@@ -76,6 +76,7 @@ function AddProduct() {
       });
   }
 
+  
   const clearForm = () => {
     setName('');
     setImages('');
