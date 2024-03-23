@@ -1,0 +1,176 @@
+.container {
+  margin: 20px;
+}
+
+.add-product-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.product-table {
+  width: 80%;
+  margin: 50px auto;
+  border-collapse: collapse;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.product-table th {
+  background-color: #f2f2f2;
+}
+
+.edit-btn, .delete-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+}
+
+.delete-btn:hover {
+  background-color: #cb3b3be2;
+}
+
+.edit-btn:hover{
+  background-color: #218838;
+}
+
+/*add product*/
+
+.containerAddProduct {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 2px 5px 40px rgba(137, 130, 130, 0.233);
+}
+
+
+.containerAddProduct h2 {
+  text-align: center;
+  font-size:30px;
+}
+
+.formContainer {
+  display: flex;
+}
+
+.formLeft {
+  width: 60%; 
+  padding-right: 50px;
+}
+
+.formRight {
+  width: 40%; 
+  padding: 50px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
+textarea {
+  resize: vertical;
+}
+
+form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+form button:focus {
+  outline: none;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.select {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.outStock{
+  color: red;
+}
+
+
+.stockView{
+  width: 150vh;
+  height: 150vh;
+}
+
+
+/* Apply animation to the success message */
+.success-message {
+  animation: fadeIn 0.5s ease-in-out;
+  color: #28a745;
+}
+
+/* Define CSS animation */
+
