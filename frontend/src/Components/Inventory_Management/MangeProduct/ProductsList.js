@@ -100,7 +100,7 @@ function ProductsList() {
             </Link>
           </div>
 
-          <div>
+          <div className="table_container">
             <table className="product-table">
               <thead>
                 <tr>
@@ -112,7 +112,8 @@ function ProductsList() {
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+
+              <tbody className="table-body">
                 {products.map((product) => (
                   <tr key={product._id}>
                     <td>{product.name}</td>

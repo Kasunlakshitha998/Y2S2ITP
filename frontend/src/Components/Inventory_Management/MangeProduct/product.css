@@ -2,6 +2,24 @@
   margin: 20px;
 }
 
+.product-table thead tr {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 20px;
+}
+
+.table_container{
+  max-height: 500px;
+	margin-bottom: 15px;
+  margin-right: 100px;
+	margin-top: 10px;
+	overflow-y: scroll;
+	padding: 0px;
+	font-family: 'Roboto Slab', serif;
+  
+}
+
 .add-product-btn {
   padding: 10px 20px;
   background-color: #007bff;
@@ -18,7 +36,7 @@
 }
 
 .product-table th, .product-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #cfcfcf;
   padding: 8px;
   text-align: left;
 }
