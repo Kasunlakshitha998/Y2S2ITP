@@ -56,6 +56,10 @@ router.route('/update/:id').put(async (req, res) => {
   const { name, image, category, brand, price, countInStock, description } =
     req.body;
 
+  const uploadRes = await cloudinary.uploader.upload(image, {
+    upload_preset: 'Online-Mobile-Shop',
+  });
+  
   const updateProduct = {
     name,
     image,
@@ -94,17 +98,20 @@ router.route('/delete/:id').delete(async (req, res) => {
 
 //get one product data
 router.route('/getProduct/:id').get(async (req, res) => {
-  let productId = req.params.id;
-  const product = await Product.findById(productId)
-    .then((product) => {
-      res.status(200).send({ status: 'Product fetched', product });
-    })
-    .catch((err) => {
-      console.log(err);
-      res
-        .status(500)
-        .send({ status: 'Error with get user', error: err.message });
-    });
+  try {
+    let productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).send({ status: 'Product not found' });
+    }
+    res.status(200).send({ status: 'Product fetched', product });
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .send({ status: 'Error with fetching product', error: err.message });
+  }
 });
+
 
 module.exports = router;

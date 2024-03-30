@@ -45,6 +45,7 @@ function ProductsList() {
     }
   }, [products]);
 
+  //delete product      
   const handleDelete = (productId) => {
     
     Swal.fire({
@@ -141,7 +142,11 @@ function ProductsList() {
                             style={{ width: '100px', height: '80px' }}
                           />
                         ) : (
-                          <span>No image available</span>
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            style={{ width: '100px', height: '80px' }}
+                          />
                         )}
                       </div>
                     </td>

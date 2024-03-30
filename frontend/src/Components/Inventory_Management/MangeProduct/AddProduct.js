@@ -16,7 +16,7 @@ function AddProduct() {
 
   const [loading, setLoading] = useState(false);
 
-  const hadndelImage = (e) => {
+  const handelImage = (e) => {
     const file = e.target.files[0];
     TransFormFile(file);
   };
@@ -202,7 +202,7 @@ function AddProduct() {
                   id="image"
                   name="image"
                   accept="image/"
-                  onChange={hadndelImage}
+                  onChange={handelImage}
                 />
               </div>
               <button disabled={loading} type="submit">

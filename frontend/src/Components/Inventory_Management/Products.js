@@ -69,7 +69,7 @@ function Products() {
                       product.image.url ? (
                         <img src={product.image.url} alt={product.name} />
                       ) : (
-                        <span>No image available</span>
+                        <img src={product.image} alt={product.name} />
                       )}
                     </div>
                   </Link>
@@ -93,10 +93,10 @@ function Products() {
                       product.image.url ? (
                         <div>
                           <img src={product.image.url} alt={product.name} />
-                            <strong>{ product.name}</strong>
+                          <strong>{product.name}</strong>
                         </div>
                       ) : (
-                        <span>No image available</span>
+                        <img src={product.image} alt={product.name} />
                       )}
                     </div>
                   </Link>

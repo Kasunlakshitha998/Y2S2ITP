@@ -75,7 +75,7 @@ function ProductPage() {
               product.image.url ? (
                 <img src={product.image.url} alt={product.name} />
               ) : (
-                <span>No image available</span>
+                <img src={product.image} alt={product.name} />
               )}
             </div>
 
@@ -89,14 +89,11 @@ function ProductPage() {
               </strong>
 
               <div className="button-section">
-                
-
                 {product.countInStock === 0 ? (
                   <>
-
-                  <strong>Out of Stock</strong>
-                  {/* add to wichst list */}
-                  {/* <div className="quantity-selector">
+                    <strong>Out of Stock</strong>
+                    {/* add to wichst list */}
+                    {/* <div className="quantity-selector">
                   <button
                     onClick={decrementQuantity}
                     disabled
@@ -114,32 +111,29 @@ function ProductPage() {
                   </>
                 ) : (
                   <>
-                  <div className="quantity-selector">
-                  <button
-                    onClick={decrementQuantity}
-                    disabled={quantity === 0}
-                  >
-                    -
-                  </button>
-                  <span className="quantity-display">{quantity}</span>
-                  <button
-                    onClick={incrementQuantity}
-                    disabled={quantity >= product.countInStock}
-                  >
-                    +
-                  </button>
-                </div>
-                    <button
-                      className="add-to-cart"
-                      disabled={quantity === 0}
-                    >
+                    <div className="quantity-selector">
+                      <button
+                        onClick={decrementQuantity}
+                        disabled={quantity === 0}
+                      >
+                        -
+                      </button>
+                      <span className="quantity-display">{quantity}</span>
+                      <button
+                        onClick={incrementQuantity}
+                        disabled={quantity >= product.countInStock}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button className="add-to-cart" disabled={quantity === 0}>
                       Add to Cart
                     </button>
 
                     <button
                       className="order-button"
                       onClick={updateStock}
-                      disabled={quantity===0}
+                      disabled={quantity === 0}
                     >
                       Order Now
                     </button>

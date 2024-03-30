@@ -15,7 +15,7 @@ function App() {
           <Route path="/admin/" element={<Dashboard />} />
           <Route path="/admin/productsList" element={<ProductsList />} />  
           <Route path="/admin/productsList/addProduct" element={<AddProduct />} />
-          <Route path="/admin/productsList/editProduct" element={<EditProduct />} />
+          <Route path="/admin/productsList/editProduct/:id" element={<EditProduct />} />
         </Routes>
     </div>
   );
