@@ -56,9 +56,13 @@ router.route('/update/:id').put(async (req, res) => {
   const { name, image, category, brand, price, countInStock, description } =
     req.body;
 
-  const uploadRes = await cloudinary.uploader.upload(image, {
-    upload_preset: 'Online-Mobile-Shop',
-  });
+  try {
+    const uploadRes = await cloudinary.uploader.upload(image, {
+      upload_preset: 'Online-Mobile-Shop',
+    });
+  } catch (error) {
+    console.log(error);
+  }
   
   const updateProduct = {
     name,

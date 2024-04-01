@@ -1,6 +1,6 @@
 .container {
-  margin: 20px;
-  margin-left: 200px;
+  margin-top: 200px;
+  margin-left: 10px;
 }
 
 .product-table thead tr {
@@ -11,23 +11,15 @@
 }
 
 .table_container{
+ 
   max-height: 500px;
 	margin-bottom: 15px;
-  margin-right: 100px;
+  margin-right: 10px;
 	margin-top: 10px;
 	overflow-y: scroll;
 	padding: 0px;
 	font-family: 'Roboto Slab', serif;
   
-}
-
-.add-product-btn {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .product-table {
@@ -66,6 +58,20 @@
 
 .edit-btn:hover{
   background-color: #218838;
+}
+
+.addProductBtn button{
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addProductBtn{
+  margin-top: 70px;
+  margin-left: 500px;
 }
 
 /*add product*/

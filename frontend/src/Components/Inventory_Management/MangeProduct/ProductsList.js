@@ -95,7 +95,7 @@ function ProductsList() {
           <div className="loader"></div>
         ) : (
           <>
-            <div>
+            <div className='addProductBtn'>
               <Link to="/admin/productsList/addProduct">
                 <button>+ Add Product</button>
               </Link>
