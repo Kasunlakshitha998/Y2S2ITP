@@ -1,7 +1,6 @@
-// import { Link } from 'react-router-dom';
-// import data from '../../data';
 import UserNav from '../../Components/Nav/userNav';
 import Products from '../../Components/Inventory_Management/Products'
+import Footer from '../../Components/Nav/footer';
 
 function HomePage() {
 
@@ -12,8 +11,11 @@ function HomePage() {
         <UserNav />
       </header>
       <h2>Item List </h2>
-      <Products/>
       
+        <Products />
+
+
+      <Footer />
     </div>
   );
 }

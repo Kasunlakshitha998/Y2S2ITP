@@ -39,7 +39,7 @@ function Products() {
   }, []);
 
   return (
-    <div>
+    <div className="Container">
       {loading ? ( // Display loading indicator
         <div className="loader"></div>
       ) : (
@@ -50,10 +50,10 @@ function Products() {
                 <button onClick={reSet}>All</button>
               </li>
               <li>
-                <button onClick={() => filterRes('iphone')}>I Phone</button>
+                <button className='iphone' onClick={() => filterRes('iphone')}>I Phone</button>
               </li>
               <li>
-                <button onClick={() => filterRes('android')}>Android</button>
+                <button className='android' onClick={() => filterRes('android')}>Android</button>
               </li>
             </ul>
           </div>
@@ -67,18 +67,23 @@ function Products() {
                       {product.image &&
                       typeof product.image !== 'string' &&
                       product.image.url ? (
-                        <img src={product.image.url} alt={product.name} />
+                        <div>
+                          <img src={product.image.url} alt={product.name} />
+                          <strong>{product.name}</strong>
+                        </div>
                       ) : (
-                        <img src={product.image} alt={product.name} />
+                        <div>
+                          <img src={product.image} alt={product.name} />
+                          <strong>{product.name}</strong>
+                        </div>
                       )}
                     </div>
                   </Link>
 
                   <strong>
-                    <p>{product.price}</p>
+                    <p>Rs. {product.price}</p>
                   </strong>
 
-                  <button>Add to Cart</button>
                 </div>
               ))}
             </div>
@@ -96,16 +101,18 @@ function Products() {
                           <strong>{product.name}</strong>
                         </div>
                       ) : (
-                        <img src={product.image} alt={product.name} />
+                        <div>
+                          <img src={product.image} alt={product.name} />
+                          <strong>{product.name}</strong>
+                        </div>
                       )}
                     </div>
                   </Link>
 
                   <strong>
-                    <p>{product.price}</p>
+                    <p>Rs. {product.price}</p>
                   </strong>
 
-                  <button>Add to Cart</button>
                 </div>
               ))}
             </div>

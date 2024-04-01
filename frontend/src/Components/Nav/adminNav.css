@@ -1,0 +1,112 @@
+.admin-header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100; 
+}
+
+.admin-header .logo a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.admin-header .profile {
+  display: flex;
+  align-items: center;
+}
+
+.admin-header .profile img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.admin-header .profile span {
+  margin-right: 10px;
+}
+
+.admin-header .dropdown {
+  position: relative;
+}
+
+.admin-header .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  right: 0;
+  z-index: 1;
+}
+
+.admin-header .dropdown-content a {
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.admin-header .dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.admin-header .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.admin-header .dropbtn {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}
+
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  width: 200px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 50;
+  padding-top: 50px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  padding: 10px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #555;
+}
+
+.sidebar ul li.active a {
+  background-color: #555;
+  color: #fff;
+}
+

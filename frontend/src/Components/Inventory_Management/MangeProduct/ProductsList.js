@@ -90,89 +90,90 @@ function ProductsList() {
       <header>
         <AdminNav />
       </header>
+      <main>
+        {loading ? (
+          <div className="loader"></div>
+        ) : (
+          <>
+            <div>
+              <Link to="/admin/productsList/addProduct">
+                <button>+ Add Product</button>
+              </Link>
+            </div>
 
-      {loading ? (
-        <div className="loader"></div>
-      ) : (
-        <>
-          <div>
-            <Link to="/admin/productsList/addProduct">
-              <button>+ Add Product</button>
-            </Link>
-          </div>
-
-          <div className="table_container">
-            <table className="product-table">
-              <thead>
-                <tr>
-                  <th>Phone</th>
-                  <th>Brand</th>
-                  <th>Count In Stock</th>
-                  <th>Image</th>
-                  <th>Price</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody className="table-body">
-                {products.map((product) => (
-                  <tr key={product._id}>
-                    <td>{product.name}</td>
-
-                    <td>{product.brand}</td>
-
-                    <td>
-                      <div className="stock">
-                        {product.countInStock > 0 ? (
-                          <span>{product.countInStock}</span>
-                        ) : (
-                          <span className="outStock">Out of Stock</span>
-                        )}
-                      </div>
-                    </td>
-
-                    <td>
-                      <div>
-                        {product.image &&
-                        typeof product.image !== 'string' &&
-                        product.image.url ? (
-                          <img
-                            src={product.image.url}
-                            alt={product.name}
-                            style={{ width: '100px', height: '80px' }}
-                          />
-                        ) : (
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            style={{ width: '100px', height: '80px' }}
-                          />
-                        )}
-                      </div>
-                    </td>
-
-                    <td>{product.price}</td>
-
-                    <td>
-                      <Link
-                        to={`/admin/productsList/editProduct/${product._id}`}
-                      >
-                        <button className="edit-btn">Edit</button>
-                      </Link>
-                      <button
-                        className="delete-btn"
-                        onClick={() => handleDelete(product._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+            <div className="table_container">
+              <table className="product-table">
+                <thead>
+                  <tr>
+                    <th>Phone</th>
+                    <th>Brand</th>
+                    <th>Count In Stock</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
+                </thead>
+
+                <tbody className="table-body">
+                  {products.map((product) => (
+                    <tr key={product._id}>
+                      <td>{product.name}</td>
+
+                      <td>{product.brand}</td>
+
+                      <td>
+                        <div className="stock">
+                          {product.countInStock > 0 ? (
+                            <span>{product.countInStock}</span>
+                          ) : (
+                            <span className="outStock">Out of Stock</span>
+                          )}
+                        </div>
+                      </td>
+
+                      <td>
+                        <div>
+                          {product.image &&
+                          typeof product.image !== 'string' &&
+                          product.image.url ? (
+                            <img
+                              src={product.image.url}
+                              alt={product.name}
+                              style={{ width: '100px', height: '80px' }}
+                            />
+                          ) : (
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              style={{ width: '100px', height: '80px' }}
+                            />
+                          )}
+                        </div>
+                      </td>
+
+                      <td>{product.price}</td>
+
+                      <td>
+                        <Link
+                          to={`/admin/productsList/editProduct/${product._id}`}
+                        >
+                          <button className="edit-btn">Edit</button>
+                        </Link>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(product._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </main>
     </div>
   );
 }

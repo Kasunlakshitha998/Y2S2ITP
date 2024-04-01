@@ -1,4 +1,4 @@
-.main {
+main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -6,16 +6,18 @@
 
 .product-container {
   display: flex;
-  margin-top: 20px;
+  margin: 100px auto;
+  padding: 20px;
 }
 
 .product-image img {
-  max-width: 100%;
-  height: auto;
+  width: 350px;
+  height: 350px;
 }
 
 .product-details {
   margin-left: 20px;
+  margin-top: 10px;
 }
 
 .product-details h1 {
@@ -44,8 +46,8 @@
 .quantity-selector button {
   padding: 5px 10px;
   font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #f4f4f4;
+  color: #2a2a2a;
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -65,14 +67,26 @@
 .add-to-cart, .order-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #28a745;
-  color: #fff;
+  background-color: #ffffff;
+  color: #388bff;
+  border: 1px solid;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+.order-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #388bff;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   margin-right: 10px;
+  margin-top: 20px;
 }
-
 
 .add-to-cart:disabled, .order-button:disabled {
   background-color: #ccc;

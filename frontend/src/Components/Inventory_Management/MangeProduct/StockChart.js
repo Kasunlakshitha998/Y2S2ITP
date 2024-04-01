@@ -62,7 +62,11 @@ const StockChart = () => {
     };
   }, []);
 
-  return <canvas ref={chartRef} id="stockChart" width="400" height="200"></canvas>;
+  return (
+    <main>
+      <canvas ref={chartRef} id="stockChart" width="400" height="200"></canvas>
+    </main>
+  );
 };
 
 export default StockChart;

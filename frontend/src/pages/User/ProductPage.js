@@ -33,7 +33,16 @@ function ProductPage() {
           console.log('Quantity updated successfully:', res.data);
         })
         .catch((err) => {
-          console.error('Error updating quantity:', err);
+          if (err.response) {
+            // The request was made and the server responded with a status code
+            console.error('Error updating quantity:', err.response.status);
+          } else if (err.request) {
+            // The request was made but no response was received
+            console.error('No response received from server');
+          } else {
+            // Something else happened while setting up the request
+            console.error('Error:', err.message);
+          }
         });
     } else {
       console.log('error');
@@ -64,7 +73,7 @@ function ProductPage() {
       <header>
         <UserNav />
       </header>
-      <main>
+      <main className='maint' >
         {loading ? ( // Display loading indicator
           <div className="loader"></div>
         ) : (
@@ -84,7 +93,7 @@ function ProductPage() {
               <h3>{product.description}</h3>
               <strong>
                 <p>Brand: {product.brand}</p>
-                <p>Price: {product.price}</p>
+                <p>Price: Rs. {product.price}</p>
                 <p>Category: {product.category}</p>
               </strong>
 
@@ -114,7 +123,7 @@ function ProductPage() {
                     <div className="quantity-selector">
                       <button
                         onClick={decrementQuantity}
-                        disabled={quantity === 0}
+                        disabled={quantity == 0}
                       >
                         -
                       </button>
@@ -133,7 +142,7 @@ function ProductPage() {
                     <button
                       className="order-button"
                       onClick={updateStock}
-                      disabled={quantity === 0}
+                      disabled={quantity == 0}
                     >
                       Order Now
                     </button>
