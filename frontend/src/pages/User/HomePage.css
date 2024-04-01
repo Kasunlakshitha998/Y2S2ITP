@@ -1,0 +1,277 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #388bff;
+    border-radius: 10px;
+}
+
+html::-webkit-scrollbar {
+    width: 10px;
+}
+
+body {
+    background: white;
+}
+
+/* Header Start */
+
+.search-box input::placeholder {
+    color: black;
+}
+
+.search-box .go-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 60px;
+    width: 70px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #388bff; 
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.header input[type="checkbox"] {
+    display: none;
+}
+
+/* Responsive */
+@media screen and (max-width:1250px) {
+    .header nav {
+        max-width: 100%;
+        padding: 0px 20px;
+    }
+    nav .content .links {
+        margin-left: 30px;
+    }
+    .content .links a {
+        padding: 8px 13px;
+    }
+    .header .search-box {
+        max-width: calc(100% - 100px);
+    }
+    .header .search-box input {
+        padding: 0px 100px 0px 15px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .header .menu-icon {
+        display: block;
+    }
+    .header #show-menu:checked ~ .menu-icon i::before {
+        content: "\f00d";
+    }
+    nav .content .links {
+        display: block;
+        position: fixed;
+        background: white;
+        height: 100%;
+        width: 100%;
+        top: 70px;
+        left: -100%;
+        margin-left: 0;
+        max-width: 350px;
+        overflow: auto;
+        padding-bottom: 100px;
+        transition: all 0.3s ease;
+    }
+    nav #show-menu:checked ~ .content .links {
+        left: 0%;
+    }
+    .content .links li {
+        margin: 15px 20px;
+    }
+    .content .links li a,
+    .content .links li label {
+        line-height: 40px;
+        font-size: 20px;
+        display: block;
+        padding: 8px 18px;
+        cursor: pointer;
+    }
+    .content .links li a.desktop-link {
+        display: none;
+    }
+}
+
+/* Header End */
+
+/* Home Section Start */
+.home {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), url('./image/o1.jpg'));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+}
+
+.home .main-text {
+    text-align: center;
+    padding: 150px 10% 10px;
+}
+
+.main-text h1 {
+    font-size: 60px;
+    color: #fff;
+    text-shadow: 0px 0px 1px black;
+}
+
+.home .main-text p {
+    color: white;
+    margin-top: 5px;
+}
+
+#btn {
+    width: 200px;
+    height: 36px;
+    font-weight: bold;
+    background: white;
+    color: #388bff; 
+    letter-spacing: 1px;
+    border: 2px solid #388bff; 
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#btn:hover {
+    background-color: #388bff; 
+    color: white;
+}
+
+/* Home Section End */
+
+/* Top Section Card Start */
+.offers {
+    padding: 10px 8% 20px;
+    background: #f3f3f3;
+}
+
+.offer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+    align-items: center;
+    gap: 0.90rem;
+    margin-top: 30px;
+}
+
+.offer-content .row {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.offer-content .row i {
+    font-size: 50px;
+    color: #388bff; /* Changed main color to #388bff */
+}
+
+.offer-content .row h3 {
+    margin-left: 5px;
+}
+
+.offer-content .row p {
+    margin-left: 5px;
+}
+
+@media (max-width:920px) {
+    .offer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Top Section Card End */
+
+/* Product Section Start */
+.product {
+    padding: 10px 8% 120px;
+}
+
+.main-txt {
+    text-align: center;
+}
+
+.main-txt h3 {
+    font-size: 36px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #388bff; /* Changed main color to #388bff */
+    text-shadow: 0px 1px 1px black;
+}
+
+/* Product Section End */
+
+/* Review Section Start */
+.review {
+    padding: 120px 8% 120px;
+    background: white;
+}
+
+.review-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 5rem;
+}
+
+.box {
+    background: #f3f3f3;
+    padding: 35px 45px;
+    height: 50vh;
+    border-radius: 8px;
+    transition: 0.5s ease;
+    text-align: center;
+}
+
+.img img {
+    width: 100px;
+    border-radius: 100px;
+}
+
+.review .star i {
+    color: rgba(255, 153, 0);
+    margin-top: 10px;
+}
+
+@media (max-width:920px) {
+    .review-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Review Section End */
+
+html {
+    scroll-behavior: smooth;
+}
+
+.arrow {
+    position: fixed;
+    background-color: #388bff; 
+    border-radius: 50px;
+    height: 50px;
+    bottom: 40px;
+    right: 50px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 50px
+}
