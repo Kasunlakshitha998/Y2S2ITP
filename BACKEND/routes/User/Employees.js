@@ -1,12 +1,15 @@
 const router = require('express').Router();
 const EmployeeModel = require('../../models/User/Employee');
-const otpGenerator = require('otp-generator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+<<<<<<< HEAD
 const cookieParser = require('cookie-parser');
 const nodemailer=require('nodemailer')
 const cors = require('cors');
 const express = require('express');
+=======
+const nodemailer = require('nodemailer');
+>>>>>>> da275b8e824f956676db3e8d212d1007cbf46c56
 
 const app = express();
 app.use(express.json());
@@ -209,8 +212,17 @@ router.route('/verify-otp').post(async (req, res) => {
     const token = req.cookies.token;
 
     // Decode token to get email
-    const decodedToken = jwt.verify(token, 'jwt-secret-key');
-    const email = decodedToken.email;
+    try {
+      const decodedToken = jwt.verify(token, 'jwt-secret-key');
+      const email = decodedToken.email;
+      // Rest of your code
+    } catch (error) {
+      console.error('Error verifying JWT token:', error);
+      return res
+        .status(401)
+        .send({ status: 'Error', message: 'Invalid or missing JWT token' });
+    }
+
 
     // Find user by email
     const user = await EmployeeModel.findOne({ email: email });
