@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function ResetPassword() {
     const [Password, setPassword] = useState('');
@@ -9,12 +10,13 @@ function ResetPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const userEmail = Cookies.get('userEmail');
         //axios.defaults.withCredentials = true;
 
         try {
             const response = await axios.post(
               'http://localhost:8175/user/reset-password',
-              { Password }
+              { Password,userEmail }
             );
 
             if (response.status === 200) {
