@@ -5,29 +5,39 @@ import Footer from '../../Components/Nav/footer';
 import './HomePage.css';
 
 function HomePage() {
+  function scrollToSection(sectionId) {
+    var section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   return (
     <>
-
       <nav>
-       <UserNav/>
+        <UserNav />
       </nav>
 
       <section className="home">
         <div className="content">
           <h1>
-            {' '}
-            <span>Electronic Products</span>
+            <span>Mobile Phone Products</span>
             <br />
             Up To <span id="span2">50%</span> Off
           </h1>
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta,
-            saepe.
+            Welcome to our online mobile phone shop! We offer a wide range of
             <br />
-            Lorem ipsum dolor sit amet consectetur.
+            smartphones and accessories at discounted prices. Whether you're
+            <br />
+            Explore our collection now and take advantage of our exclusive
+            <br />
+            discounts.
           </p>
           <div className="btn">
-            <button>Shop Now</button>
+            <button onClick={() => scrollToSection('section1')}>
+              Shop Now
+            </button>
           </div>
         </div>
         <div className="img">
@@ -35,31 +45,10 @@ function HomePage() {
         </div>
       </section>
 
-      <div className="container" id="product-cards">
-        <h1 className="text-center">PRODUCTS</h1>
-        <div className="row" style={{ marginTop: '30px' }}>
-          <div className="col-md-3 py-3 py-md-0">
-            <div className="card">
-              <img src="./images/p6.png" alt="" />
-              <div className="card-body">
-                <h3 className="text-center">Iphone 13 pro</h3>
-                <p className="text-center">Lorem ipsum dolor sit amet.</p>
-                <div className="star text-center">
-                  <i className="fa-solid fa-star checked"></i>
-                  <i className="fa-solid fa-star checked"></i>
-                  <i className="fa-solid fa-star checked"></i>
-                  <i className="fa-solid fa-star checked"></i>
-                  <i className="fa-solid fa-star checked"></i>
-                </div>
-                <h2>
-                  $1000{' '}
-                  <span>
-                    <li className="fa-solid fa-cart-shopping"></li>
-                  </span>
-                </h2>
-              </div>
-            </div>
-          </div>
+      <div id="section1">
+        <div id="product-cards">
+          <h1 className="text-center">PRODUCTS</h1>
+          <Products />
         </div>
       </div>
 
@@ -72,12 +61,6 @@ function HomePage() {
           <img src="/image/arrow.png" alt="ar" />
         </i>
       </a>
-
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"
-      ></script>
     </>
   );
 }
