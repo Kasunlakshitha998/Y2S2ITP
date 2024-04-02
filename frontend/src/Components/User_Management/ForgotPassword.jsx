@@ -13,13 +13,10 @@ function ForgotPassword() {
        .post('http://localhost:8175/user/forgot-password', { email })
        .then((result) => {
          console.log(result);
-         if (result.data.status === 'success') {
+         if (result) {
            // Display alert for successful email sent
-           alert(
-             'Email sent successfully. Please check your inbox to reset your password.'
-           );
-           // Optionally, navigate the user to the login page
-           navigate('/verify-otp');
+           alert("Email sent successfully. Please check your inbox to reset your password.");
+          navigate('/verify-otp'); 
            // navigate('/login');
          } else if (result.data.status === 'no record existed') {
            // Display alert for email not found

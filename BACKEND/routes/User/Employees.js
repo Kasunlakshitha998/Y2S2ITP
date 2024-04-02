@@ -4,7 +4,24 @@ const otpGenerator = require('otp-generator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const nodemailer=require('nodemailer')
+const cors = require('cors');
+const express = require('express');
 
+const app = express();
+app.use(express.json());
+app.use(cors({
+  origin:["http://localhost:3000"],
+  methods:["GET","POST","DELETE","PUT"],
+  credentials:true
+
+}));
+app.use(cookieParser())
+
+
+
+
+router.use(cookieParser());
 router.route('/register').post((req, res) => {
     const { name, email, password, number } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
@@ -253,6 +270,12 @@ router.route('/reset-password').post(async (req, res) => {
       .status(500)
       .send({ status: 'Error resetting password', message: error.message });
   }
+ 
+  
 });
+//const PORT = process.env.PORT || 8181;
+
+
+
 
 module.exports = router;
