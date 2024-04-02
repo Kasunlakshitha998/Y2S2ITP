@@ -44,78 +44,97 @@ function Products() {
         <div className="loader"></div>
       ) : (
         <>
-          <div>
+          <div className="ListCategory">
+            <h2>Category</h2>
             <ul>
               <li>
                 <button onClick={reSet}>All</button>
               </li>
               <li>
-                <button className='iphone' onClick={() => filterRes('iphone')}>I Phone</button>
+                <button className="iphone" onClick={() => filterRes('iphone')}>
+                  I Phone
+                </button>
               </li>
               <li>
-                <button className='android' onClick={() => filterRes('android')}>Android</button>
+                <button
+                  className="android"
+                  onClick={() => filterRes('android')}
+                >
+                  Android
+                </button>
               </li>
             </ul>
           </div>
 
           {filter ? (
-            <div className="products">
-              {cat.map((product) => (
-                <div className="product" key={product._id}>
-                  <Link to={`/product/${product._id}`}>
-                    <div>
-                      {product.image &&
-                      typeof product.image !== 'string' &&
-                      product.image.url ? (
-                        <div>
-                          <img src={product.image.url} alt={product.name} />
-                          <strong>{product.name}</strong>
-                        </div>
-                      ) : (
-                        <div>
-                          <img src={product.image} alt={product.name} />
-                          <strong>{product.name}</strong>
-                        </div>
-                      )}
-                    </div>
-                  </Link>
+            <>
+              <div className="products">
+                {cat.map((product) => (
+                  <div className="product" key={product._id}>
+                    <Link to={`/product/${product._id}`}>
+                      <div>
+                        {product.image &&
+                        typeof product.image !== 'string' &&
+                        product.image.url ? (
+                          <div>
+                            <img src={product.image.url} alt={product.name} />
+                            <strong>{product.name}</strong>
+                          </div>
+                        ) : (
+                          <div>
+                            <img src={product.image} alt={product.name} />
+                            <strong>{product.name}</strong>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
 
-                  <strong>
-                    <p>Rs. {product.price}</p>
-                  </strong>
-
-                </div>
-              ))}
-            </div>
+                    <strong>
+                      <p>Rs. {product.price}</p>
+                    </strong>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : (
-            <div className="products">
-              {products.map((product) => (
-                <div className="product" key={product._id}>
-                  <Link to={`/product/${product._id}`}>
-                    <div>
-                      {product.image &&
-                      typeof product.image !== 'string' &&
-                      product.image.url ? (
-                        <div>
-                          <img src={product.image.url} alt={product.name} />
-                          <strong>{product.name}</strong>
+            <>
+              <div class="container" id="product-cards">
+                <h1 class="text-center">PRODUCTS</h1>
+                <div class="row" style={{ }} >
+                  {products.map((product) => (
+                    <div class="col-md-3 py-3 py-md-0" key={product._id}>
+                      <div class="card">
+                        <Link to={`/product/${product._id}`}>
+                          <div>
+                            {product.image &&
+                            typeof product.image !== 'string' &&
+                            product.image.url ? (
+                              <img src={product.image.url} alt={product.name} />
+                            ) : (
+                              <img src={product.image} alt={product.name} />
+                            )}
+                            <strong>{product.name}</strong>
+                          </div>
+                        </Link>
+                        <div class="card-body">
+                          <h3 class="text-center">{product.name}</h3>
+                          <p class="text-center">{product.description}</p>
+                          <div class="star text-center">
+                            {/* Add your star rating component here */}
+                          </div>
+                          <h2>
+                            Rs. {product.price}{' '}
+                            <span>
+                              <li class="fa-solid fa-cart-shopping"></li>
+                            </span>
+                          </h2>
                         </div>
-                      ) : (
-                        <div>
-                          <img src={product.image} alt={product.name} />
-                          <strong>{product.name}</strong>
-                        </div>
-                      )}
+                      </div>
                     </div>
-                  </Link>
-
-                  <strong>
-                    <p>Rs. {product.price}</p>
-                  </strong>
-
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            </>
           )}
         </>
       )}

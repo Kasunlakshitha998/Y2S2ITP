@@ -26,23 +26,14 @@ function ProductPage() {
   const updateStock = () => {
     const countInStock = product.countInStock - quantity;
 
-    if (countInStock > 0) {
+    if (countInStock >= 0) {
       axios
         .put(`http://localhost:8175/product/update/${id}`, { countInStock })
         .then((res) => {
           console.log('Quantity updated successfully:', res.data);
         })
         .catch((err) => {
-          if (err.response) {
-            // The request was made and the server responded with a status code
-            console.error('Error updating quantity:', err.response.status);
-          } else if (err.request) {
-            // The request was made but no response was received
-            console.error('No response received from server');
-          } else {
-            // Something else happened while setting up the request
-            console.error('Error:', err.message);
-          }
+          console.error('Error updating quantity:', err);
         });
     } else {
       console.log('error');
@@ -123,7 +114,7 @@ function ProductPage() {
                     <div className="quantity-selector">
                       <button
                         onClick={decrementQuantity}
-                        disabled={quantity == 0}
+                        disabled={quantity === 0}
                       >
                         -
                       </button>
@@ -142,7 +133,7 @@ function ProductPage() {
                     <button
                       className="order-button"
                       onClick={updateStock}
-                      disabled={quantity == 0}
+                      disabled={quantity === 0}
                     >
                       Order Now
                     </button>

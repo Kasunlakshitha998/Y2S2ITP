@@ -1,41 +1,42 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
 const app = express();
-require("dotenv").config();
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8175;
 
-app.use(cors());
+// Middleware
+app.use(
+  cors()
+);
 app.use(bodyParser.json());
-
+app.use(cookieParser());
+// MongoDB connection
 const URL = process.env.MONGODB_URL;
-
-mongoose.connect(URL, {
-
+mongoose
+  .connect(URL, {
     useNewUrlParser: true,
-    //useCreateIndex: true,
-   //useFindAndModify: false,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('MongoDB connected successfully');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
-})
+// Routes
+const productRouter = require('./routes/Inventory_Management/products.js');
+const userRouter = require('./routes/User/Employees.js');
 
-const connection = mongoose.connection;
-connection.once("open", ()=>{
+app.use('/product', productRouter);
+app.use('/user', userRouter);
 
-    console.log("Mongodb connection ok");
-
-})
-
-
-const productRouter = require("./routes/Inventory_Management/products.js");
-
-app.use("/product",productRouter);
-
-app.listen( PORT, ()=>{
-
-    console.log(`Server is up and running on port: ${PORT} `);
-
-})
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is up and running on port: ${PORT}`);
+});
