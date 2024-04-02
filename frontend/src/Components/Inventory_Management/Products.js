@@ -6,6 +6,7 @@ import './productPage.css';
 function Products() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState(false);
+  const [searchItem, setSearchItem] = useState('');
   const [products, setProducts] = useState([]);
   const [cat, setCat] = useState([]);
 
@@ -73,7 +74,9 @@ function Products() {
             </div>
             <div class="searchSection">
               <h3>Search Product</h3>
-              <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search..." onChange={(e) => {
+                  setSearchItem(e.target.value)
+              }} />
             </div>
           </div>
 
@@ -110,7 +113,15 @@ function Products() {
           ) : (
             <>
               <div className="products">
-                {products.map((product) => (
+                    {products.filter((product) => {
+                      
+                      if (searchItem === "") {
+                        return product;
+                      } else if (product.name.toLowerCase().includes(searchItem.toLowerCase())) {
+                        return product;
+                      }
+
+                    }).map((product) => (
                   <div className="product" key={product._id}>
                     <Link to={`/product/${product._id}`}>
                       <div>
