@@ -6,71 +6,62 @@ import './HomePage.css';
 
 function HomePage() {
   return (
-    <div>
-      <div className="header">
-        <UserNav />
-      </div>
+    <>
 
-      <div className="home">
-        <div className="main-text">
+      <nav>
+       <UserNav/>
+      </nav>
+
+      <section className="home">
+        <div className="content">
           <h1>
-            Discover The Best <br />
-            Phone Shop For You 
+            {' '}
+            <span>Electronic Products</span>
+            <br />
+            Up To <span id="span2">50%</span> Off
           </h1>
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-            inventore nulla quis doloribus modi magni iusto earum!
-            Necessitatibus, quidem quia.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta,
+            saepe.
+            <br />
+            Lorem ipsum dolor sit amet consectetur.
           </p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-            inventore nulla quis doloribus modi magni iusto earum!
-            Necessitatibus, quidem quia.
-          </p>
-          <button id="btn">View More</button>
+          <div className="btn">
+            <button>Shop Now</button>
+          </div>
+        </div>
+        <div className="img">
+          <img src="image/background.jpg" alt="gg" />
+        </div>
+      </section>
+
+      <div className="container" id="product-cards">
+        <h1 className="text-center">PRODUCTS</h1>
+        <div className="row" style={{ marginTop: '30px' }}>
+          <div className="col-md-3 py-3 py-md-0">
+            <div className="card">
+              <img src="./images/p6.png" alt="" />
+              <div className="card-body">
+                <h3 className="text-center">Iphone 13 pro</h3>
+                <p className="text-center">Lorem ipsum dolor sit amet.</p>
+                <div className="star text-center">
+                  <i className="fa-solid fa-star checked"></i>
+                  <i className="fa-solid fa-star checked"></i>
+                  <i className="fa-solid fa-star checked"></i>
+                  <i className="fa-solid fa-star checked"></i>
+                  <i className="fa-solid fa-star checked"></i>
+                </div>
+                <h2>
+                  $1000{' '}
+                  <span>
+                    <li className="fa-solid fa-cart-shopping"></li>
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <section className="offers">
-        <div className="offer-content">
-          <div className="row">
-            <i className="fa-solid fa-truck-fast"></i>
-            <h3>Free Delivery</h3>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <div className="row">
-            <i className="fa-solid fa-headset"></i>
-            <h3>Support 24/7</h3>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <div className="row">
-            <i className="fa-solid fa-rotate-left"></i>
-            <h3>30 Day Return</h3>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <div className="row">
-            <i className="fa-solid fa-cart-shopping"></i>
-            <h3>Secure Shopping</h3>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="product" id="product">
-        <div className="main-txt">
-          <h3>Products</h3>
-        </div>
-        <Products />
-      </section>
-
-      <section className="review" id="review">
-        <div className="main-txt">
-          <h3>
-            Customers <span>Review</span>
-          </h3>
-        </div>
-        <div className="review-content">{/* Customer reviews content */}</div>
-      </section>
 
       <div id="footer">
         <Footer />
@@ -78,10 +69,16 @@ function HomePage() {
 
       <a href="#" className="arrow">
         <i>
-          <img src='./image/o2.png' alt="hhh" width="50px" />
+          <img src="/image/arrow.png" alt="ar" />
         </i>
       </a>
-    </div>
+
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+      ></script>
+    </>
   );
 }
 

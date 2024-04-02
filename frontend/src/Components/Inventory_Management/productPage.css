@@ -1,130 +1,41 @@
-/* productPage.css */
-
-/* Main Container */
-.Container {
-  display: flex;
-  margin: 50px auto;
-  max-width: 1400px;
+/* product cards */
+#product-cards{
+    margin-top: 100px;
 }
-
-/* Side Category Section */
-.ListCategory {
-  margin: 10px;
-  background-color: #ededed;
-  width: 240px;
-  height: 250px;
-  left: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+#product-cards h1{
+    color: #ffc800;
+    text-shadow: 1px 1px 1px black;
+    border-bottom: 2px solid #ffc800;
 }
-
-.ListCategory:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+#product-cards .card h3{
+    font-size: 20px;
+    color: black;
 }
-
-/* List Category Styles */
-.ListCategory ul {
-  list-style-type: none;
-  padding: 0;
+#product-cards .card p{
+    font-size: 12px;
+    margin-top: 5px;
+    color: black;
 }
-
-.ListCategory li {
-  margin-bottom: 10px;
+.star i{
+    margin-left: 5px;
+    font-size: 13px;
 }
-
-.ListCategory h2{
-  padding: 10px;
-  
+.checked{
+    color: #ffc800;
 }
-
-.ListCategory button {
-  width: 100%;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 10px;
-  transition: all 0.3s ease;
+#product-cards .card h2{
+    font-size: 20px;
+    color: black;
+    margin-top: 20px;
 }
-
-.ListCategory button:hover {
-  background-color: #f9f9f9;
+#product-cards .card h2 span{
+    float: right;
+    color: black;
+    cursor: pointer;
 }
-
-/* Products Section */
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: 220px; 
+@media screen and (max-width:1000px){
+    #product-cards .card h3{
+        font-size: 15px;
+    }
 }
-
-.product {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.product:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-.product a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.product img {
-  width: 250px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.product strong {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* Responsive Styles */
-@media (max-width: 1200px) {
-  .Container {
-    padding:10px; 
-    margin: 0;
-  }
-}
-
-@media (max-width: 992px) {
-  .ListCategory {
-    position: static;
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 10px;
-  }
-
-  .products {
-    margin-left: 0;
-  }
-
-  .product {
-    width: calc(50% - 20px);
-  }
-}
-
-@media (max-width: 576px) {
-  .product {
-    width: calc(100% - 20px);
-  }
-}
-
-.pheader{
-   font-size: 50px;
-  margin-left: 250px; 
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  width: calc(100% - 260px);
-  text-align: center; 
-  margin-bottom: 20px; 
-}
+/* product cards */
