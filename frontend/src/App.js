@@ -6,11 +6,7 @@ import ProductsList from './Components/Inventory_Management/MangeProduct/Product
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
 
-<<<<<<< HEAD
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-=======
->>>>>>> da275b8e824f956676db3e8d212d1007cbf46c56
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import Signup from './Components/User_Management/signup';
 import Login from './Components/User_Management/Login';
 import ForgotPassword from './Components/User_Management/ForgotPassword';

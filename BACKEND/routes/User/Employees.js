@@ -2,14 +2,11 @@ const router = require('express').Router();
 const EmployeeModel = require('../../models/User/Employee');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-<<<<<<< HEAD
 const cookieParser = require('cookie-parser');
 const nodemailer=require('nodemailer')
 const cors = require('cors');
 const express = require('express');
-=======
-const nodemailer = require('nodemailer');
->>>>>>> da275b8e824f956676db3e8d212d1007cbf46c56
+
 
 const app = express();
 app.use(express.json());

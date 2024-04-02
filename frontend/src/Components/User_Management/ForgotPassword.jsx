@@ -34,39 +34,6 @@ function ForgotPassword() {
       });
   };
 
-<<<<<<< HEAD
-   //axios.defaults.withCredentials=true;
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     axios
-       .post('http://localhost:8175/user/forgot-password', { email })
-       .then((result) => {
-         console.log(result);
-         if (result) {
-           // Display alert for successful email sent
-           alert("Email sent successfully. Please check your inbox to reset your password.");
-          navigate('/verify-otp'); 
-           // navigate('/login');
-         } else if (result.data.status === 'no record existed') {
-           // Display alert for email not found
-           alert('Email does not exist. Please register.');
-         } else {
-           // Display alert for unexpected response
-           alert('An error occurred. Please try again later.');
-           
-         }
-       })
-       .catch((err) => {
-         console.log(err);
-         // Display alert for general error
-         alert(
-           'Email sent successfully. Please check your inbox to reset your password.'
-         );
-       });
-   }
-   
-=======
->>>>>>> da275b8e824f956676db3e8d212d1007cbf46c56
   return (
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div className="bg-white p-3 rounded w-25">
