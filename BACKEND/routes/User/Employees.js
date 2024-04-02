@@ -6,22 +6,11 @@ const cookieParser = require('cookie-parser');
 const nodemailer=require('nodemailer')
 const cors = require('cors');
 const express = require('express');
-
-
-const app = express();
-app.use(express.json());
-app.use(cors({
-  origin:["http://localhost:3000"],
-  methods:["GET","POST","DELETE","PUT"],
-  credentials:true
-
-}));
-app.use(cookieParser())
+//const nodemailer = require('nodemailer');
 
 
 
 
-router.use(cookieParser());
 router.route('/register').post((req, res) => {
     const { name, email, password, number } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
@@ -58,7 +47,9 @@ router.route('/login').post((req, res) => {
               const token = jwt.sign({ email: user.email }, 'jwt-secret-key', {
                 expiresIn: '1d',
               });
-              res.cookie('token', token);
+              // Set the token as a cookie
+              res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // Max age set to 1 day in milliseconds
+              res.cookie('userEmail', user.email, { maxAge: 86400000 }); // Max age set to 1 day in milliseconds
               res.json({ status: 'success', isAdmin: user.isAdmin });
             } else {
               res.status(401).json({ status: 'incorrect password' });
@@ -72,7 +63,8 @@ router.route('/login').post((req, res) => {
     .catch((err) => {
       res.status(500).json({ status: 'error', error: err.message });
     });
-}); 
+});
+
 
 router.route('/userdetails').get((req, res) => {
   EmployeeModel.find({ isAdmin: false })
@@ -144,25 +136,29 @@ function generateNumericOTP(length) {
   return OTP;
 }
 
+
+
 router.route('/forgot-password').post((req, res) => {
   const { email } = req.body;
 
+  // Find user by email
   EmployeeModel.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        return res.send({ status: 'User not existed' });
+        return res.status(404).send({ status: 'User not found' });
       }
 
-      // Generate JWT token
+      // Generate JWT token for password reset
       const token = jwt.sign({ email: user.email }, 'jwt-secret-key', {
-        expiresIn: '1d',
+        expiresIn: '1h', // Set expiry time for the token (e.g., 1 hour)
       });
 
       // Store token in cookie
-      res.cookie('token', token);
+      res.cookie('resetToken', token, { httpOnly: true, maxAge: 3600000 }); // Max age set to 1 hour in milliseconds
+      res.cookie('userEmail', user.email, { maxAge: 3600000 });
 
-      // Generate Numeric OTP
-      const otp = generateNumericOTP(6);
+      // Generate Numeric OTP (if you have a function named generateNumericOTP)
+      const otp = generateNumericOTP(6); // You need to define this function
 
       // Save the OTP in the database
       user.otp = otp;
@@ -173,79 +169,68 @@ router.route('/forgot-password').post((req, res) => {
         service: 'gmail',
         auth: {
           user: 'navindadharmasiri@gmail.com',
-          pass: 'xbdd pchv ufvh spcs',
+          pass: 'xbdd pchv ufvh spcs', // Please replace with your actual password or use environment variables for security
         },
       });
 
+      // Define email content
       const mailOptions = {
         from: 'navindadharmasiri@gmail.com',
-        to: email,
-        subject: 'Reset Password OTP',
+        to: user.email,
+        subject: 'Password Reset OTP',
         text: `Your OTP for password reset is: ${otp}`,
       };
 
-      transporter.sendMail(mailOptions, function (error, info) {
+      // Send email
+      transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
+          console.log('Error sending email:', error);
           return res.status(500).send({ status: 'Error sending email' });
         } else {
-          // Return the token and OTP in the response
-          return res.send({ status: 'Success', token: token, otp: otp });
+          console.log('Email sent:', info.response);
+          return res.status(200).send({ status: 'OTP sent successfully' });
         }
       });
     })
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).send({ status: 'Error processing request' });
+    .catch((error) => {
+      console.log('Error:', error);
+      return res.status(500).send({ status: 'Internal server error' });
     });
 });
 
+
 // Assuming this is your backend route for OTP verification
 router.route('/verify-otp').post(async (req, res) => {
-  const { otp } = req.body;
+  const { otp, userEmail } = req.body; // Retrieve userEmail from request body
 
   try {
-    // Retrieve token from cookie
-    const token = req.cookies.token;
-
-    // Decode token to get email
-    try {
-      const decodedToken = jwt.verify(token, 'jwt-secret-key');
-      const email = decodedToken.email;
-      // Rest of your code
-    } catch (error) {
-      console.error('Error verifying JWT token:', error);
-      return res
-        .status(401)
-        .send({ status: 'Error', message: 'Invalid or missing JWT token' });
-    }
-
-
     // Find user by email
-    const user = await EmployeeModel.findOne({ email: email });
+    const user = await EmployeeModel.findOne({ email: userEmail });
 
     if (!user) {
-      return res.send({ status: 'Incorrect OTP' });
+      return res.send({ status: "Incorrect OTP" });
     }
 
     // Check if OTP matches
     if (user.otp !== otp) {
-      return res.send({ status: 'Incorrect OTP' });
+      return res.send({ status: "Incorrect OTP" });
     }
 
     // Clear the OTP from the database after successful verification
     user.otp = null;
     await user.save();
 
-    return res.send({ status: 'Success' });
+    return res.send({ status: "Success" });
+
   } catch (error) {
     console.error('Error verifying OTP:', error);
-    return res.status(500).send({ status: 'Error processing request' });
+    return res.status(500).send({ status: "Error processing request" });
   }
 });
 
+
 router.route('/reset-password').post(async (req, res) => {
-  const { Password } = req.body;
+  const { Password ,userEmail} = req.body;
   try {
     if (!Password) {
       return res.status(400).send({
@@ -254,11 +239,9 @@ router.route('/reset-password').post(async (req, res) => {
       });
     }
 
-    const token = req.cookies.token;
-    const decodedToken = jwt.verify(token, 'jwt-secret-key');
-    const email = decodedToken.email;
+    
 
-    const user = await EmployeeModel.findOne({ email: email });
+    const user = await EmployeeModel.findOne({ email: userEmail });
 
     if (!user) {
       return res.status(404).send({

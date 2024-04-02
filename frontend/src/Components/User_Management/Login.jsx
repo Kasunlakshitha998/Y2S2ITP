@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
+import Cookies from 'js-cookie'; // Import js-cookie library
 
 function Login() {
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
   const navigate = useNavigate();
 
-  //axios.defaults.withCredentials=true;
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8175/user/login', { email, password })
       .then((result) => {
         console.log(result);
         if (result.data.status === 'success') {
+          // Set cookies for token and user email
+          Cookies.set('token', result.data.token, { expires: 1 }); // Expires in 1 day
+          Cookies.set('userEmail', email, { expires: 1 }); // Expires in 1 day
+
           // Display alert for successful login
           alert('Login successful!');
 
@@ -76,15 +80,10 @@ function Login() {
           </button>
         </form>
         <p>Already Have an Account</p>
-        
-        
-            <Link to="/forgot-password" className="text-decoration-none">
-            Forgot Password
-</Link>
-
-        <br>
-      
-        </br>
+        <Link to="/forgot-password" className="text-decoration-none">
+          Forgot Password
+        </Link>
+        <br />
         <Link to="/register" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
           Register
         </Link>

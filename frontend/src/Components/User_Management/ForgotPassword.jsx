@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -12,11 +13,13 @@ function ForgotPassword() {
       .post('http://localhost:8175/user/forgot-password', { email })
       .then((result) => {
         console.log(result);
-        if (result.data.status === 'success') {
+        if (result) {
           // Display alert for successful email sent
           alert(
             'Email sent successfully. Please check your inbox to reset your password.'
           );
+          Cookies.set('token', result.data.token, { expires: 1 }); // Expires in 1 day
+          Cookies.set('userEmail', email, { expires: 1 }); // Expires in 1 day
           // Navigate the user to the appropriate page
           navigate('/verify-otp');
         } else if (result.data.status === 'no record existed') {
