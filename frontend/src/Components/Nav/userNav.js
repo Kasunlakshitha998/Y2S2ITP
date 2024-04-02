@@ -50,10 +50,10 @@ function UserNav() {
 
           <div className="sub-nav">
             <div className="register-signin">
-              <Link to="#" className="register-btn">
+              <Link to="/register" className="register-btn">
                 Register
               </Link>
-              <Link to="#" className="signin-btn">
+              <Link to="/login" className="signin-btn">
                 Sign in
               </Link>
             </div>

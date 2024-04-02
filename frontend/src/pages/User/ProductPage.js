@@ -114,7 +114,7 @@ function ProductPage() {
                     <div className="quantity-selector">
                       <button
                         onClick={decrementQuantity}
-                        disabled={quantity == 0}
+                        disabled={quantity === 0}
                       >
                         -
                       </button>
@@ -133,7 +133,7 @@ function ProductPage() {
                     <button
                       className="order-button"
                       onClick={updateStock}
-                      disabled={quantity == 0}
+                      disabled={quantity === 0}
                     >
                       Order Now
                     </button>
