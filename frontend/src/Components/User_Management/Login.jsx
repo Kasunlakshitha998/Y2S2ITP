@@ -29,25 +29,36 @@ function Login() {
           // Navigate to the appropriate dashboard based on user type
           if (isAdmin) {
             Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Login successful!",
-              showConfirmButton: false,
-              timer: 1500
-              
+              title: "Login successful.",
+              width: 600,
+              padding: "3em",
+              color: "#716add",
+              background: "#fff url(/images/trees.png)",
+              backdrop: `
+                rgba(0,0,123,0.4)
+                url(" https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmljengyd3ExNHk5c3Y0c216N2V5enVvNGlzZTRpbTJxZzJnOW01dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/RNt1ToMbwVg6yKyKmv/giphy-downsized-large.gif")
+                left top
+                no-repeat
+              `
             });
 
-
+           
             navigate('/admin'); // Replace with your admin dashboard route
           } else {
             Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Login successful!",
-              showConfirmButton: false,
-              timer: 1500
-              
+              title: "Login successful.",
+              width: 600,
+              padding: "3em",
+              color: "#716add",
+              background: "#fff url(/images/trees.png)",
+              backdrop: `
+                rgba(0,0,123,0.4)
+                url(" https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmljengyd3ExNHk5c3Y0c216N2V5enVvNGlzZTRpbTJxZzJnOW01dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/RNt1ToMbwVg6yKyKmv/giphy-downsized-large.gif")
+                left top
+                no-repeat
+              `
             });
+
             navigate('/'); // Replace with your regular user dashboard route
           }
         } else if (result.data.status === 'no record existed') {
