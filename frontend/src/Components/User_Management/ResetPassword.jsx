@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 
 function ResetPassword() {
     const [Password, setPassword] = useState('');
@@ -22,6 +23,14 @@ function ResetPassword() {
             if (response.status === 200) {
                 if (response.data.status === "Password reset successfully") {
                     // Handle successful password reset
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Password reset successfully!",
+                        showConfirmButton: false,
+                        timer: 1500
+                        
+                      });
                     setVerificationStatus("Password reset successfully");
                     navigate('/login'); // Navigate to login page
                 } else if (response.data.status === "User not found") {

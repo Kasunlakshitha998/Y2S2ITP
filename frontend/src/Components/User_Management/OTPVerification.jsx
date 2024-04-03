@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+
 
 function OTPVerification() {
   const [otp, setOTP] = useState('');
@@ -20,10 +22,27 @@ function OTPVerification() {
   
       if (response.status === 200) {
         if (response.data.status === "Success") {
-          setVerificationStatus("OTP verified successfully");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "OTP verified successfully!",
+            showConfirmButton: false,
+            timer: 1500
+            
+          });
           navigate('/reset-password');
+        
+         
+          
         } else if (response.data.status === "Incorrect OTP") {
-          setVerificationStatus("Incorrect OTP. Please try again.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Incorrect OTP. Please try again",
+            
+          });
+
+          
         } else {
           setVerificationStatus("An error occurred. Please try again later.");
         }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -15,9 +16,11 @@ function ForgotPassword() {
         console.log(result);
         if (result) {
           // Display alert for successful email sent
-          alert(
-            'Email sent successfully. Please check your inbox to reset your password.'
-          );
+          Swal.fire({
+            title: "Email sent successfully!",
+            text: "Please check your inbox to reset your password",
+            icon: "success"
+          });
           Cookies.set('token', result.data.token, { expires: 1 }); // Expires in 1 day
           Cookies.set('userEmail', email, { expires: 1 }); // Expires in 1 day
           // Navigate the user to the appropriate page
@@ -33,7 +36,12 @@ function ForgotPassword() {
       .catch((err) => {
         console.log(err);
         // Display alert for general error
-        alert('An error occurred. Please try again later.');
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Email is wrong",
+          
+        });
       });
   };
 

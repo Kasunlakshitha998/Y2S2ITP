@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 import Cookies from 'js-cookie'; // Import js-cookie library
+import Swal from 'sweetalert2';
 
 function Login() {
   const [email, setEmail] = useState(""); 
@@ -19,15 +20,34 @@ function Login() {
           Cookies.set('userEmail', email, { expires: 1 }); // Expires in 1 day
 
           // Display alert for successful login
-          alert('Login successful!');
+         
+          
 
           // Check if the user is an admin
           const isAdmin = result.data.isAdmin;
 
           // Navigate to the appropriate dashboard based on user type
           if (isAdmin) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Login successful!",
+              showConfirmButton: false,
+              timer: 1500
+              
+            });
+
+
             navigate('/admin'); // Replace with your admin dashboard route
           } else {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Login successful!",
+              showConfirmButton: false,
+              timer: 1500
+              
+            });
             navigate('/'); // Replace with your regular user dashboard route
           }
         } else if (result.data.status === 'no record existed') {
@@ -41,7 +61,14 @@ function Login() {
       .catch((err) => {
         console.log(err);
         // Display alert for general error
-        alert('An error occurred. Please try again later.');
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Email or password incorrect please enter valied password or email",
+          
+        });
+
+        
       });
   }
 
