@@ -6,6 +6,8 @@ import ProductsList from './Components/Inventory_Management/MangeProduct/Product
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import Signup from './Components/User_Management/signup';
 import Login from './Components/User_Management/Login';
 import ForgotPassword from './Components/User_Management/ForgotPassword';
@@ -25,6 +27,9 @@ function App() {
         <Route path="/admin/productsList" element={<ProductsList />} />
         <Route path="/admin/productsList/addProduct" element={<AddProduct />} />
         <Route path="/admin/productsList/editProduct/:id" element={<EditProduct />} />
+
+
+        
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
