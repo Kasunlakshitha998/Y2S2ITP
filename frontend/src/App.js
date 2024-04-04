@@ -18,6 +18,8 @@ import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
 import Users from './Components/User_Management/displayuserdetails';
 import CreateUsers from'./Components/User_Management/createuser'
+import AccountDetails from'./Components/User_Management/AccountDetails';
+import SecuritySettings from'./Components/User_Management/SecuritySettings';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/userdetails" element={<Users />} /> 
         <Route path="/usercreate" element={<CreateUsers />} />
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
+        <Route path="/AccountDetails" element={<AccountDetails />} />
+        <Route path="/SecuritySettings" element={<SecuritySettings />} />
 
       </Routes>
     </div>
