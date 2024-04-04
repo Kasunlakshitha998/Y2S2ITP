@@ -5,7 +5,7 @@ const employeeSchema = new mongoose.Schema({
     email: String,
     password: String,
     reenterpassword: String,
-    number: Number,
+    number: String,
     isAdmin: {
         type: Boolean,
         default: false

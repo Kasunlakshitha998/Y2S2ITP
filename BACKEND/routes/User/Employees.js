@@ -88,18 +88,31 @@ router.route('/getUser/:id').get((req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
+
 router.route('/userupdate/:id').put(async (req, res) => {
   try {
     const id = req.params.id;
+    let updatedUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      number: req.body.number,
+    };
+
+    // Check if password is provided and hash it
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      updatedUserData.password = hashedPassword;
+    }
+
+    // Check if reentered password is provided and hash it
+    if (req.body.reenterPassword) {
+      const hashedReenterPassword = await bcrypt.hash(req.body.reenterPassword, 10);
+      updatedUserData.reenterPassword = hashedReenterPassword;
+    }
+
     const updatedUser = await EmployeeModel.findByIdAndUpdate(
       id,
-      {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        reenterpassword: req.body.reenterpassword,
-        number: req.body.number,
-      },
+      updatedUserData,
       { new: true }
     ); // Set { new: true } to return the updated document
 
@@ -112,6 +125,7 @@ router.route('/userupdate/:id').put(async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 router.route('/deleteUser/:id').delete((req, res) => {
   const id = req.params.id;

@@ -1,0 +1,121 @@
+.card-container {
+    margin-top: 3rem;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add {
+    margin-bottom: 1rem;
+}
+
+.total-users {
+    background-color: #17a2b8; /* or any other color you prefer */
+    color: #fff; /* text color */
+}
+
+.table-header {
+    background-color: #343a40; /* dark background color */
+    color: #fff; /* text color */
+}
+/* displayuser.css */
+
+/* Additional styles for the card container */
+.card-container {
+    margin-top: 20px; /* Add margin to the top */
+  }
+  
+  /* Styles for the search input */
+  .form-control {
+    width: 300px; /* Adjust the width of the input */
+  }
+  
+  /* Styles for the total users paragraph */
+  .total-users {
+    font-weight: bold; /* Make the text bold */
+    margin-top: 10px; /* Add margin to the top */
+  }
+  
+  /* Styles for the table header */
+  .table-header th {
+    text-align: center; /* Center align the table header */
+  }
+  
+  /* Styles for the action buttons */
+  .btn {
+    padding: 5px 10px; /* Add padding to the buttons */
+    border-radius: 5px; /* Add border-radius to round the corners */
+  }
+  
+  .btn-add {
+    margin-right: 10px; /* Add margin to the right of the "Add" button */
+  }
+  
+  /* Additional styles for the update and delete buttons */
+  .btn-success {
+    background-color: #28a745; /* Change background color for success button */
+    color: #fff; /* Change text color */
+  }
+  
+  .btn-danger {
+    background-color: #dc3545; /* Change background color for danger button */
+    color: #fff; /* Change text color */
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333; /* Change background color on hover */
+  }
+  /* displayuser.css */
+
+/* Define 3D background animation */
+@keyframes rotate3DBackground {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  /* Apply animation to container */
+  .container-fluid {
+    animation: rotate3DBackground 10s linear infinite; /* Apply 3D background rotation animation */
+    background: linear-gradient(-45deg, #ff9966, #ff5e62, #ff66a3, #6610f2, #003366, #3399ff); /* Define gradient colors */
+    background-size: 400% 400%; /* Set background size */
+    overflow: hidden; /* Hide overflow */
+  }
+/* displayuser.css */
+
+/* Ensure the container covers the entire screen */
+.container-fluid {
+    position: fixed; /* Fix the position */
+    top: 0; /* Position from the top */
+    left: 0; /* Position from the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scrolling if content overflows */
+  }
+  
+  /* Center align content vertically and horizontally */
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensure the card body takes up full height */
+  }
+  
+  /* Additional styles for the card */
+  .card {
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Max width for larger screens */
+    background: #fff; /* Background color */
+    padding: 20px; /* Padding */
+    border-radius: 10px; /* Border radius */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow */
+  }
+  
+  /* Add more styles as needed */
+    
+  

@@ -35,8 +35,8 @@ function AdminNav() {
           <li className={activeLink === '/admin' ? 'active' : ''}>
             <Link to="/admin">Dashboard</Link>
           </li>
-          <li className={activeLink === '/users' ? 'active' : ''}>
-            <Link to="/users">Users</Link>
+          <li className={activeLink === '/userdetails' ? 'active' : ''}>
+            <Link to="/userdetails">Users</Link>
           </li>
           <li className={activeLink === '/admin/productsList' ? 'active' : ''}>
             <Link to="/admin/productsList">Products</Link>
