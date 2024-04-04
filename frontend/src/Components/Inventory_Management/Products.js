@@ -74,78 +74,98 @@ function Products() {
             </div>
             <div class="searchSection">
               <h3>Search Product</h3>
-                <input type="text" placeholder="Search..." onChange={(e) => {
-                  setSearchItem(e.target.value)
-              }} />
+              <input
+                type="text"
+                placeholder="Search..."
+                onChange={(e) => {
+                  setSearchItem(e.target.value);
+                }}
+              />
             </div>
           </div>
 
           {filter ? (
             <>
               <div className="products">
-                {cat.map((product) => (
-                  <div className="product" key={product._id}>
-                    <Link to={`/product/${product._id}`}>
-                      <div>
-                        {product.image &&
-                        typeof product.image !== 'string' &&
-                        product.image.url ? (
-                          <div>
-                            <img src={product.image.url} alt={product.name} />
-                            <strong>{product.name}</strong>
-                          </div>
-                        ) : (
-                          <div>
-                            <img src={product.image} alt={product.name} />
-                            <strong>{product.name}</strong>
-                          </div>
-                        )}
-                      </div>
-                    </Link>
+                {cat
+                  .filter((product) => {
+                    if (searchItem === '') {
+                      return product;
+                    } else if (
+                      product.name
+                        .toLowerCase()
+                        .includes(searchItem.toLowerCase())
+                    ) {
+                      return product;
+                    }
+                  })
+                  .map((product) => (
+                    <div className="product" key={product._id}>
+                      <Link to={`/product/${product._id}`}>
+                        <div>
+                          {Array.isArray(product.image) ? (
+                            <div>
+                              <img
+                                src={product.image[0]}
+                                alt={`${product.name}_0`}
+                              />
+                              <strong>{product.name}</strong>
+                            </div>
+                          ) : (
+                            product.image && (
+                              <img src={product.image} alt={product.name} />
+                            )
+                          )}
+                        </div>
+                      </Link>
 
-                    <strong>
-                      <p>Rs. {product.price}</p>
-                    </strong>
-                  </div>
-                ))}
+                      <strong>
+                        <p>Rs. {product.price}</p>
+                      </strong>
+                    </div>
+                  ))}
               </div>
             </>
           ) : (
             <>
               <div className="products">
-                    {products.filter((product) => {
-                      
-                      if (searchItem === "") {
-                        return product;
-                      } else if (product.name.toLowerCase().includes(searchItem.toLowerCase())) {
-                        return product;
-                      }
+                {products
+                  .filter((product) => {
+                    if (searchItem === '') {
+                      return product;
+                    } else if (
+                      product.name
+                        .toLowerCase()
+                        .includes(searchItem.toLowerCase())
+                    ) {
+                      return product;
+                    }
+                  })
+                  .map((product) => (
+                    <div className="product" key={product._id}>
+                      <Link to={`/product/${product._id}`}>
+                        <div>
+                          {Array.isArray(product.image) ? (
+                            <div>
+                              <img
+                                src={product.image[0]}
+                                alt={`${product.name}_0`}
+                              />
+                              <strong>{product.name}</strong>
+                            </div>
+                          ) : (
+                            product.image && (
+                              <img src={product.image} alt={product.name} />
+                            )
+                          )}
+                        </div>
+                      </Link>
 
-                    }).map((product) => (
-                  <div className="product" key={product._id}>
-                    <Link to={`/product/${product._id}`}>
-                      <div>
-                        {product.image &&
-                        typeof product.image !== 'string' &&
-                        product.image.url ? (
-                          <div>
-                            <img src={product.image.url} alt={product.name} />
-                            <strong>{product.name}</strong>
-                          </div>
-                        ) : (
-                          <div>
-                            <img src={product.image} alt={product.name} />
-                            <strong>{product.name}</strong>
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-
-                    <strong>
-                      <p>Rs. {product.price}</p>
-                    </strong>
-                  </div>
-                ))}
+                      <strong>
+                        <p>Rs. {product.price}</p>
+                      </strong>
+                    </div>
+                  ))}
               </div>
             </>
           )}

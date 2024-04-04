@@ -10,11 +10,15 @@ const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 8175;
 
 // Middleware
-app.use(
-  cors()
-);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.use(bodyParser.json({ limit: '50mb' })); 
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+
+
 // MongoDB connection
 const URL = process.env.MONGODB_URL;
 mongoose
@@ -28,6 +32,8 @@ mongoose
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
+
+
 
 // Routes
 const productRouter = require('./routes/Inventory_Management/products.js');

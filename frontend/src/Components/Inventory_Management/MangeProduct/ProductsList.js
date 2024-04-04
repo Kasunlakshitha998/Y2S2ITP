@@ -95,7 +95,7 @@ function ProductsList() {
           <div className="loader"></div>
         ) : (
           <>
-            <div className='addProductBtn'>
+            <div className="addProductBtn">
               <Link to="/admin/productsList/addProduct">
                 <button>+ Add Product</button>
               </Link>
@@ -133,20 +133,20 @@ function ProductsList() {
 
                       <td>
                         <div>
-                          {product.image &&
-                          typeof product.image !== 'string' &&
-                          product.image.url ? (
+                          {Array.isArray(product.image) ? (
                             <img
-                              src={product.image.url}
-                              alt={product.name}
+                              src={product.image[0]} 
+                              alt={`${product.name}_0`}
                               style={{ width: '100px', height: '80px' }}
                             />
                           ) : (
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              style={{ width: '100px', height: '80px' }}
-                            />
+                            product.image && (
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                style={{ width: '100px', height: '80px' }}
+                              />
+                            )
                           )}
                         </div>
                       </td>

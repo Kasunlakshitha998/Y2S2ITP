@@ -7,32 +7,50 @@ import './product.css';
 
 function AddProduct() {
   const [name, setName] = useState('');
-  const [image, setImages] = useState('');
+  const [image, setImages] = useState([]);
   const [category, setCategory] = useState('');
   const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
-
   const [loading, setLoading] = useState(false);
 
-  const handelImage = (e) => {
-    const file = e.target.files[0];
-    TransFormFile(file);
+  
+const convertBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
   };
+  
+const uploadImage = async (event) => {
+  const files = event.target.files;
+  console.log(files.length);
 
-  const TransFormFile = (file) => {
-    const reader = new FileReader();
+  if (files.length === 1) {
+    const base64 = await convertBase64(files[0]);
+    setImages(base64);
+    return;
+  }
 
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImages(reader.result);
-      };
-    } else {
-      setImages('');
+  const base64s = [];
+    for (var i = 0; i < files.length; i++) {
+      var base = await convertBase64(files[i]);
+      base64s.push(base);
     }
-  };
+    setImages(base64s);
+
+};
+
+
 
   function AddData(e) {
     e.preventDefault();
@@ -188,7 +206,17 @@ function AddProduct() {
                 <div className="form-group">
                   <label htmlFor="image">Image:</label>
                   <div>
-                    {image ? (
+                    {Array.isArray(image) ? (
+                      image.map((img, index) => (
+                        <img
+                          key={index}
+                          width={200}
+                          height={200}
+                          src={img}
+                          alt={`productImage${index}`}
+                        />
+                      ))
+                    ) : image ? (
                       <img
                         width={200}
                         height={200}
@@ -199,12 +227,14 @@ function AddProduct() {
                       <p>No Image Selected</p>
                     )}
                   </div>
+
                   <input
                     type="file"
                     id="image"
                     name="image"
                     accept="image/"
-                    onChange={handelImage}
+                    onChange={uploadImage}
+                    multiple
                   />
                 </div>
                 <button disabled={loading} type="submit">

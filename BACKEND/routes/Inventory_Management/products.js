@@ -5,32 +5,64 @@ const cloudinary = require('../../Utils/cloudinary');
 //add product
 router.route('/add').post(async (req, res) => {
   try {
-    const name = req.body.name;
-    const image = req.body.image;
-    const category = req.body.category;
-    const brand = req.body.brand;
-    const price = Number(req.body.price);
-    const countInStock = Number(req.body.countInStock);
-    const description = req.body.description;
+    const uploadImage = (image) => {
+      return new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(image, (error, result) => {
+          if (result && result.secure_url) {
+            resolve(result.secure_url);
+          } else {
+            console.log(error && error.message);
+            reject({ message: error && error.message });
+          }
+        });
+      });
+    };
 
-    // Upload image to cloudinary
-    const uploadRes = await cloudinary.uploader.upload(image, {
-      upload_preset: 'Online-Mobile-Shop',
-    });
+    const uploadMultipleImages = async (images) => {
+      try {
+        const imageUrls = await Promise.all(images.map(uploadImage));
+        return imageUrls;
+      } catch (error) {
+        throw error;
+      }
+    };
 
-    const newProduct = new Product({
-      name,
-      image: uploadRes,
-      category,
-      brand,
-      price,
-      countInStock,
-      description,
-    });
+    const { name, category, brand, price, countInStock, description, image } =
+      req.body;
 
-    // Save the new product to the database
-    await newProduct.save();
-    res.json('Product added successfully');
+    if (!Array.isArray(image)) {
+      // If only one image is provided, upload it directly
+      const imageUrl = await uploadImage(image);
+
+      const newProduct = new Product({
+        name,
+        image: imageUrl,
+        category,
+        brand,
+        price,
+        countInStock,
+        description,
+      });
+
+      await newProduct.save();
+      res.json('Product added successfully');
+    } else {
+      // If multiple images are provided, upload them concurrently
+      const imageUrls = await uploadMultipleImages(image);
+
+      const newProduct = new Product({
+        name,
+        image: imageUrls, // Use the array of image URLs obtained from uploadMultipleImages
+        category,
+        brand,
+        price,
+        countInStock,
+        description,
+      });
+
+      await newProduct.save();
+      res.json('Product added successfully');
+    }
   } catch (error) {
     console.error('Error adding product:', error);
     res.status(500).json({ error: 'Failed to add product' });
@@ -63,7 +95,7 @@ router.route('/update/:id').put(async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  
+
   const updateProduct = {
     name,
     image,
@@ -116,6 +148,5 @@ router.route('/getProduct/:id').get(async (req, res) => {
       .send({ status: 'Error with fetching product', error: err.message });
   }
 });
-
 
 module.exports = router;
