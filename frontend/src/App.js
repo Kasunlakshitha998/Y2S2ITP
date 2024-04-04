@@ -11,11 +11,13 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Signup from './Components/User_Management/signup';
 import Login from './Components/User_Management/Login';
 import ForgotPassword from './Components/User_Management/ForgotPassword';
-import CreateUsers from './Components/User_Management/Create';
-import Users from './Components/User_Management/Detail';
+//import CreateUsers from './Components/User_Management/Create';
+//import Users from './Components/User_Management/Detail';
 import UpdateUsers from './Components/User_Management/updateuser';
 import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
+import Users from './Components/User_Management/displayuserdetails';
+import CreateUsers from'./Components/User_Management/createuser'
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
         <Route path="/userdetails" element={<Users />} /> 
         <Route path="/usercreate" element={<CreateUsers />} />
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
+
       </Routes>
     </div>
   );
