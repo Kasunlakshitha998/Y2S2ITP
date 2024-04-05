@@ -12,6 +12,7 @@ function Login() {
 
     useEffect(() => {
         const inputs = document.querySelectorAll(".input");
+        
 
         function focusFunc() {
             let parent = this.parentNode;
@@ -79,6 +80,9 @@ function Login() {
     }
 
     return (
+        <div class="login-wrapper">
+    
+
         <div className="container">
             <span className="big-circle"></span>
             <img src="img/shape.png" className="square" alt="" />
@@ -138,6 +142,7 @@ function Login() {
                     <p><Link to="/forgot-password">Forgot Password?</Link></p>
                 </div>
             </div>
+        </div>
         </div>
     );
 }
