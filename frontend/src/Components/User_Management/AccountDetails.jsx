@@ -1,28 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // Import React and necessary hooks
 import './AccountDetails.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+
 
 function AccountDetails() {
-    const { id } = useParams();
+    //const { userEmail} = Cookies.get('userEmail')
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [number, setNumber] = useState(""); // Define number state
+    const [number, setNumber] = useState("");
+    const navigate = useNavigate(); // Use useNavigate hook to get the navigate function
 
     useEffect(() => {
-        axios.get(`http://localhost:8175/user/get1/${id}`)
-            .then(result => {
-                setName(result.data.name);
-                setEmail(result.data.email);
-                setNumber(result.data.number); // Set number state
-            })
-            .catch(err => console.log(err));
-    }, [id]);
+        const userEmail = Cookies.get('userEmail');
+        if (userEmail) {
+            axios.get(`http://localhost:8175/user/getUsers/${userEmail}`)
+                .then(result => {
+                    setName(result.data.name);
+                    setEmail(result.data.email);
+                    setNumber(result.data.number);
+                })
+                .catch(err => console.log(err));
+        }
+    }, []);
 
-    const handleUpdateName = () => {
-        // Implement logic to update name
-    };
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Your validation and axios post request code...
+
+        axios
+            .post('http://localhost:8175/user/AccountDetails', {
+                name,
+                email,
+                number,
+                userEmail: Cookies.get('userEmail') // Changed from 'const userEmail'
+            })
+            .then((result) => {
+                console.log(result);
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Update successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                navigate('/AccountDetails'); // Navigate to '/login' upon successful submission
+            })
+            .catch((err) => {
+                if (
+                    err.response &&
+                    err.response.data.error === 'Email is already in use'
+                ) {
+                    alert('Email is already in use. Please use a different email.');
+                } else {
+                    console.log(err);
+                }
+            });
+    }
+
+
+
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -49,7 +91,7 @@ function AccountDetails() {
                     <div className="card mb-4">
                         <div className="card-header">Account Details</div>
                         <div className="card-body">
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label className="small mb-1" htmlFor="inputUsername">Username (how your name will appear to other users on the site)</label>
                                     <input className="form-control" id="inputUsername" type="text" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} />
@@ -64,7 +106,7 @@ function AccountDetails() {
                                         <input className="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value={number} onChange={(e) => setNumber(e.target.value)} />
                                     </div>
                                 </div>
-                                <button className="btn btn-primary" type="button" onClick={handleUpdateName}>Save changes</button>
+                                <button className="btn btn-primary" type="submit" >Save changes</button>
                             </form>
                         </div>
                     </div>

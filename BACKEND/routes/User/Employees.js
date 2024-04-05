@@ -241,54 +241,9 @@ router.route('/verify-otp').post(async (req, res) => {
     return res.status(500).send({ status: "Error processing request" });
   }
 });
-router.route('/get1/:id').get((req, res) => {
-  const id = req.params.id;
-  EmployeeModel.findById(id) // Using findById to directly search by _id
-    .then((user) => {
-      if (user) {
-        res.json(user); // Send the user details in the response
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    })
-    .catch((err) => res.status(500).json({ error: err.message }));
-});
-router.route('/userupdate/:id').put(async (req, res) => {
-  try {
-    const id = req.params.id;
-    let updatedUserData = {
-      name: req.body.name,
-      email: req.body.email,
-      number: req.body.number,
-    };
 
-    // Check if password is provided and hash it
-    if (req.body.password) {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      updatedUserData.password = hashedPassword;
-    }
 
-    // Check if reentered password is provided and hash it
-    if (req.body.reenterPassword) {
-      const hashedReenterPassword = await bcrypt.hash(req.body.reenterPassword, 10);
-      updatedUserData.reenterPassword = hashedReenterPassword;
-    }
 
-    const updatedUser = await EmployeeModel.findByIdAndUpdate(
-      id,
-      updatedUserData,
-      { new: true }
-    ); // Set { new: true } to return the updated document
-
-    if (updatedUser) {
-      res.json(updatedUser);
-    } else {
-      res.status(404).json({ error: 'User not found' });
-    }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 
 
@@ -333,9 +288,37 @@ router.route('/reset-password').post(async (req, res) => {
   
 });
 
+router.route('/AccountDetails').post((req, res) => {
+  const { name, email, number, userEmail } = req.body;
+
+  // Update the user details based on userEmail
+  EmployeeModel.findOneAndUpdate({ email: userEmail }, { name, email, number }, { new: true })
+      .then(updatedUser => {
+          if (updatedUser) {
+              res.json({ status: 'success', updatedUser });
+          } else {
+              res.status(404).json({ status: 'error', message: 'User not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({ status: 'error', error: error.message });
+      });
+});
 
 
 
+router.get('/getUsers/:userEmail', (req, res) => {
+  const userEmail = req.params.userEmail;
+  EmployeeModel.findOne({ email: userEmail })
+      .then((user) => {
+          if (user) {
+              res.json(user); // Send the user details in the response
+          } else {
+              res.status(404).json({ error: 'User not found' });
+          }
+      })
+      .catch((err) => res.status(500).json({ error: err.message }));
+});
 
 //const PORT = process.env.PORT || 8181;
 
