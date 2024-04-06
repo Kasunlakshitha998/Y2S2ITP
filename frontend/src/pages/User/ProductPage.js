@@ -31,7 +31,7 @@ function ProductPage() {
   useEffect(() => {
     const timer = setInterval(() => {
       setSlideIndex((prevIndex) => (prevIndex + 1) % product.image.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 8000);
 
     return () => clearInterval(timer);
   }, [product.image]);
@@ -71,9 +71,9 @@ function ProductPage() {
 
   return (
     <>
-      {/* <header>
+      <header>
         <UserNav />
-      </header> */}
+      </header>
       <main className="maint">
         {loading ? (
           <div className="loader"></div>
