@@ -37,37 +37,41 @@ router.route('/register').post((req, res) => {
 router.route('/login').post((req, res) => {
   const { email, password } = req.body;
   EmployeeModel.findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (err) {
-            res.json({ status: 'error', error: err.message });
-          } else {
-            if (result) {
-              const token = jwt.sign({ email: user.email }, 'jwt-secret-key', {
-                expiresIn: '1d',
+      .then((user) => {
+          if (user) {
+              bcrypt.compare(password, user.password, (err, result) => {
+                  if (err) {
+                      res.json({ status: 'error', error: err.message });
+                  } else {
+                      if (result) {
+                          const token = jwt.sign({ email: user.email }, 'jwt-secret-key', {
+                              expiresIn: '1d',
+                          });
+                          // Set the token as a cookie
+                          res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // Max age set to 1 day in milliseconds
+                          res.cookie('userEmail', user.email, { maxAge: 86400000 }); // Max age set to 1 day in milliseconds
+
+                          // Determine user's role and send it in response
+                          let isAdmin = user.role === 'admin';
+                          let isStaff = user.role === 'staff';
+                          res.json({ status: 'success', isAdmin, isStaff });
+                      } else {
+                          res.status(401).json({ status: 'incorrect password' });
+                      }
+                  }
               });
-              // Set the token as a cookie
-              res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // Max age set to 1 day in milliseconds
-              res.cookie('userEmail', user.email, { maxAge: 86400000 }); // Max age set to 1 day in milliseconds
-              res.json({ status: 'success', isAdmin: user.isAdmin });
-            } else {
-              res.status(401).json({ status: 'incorrect password' });
-            }
+          } else {
+              res.status(404).json({ status: 'no record existed' });
           }
-        });
-      } else {
-        res.status(404).json({ status: 'no record existed' });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ status: 'error', error: err.message });
-    });
+      })
+      .catch((err) => {
+          res.status(500).json({ status: 'error', error: err.message });
+      });
 });
 
 
-router.route('/userdetails').get((req, res) => {
-  EmployeeModel.find({ isAdmin: false })
+router.route('/userdetails').get((req, res) => {s
+  EmployeeModel.find({ role: 'user' })
     .then((users) => {
       const userCount = users.length; // Get the count of regular users
       res.json({ users, userCount }); // Send both users and userCount in the response
