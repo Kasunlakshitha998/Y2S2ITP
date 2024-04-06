@@ -46,20 +46,22 @@ function Login() {
                 if (result.data.status === 'success') {
                     Cookies.set('token', result.data.token, { expires: 1 });
                     Cookies.set('userEmail', email, { expires: 1 });
-
+    
                     const isAdmin = result.data.isAdmin;
-
-                  
+                    const isStaff = result.data.isStaff; // New
+    
                     Swal.fire({
                         position: "center",
                         icon: "success",
                         title: "Login successful",
                         showConfirmButton: false,
                         timer: 1500
-                      });
-
+                    });
+    
                     if (isAdmin) {
                         navigate('/admin');
+                    } else if (isStaff) { // Check if user is staff
+                        navigate('/staff'); // Navigate to staff page
                     } else {
                         navigate('/');
                     }
