@@ -110,7 +110,7 @@ function UserNav() {
               <div className="absolute right-0 mt-12 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <ul>
                   <li>
-                    <Link to="#" className="block py-2 px-4 hover:bg-gray-100">
+                    <Link to="/AccountDetails" className="block py-2 px-4 hover:bg-gray-100">
                       Profile
                     </Link>
                   </li>

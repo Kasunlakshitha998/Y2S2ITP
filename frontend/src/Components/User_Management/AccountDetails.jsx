@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react'; // Import React and necessary hooks
+import React, { useState, useEffect } from 'react'; 
 import './AccountDetails.css';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 
 
 function AccountDetails() {
-    //const { userEmail} = Cookies.get('userEmail')
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const navigate = useNavigate(); 
-    const[file,setFile]=useState();
-    // Use useNavigate hook to get the navigate function
+    const [image, setimage] = useState(null);
+    const [userImage, setUserImage] = useState(null);
+
 
     useEffect(() => {
         const userEmail = Cookies.get('userEmail');
@@ -28,19 +28,15 @@ function AccountDetails() {
         }
     }, []);
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Your validation and axios post request code...
 
         axios
             .post('http://localhost:8175/user/AccountDetails', {
                 name,
                 email,
                 number,
-                userEmail: Cookies.get('userEmail') // Changed from 'const userEmail'
+                userEmail: Cookies.get('userEmail') 
             })
             .then((result) => {
                 console.log(result);
@@ -51,7 +47,7 @@ function AccountDetails() {
                     showConfirmButton: false,
                     timer: 1500
                   });
-                navigate('/AccountDetails'); // Navigate to '/login' upon successful submission
+                navigate('/AccountDetails'); 
             })
             .catch((err) => {
                 if (
@@ -64,10 +60,43 @@ function AccountDetails() {
                 }
             });
     }
+    const submitimage = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("image", image);
+      
+        try {
+            const result = await axios.post(
+                "http://localhost:8175/user/upload-image",
+                formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    params: { userEmail: Cookies.get('userEmail') } // Send userEmail as a query parameter
+                }
+            );
+            console.log(result);
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            // Handle error
+        }
+      };
+      
+      const onInputChange = (e) => {
+        console.log(e.target.files[0]);
+        setimage(e.target.files[0]);
+      };
 
-    const handleupload=(e)=>{
-        console.log(file);
-    }
+      useEffect(() => {
+        const userEmail = Cookies.get('userEmail');
+        if (userEmail) {
+          axios.get(`http://localhost:8175/user/get-image/${userEmail}`)
+            .then(result => {
+              setUserImage(result.data.image); // Assuming the response is an object with 'image' property
+            })
+            .catch(err => console.log(err));
+        }
+      }, []);
+
+
 
 
     return (
@@ -85,11 +114,19 @@ function AccountDetails() {
                     <div className="card mb-4 mb-xl-0">
                         <div className="card-header">Profile Picture</div>
                         <div className="card-body text-center">
-                            
-                            
-                            <div className="small font-italic text-muted mb-4"><input type="file" onChange={e=>setFile(e.target.file[0])}/> </div>
-                            <button className="btn btn-primary" onClick={handleupload}>Upload new image</button>
-                        </div>
+    {userImage ? (
+        <img src={`http://localhost:8175/uploads/${userImage}`} alt="User Image" />
+    ) : (
+        <p>No image available</p>
+    )}
+    <form onSubmit={submitimage}>
+        <div className="small font-italic text-muted mb-4">
+            <input type="file" onChange={onInputChange}/> 
+        </div>
+        <button className="btn btn-primary" type="submit">Upload new image</button>
+    </form>
+</div>
+
                     </div>
                 </div>
                 <div className="col-xl-8">

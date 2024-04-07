@@ -13,10 +13,10 @@ const employeeSchema = new mongoose.Schema({
         default: 'user' // Default role is 'user'
     },
     otp: String, // Add a field to store OTP
-    image: {
-        data: Buffer, // Store image data as Buffer
-        contentType: String // Store content type of the image
-    }
+    image :String
+        
+        
+    
 });
 
 const EmployeeModel = mongoose.model("employee", employeeSchema);
