@@ -374,8 +374,7 @@ router.get("/get-image/:userEmail", async (req, res) => {
   const userEmail = req.params.userEmail;
   EmployeeModel.findOne({ email: userEmail })
     .then((user) => {
-      if (user && user.image) {
-      
+      if (user) {
         res.json({ image: user.image });
       } else {
         res.status(404).json({ error: 'Image not found' });

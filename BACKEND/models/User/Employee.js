@@ -13,7 +13,11 @@ const employeeSchema = new mongoose.Schema({
         default: 'user' // Default role is 'user'
     },
     otp: String, // Add a field to store OTP
-    image :String
+    image :{
+        type : [Object],
+        
+    },
+
         
         
     

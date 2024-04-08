@@ -5,15 +5,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 
-
 function AccountDetails() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const navigate = useNavigate(); 
-    const [image, setimage] = useState(null);
-    const [userImage, setUserImage] = useState(null);
-
+   const [image, setImage] = useState(null);
+    const [userImage, setUserImage] = useState(null); 
+  
 
     useEffect(() => {
         const userEmail = Cookies.get('userEmail');
@@ -60,7 +59,8 @@ function AccountDetails() {
                 }
             });
     }
-    const submitimage = async (e) => {
+
+    const submitImage = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
@@ -78,26 +78,23 @@ function AccountDetails() {
             console.error('Error uploading image:', error);
             // Handle error
         }
-      };
+    };
       
-      const onInputChange = (e) => {
+    const onInputChange = (e) => {
         console.log(e.target.files[0]);
-        setimage(e.target.files[0]);
-      };
+        setImage(e.target.files[0]);
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         const userEmail = Cookies.get('userEmail');
         if (userEmail) {
-          axios.get(`http://localhost:8175/user/get-image/${userEmail}`)
-            .then(result => {
-              setUserImage(result.data.image); // Assuming the response is an object with 'image' property
-            })
-            .catch(err => console.log(err));
+            axios.get(`http://localhost:8175/user/get-image/${userEmail}`)
+                .then(result => {
+                    setUserImage(result.data.image); // Assuming the response is an object with 'image' property
+                })
+                .catch(err => console.log(err));
         }
-      }, []);
-
-
-
+    }, []);
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -114,19 +111,17 @@ function AccountDetails() {
                     <div className="card mb-4 mb-xl-0">
                         <div className="card-header">Profile Picture</div>
                         <div className="card-body text-center">
-    {userImage ? (
-        <img src={`http://localhost:8175/uploads/${userImage}`} alt="User Image" />
-    ) : (
-        <p>No image available</p>
-    )}
-    <form onSubmit={submitimage}>
-        <div className="small font-italic text-muted mb-4">
-            <input type="file" onChange={onInputChange}/> 
-        </div>
-        <button className="btn btn-primary" type="submit">Upload new image</button>
-    </form>
-</div>
-
+                        <img src={userImage} alt="User" /> 
+                          
+                                <p>No image available</p>
+                            
+                            <form onSubmit={submitImage}>
+                                <div className="small font-italic text-muted mb-4">
+                                    <input type="file" onChange={onInputChange}/> 
+                                </div>
+                                <button className="btn btn-primary" type="submit">Upload new image</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div className="col-xl-8">
