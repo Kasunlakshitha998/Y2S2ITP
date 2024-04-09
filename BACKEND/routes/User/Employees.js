@@ -383,6 +383,35 @@ router.get("/get-image/:userEmail", async (req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
+router.route('/passwordchange').post(async (req, res) => {
+  try {
+    const { userEmail, currentPassword, newPassword } = req.body;
+
+    
+    const user = await EmployeeModel.findOne({ email: userEmail });
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+
+    
+    const isPasswordValid = await bcrypt.compare(currentPassword, user. password);
+    if (!isPasswordValid) {
+        return res.status(400).json({ message: 'Incorrect current password.' });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10); // Hash the new password
+    user.password = hashedNewPassword;
+    await user.save();
+
+    return res.status(200).json({ message: 'Password changed successfully.' });
+} catch (error) {
+    console.error('Error changing password:', error);
+    return res.status(500).json({ message: 'Failed to change password. Please try again.' });
+}
+
+
+})
+
 
 
 //const PORT = process.env.PORT || 8181;

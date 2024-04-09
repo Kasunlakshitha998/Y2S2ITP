@@ -135,7 +135,7 @@ function AccountDetails() {
                                 </div>
                                 <div className="mb-3">
                                     <label className="small mb-1" htmlFor="inputEmailAddress">Email address</label>
-                                    <input className="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <input className="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
                                 </div>
                                 <div className="row gx-3 mb-3">
                                     <div className="col-md-6">

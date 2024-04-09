@@ -22,7 +22,7 @@ function AdminNav() {
           <div className="dropdown">
             <button className="dropbtn">▼</button>
             <div className="dropdown-content">
-              <Link to="#">Profile</Link>
+              <Link to="/AccountDetails">Profile</Link>
               <Link to="#">Settings</Link>
               <Link to="#">Logout</Link>
             </div>
