@@ -1,12 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+import './style.css';
 
 function ResetPassword() {
     const [Password, setPassword] = useState('');
     const [verificationStatus, setVerificationStatus] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const inputs = document.querySelectorAll(".input");
+    
+        function focusFunc() {
+            let parent = this.parentNode;
+            parent.classList.add("focus");
+        }
+    
+        function blurFunc() {
+            let parent = this.parentNode;
+            if (this.value === "") {
+                parent.classList.remove("focus");
+            }
+        }
+    
+        inputs.forEach((input) => {
+            input.addEventListener("focus", focusFunc);
+            input.addEventListener("blur", blurFunc);
+    
+            // Cleanup function to remove event listeners when component unmounts
+            return () => {
+                input.removeEventListener("focus", focusFunc);
+                input.removeEventListener("blur", blurFunc);
+            };
+        });
+      }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,6 +51,14 @@ function ResetPassword() {
             if (response.status === 200) {
                 if (response.data.status === "Password reset successfully") {
                     // Handle successful password reset
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Password reset successfully!",
+                        showConfirmButton: false,
+                        timer: 1500
+                        
+                      });
                     setVerificationStatus("Password reset successfully");
                     navigate('/login'); // Navigate to login page
                 } else if (response.data.status === "User not found") {
@@ -42,29 +79,61 @@ function ResetPassword() {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-            <div className="bg-white p-3 rounded w-25">
-                <h4>Reset Password</h4>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="password">
-                            <strong>New Password</strong>
-                        </label>
-                        <input
-                            type="password"
-                            placeholder="Enter Password"
-                            autoComplete="off"
-                            name="password"
-                            className="form-control rounded-0"
-                            value={Password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+        <div className="container">
+            <span className="big-circle"></span>
+            <img src="img/shape.png" className="square" alt="" />
+            <div className="form">
+                {/* Contact Info Section */}
+                <div className="contact-info">
+                    <h3 className="title">Let's get in touch</h3>
+                    <p className="text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
+                    dolorum adipisci recusandae praesentium dicta!
+                    </p>
+                    {/* Information */}
+                    <div className="info">
+                        <div className="information d-flex align-items-center">
+                            <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
+                            <p className="mb-0">92 Cherry Drive Uniondale, NY 11553</p>
+                        </div>
+                        <div className="information">
+                            <i className="bi bi-envelope-fill fs-5 me-3"></i>
+                            <p className="mb-0">lorem@ipsum.com</p>
+                        </div>
+                        <div className="information">
+                            <i className="bi bi-telephone-fill fs-5 me-3"></i>
+                            <p className="mb-0">123-456-789</p>
+                        </div>
                     </div>
-                    <button type="submit" className="btn btn-success w-100 rounded-0">
-                        Update
-                    </button>
-                </form>
-                {verificationStatus && <p>{verificationStatus}</p>}
+                    {/* Social Media Links */}
+                    <div className="social-media">
+                        <p>Connect with us :</p>
+                        <div className="social-icons d-flex justify-content-center">
+                            <button onClick={() => {}} className="me-3">
+                                <i className="bi bi-facebook fs-5"></i>
+                            </button>
+                            <button onClick={() => {}}>
+                                <i className="bi bi-whatsapp fs-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {/* Contact Form Section */}
+                <div className="contact-form">
+                    <span className="circle one"></span>
+                    <span className="circle two"></span>
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} autoComplete="off">
+                        <h3 className="title">Reset Password</h3>
+                        <div className="input-container">
+                            <input type="password" name="password" className="input" value={Password} onChange={(e) => setPassword(e.target.value)} />
+                            <label htmlFor="">Enter password</label>
+                            <span>Enter password</span>
+                        </div>
+                        <button type="submit" className="btn">Reset Password</button>
+                        {verificationStatus && <p className="mt-3">{verificationStatus}</p>}
+                    </form>
+                </div>
             </div>
         </div>
     );

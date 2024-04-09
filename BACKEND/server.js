@@ -10,11 +10,15 @@ const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 8175;
 
 // Middleware
-app.use(
-  cors()
-);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.use(bodyParser.json({ limit: '50mb' })); 
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+
+
 // MongoDB connection
 const URL = process.env.MONGODB_URL;
 mongoose
@@ -29,12 +33,21 @@ mongoose
     console.error('Error connecting to MongoDB:', error);
   });
 
+
+
 // Routes
 const productRouter = require('./routes/Inventory_Management/products.js');
 const userRouter = require('./routes/User/Employees.js');
+const appointmentRouter = require("./routes/appointment/appointments.js");
 
-app.use('/product', productRouter);
-app.use('/user', userRouter);
+app.use('/product', productRouter);//Product
+app.use('/user', userRouter);//User
+app.use('/appointment',appointmentRouter);//Appointment 
+//feedback
+//leave
+//promotion
+//financial
+//payment
 
 // Start server
 app.listen(PORT, () => {

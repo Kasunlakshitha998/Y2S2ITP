@@ -37,37 +37,41 @@ router.route('/register').post((req, res) => {
 router.route('/login').post((req, res) => {
   const { email, password } = req.body;
   EmployeeModel.findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (err) {
-            res.json({ status: 'error', error: err.message });
-          } else {
-            if (result) {
-              const token = jwt.sign({ email: user.email }, 'jwt-secret-key', {
-                expiresIn: '1d',
+      .then((user) => {
+          if (user) {
+              bcrypt.compare(password, user.password, (err, result) => {
+                  if (err) {
+                      res.json({ status: 'error', error: err.message });
+                  } else {
+                      if (result) {
+                          const token = jwt.sign({ email: user.email }, 'jwt-secret-key', {
+                              expiresIn: '1d',
+                          });
+                          // Set the token as a cookie
+                          res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // Max age set to 1 day in milliseconds
+                          res.cookie('userEmail', user.email, { maxAge: 86400000 }); // Max age set to 1 day in milliseconds
+
+                          // Determine user's role and send it in response
+                          let isAdmin = user.role === 'admin';
+                          let isStaff = user.role === 'staff';
+                          res.json({ status: 'success', isAdmin, isStaff });
+                      } else {
+                          res.status(401).json({ status: 'incorrect password' });
+                      }
+                  }
               });
-              // Set the token as a cookie
-              res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // Max age set to 1 day in milliseconds
-              res.cookie('userEmail', user.email, { maxAge: 86400000 }); // Max age set to 1 day in milliseconds
-              res.json({ status: 'success', isAdmin: user.isAdmin });
-            } else {
-              res.status(401).json({ status: 'incorrect password' });
-            }
+          } else {
+              res.status(404).json({ status: 'no record existed' });
           }
-        });
-      } else {
-        res.status(404).json({ status: 'no record existed' });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ status: 'error', error: err.message });
-    });
+      })
+      .catch((err) => {
+          res.status(500).json({ status: 'error', error: err.message });
+      });
 });
 
 
 router.route('/userdetails').get((req, res) => {
-  EmployeeModel.find({ isAdmin: false })
+  EmployeeModel.find({ role: 'user' })
     .then((users) => {
       const userCount = users.length; // Get the count of regular users
       res.json({ users, userCount }); // Send both users and userCount in the response
@@ -88,18 +92,31 @@ router.route('/getUser/:id').get((req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
+
 router.route('/userupdate/:id').put(async (req, res) => {
   try {
     const id = req.params.id;
+    let updatedUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      number: req.body.number,
+    };
+
+    // Check if password is provided and hash it
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      updatedUserData.password = hashedPassword;
+    }
+
+    // Check if reentered password is provided and hash it
+    if (req.body.reenterPassword) {
+      const hashedReenterPassword = await bcrypt.hash(req.body.reenterPassword, 10);
+      updatedUserData.reenterPassword = hashedReenterPassword;
+    }
+
     const updatedUser = await EmployeeModel.findByIdAndUpdate(
       id,
-      {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        reenterpassword: req.body.reenterpassword,
-        number: req.body.number,
-      },
+      updatedUserData,
       { new: true }
     ); // Set { new: true } to return the updated document
 
@@ -112,6 +129,7 @@ router.route('/userupdate/:id').put(async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 router.route('/deleteUser/:id').delete((req, res) => {
   const id = req.params.id;
@@ -229,6 +247,11 @@ router.route('/verify-otp').post(async (req, res) => {
 });
 
 
+
+
+
+
+
 router.route('/reset-password').post(async (req, res) => {
   const { Password ,userEmail} = req.body;
   try {
@@ -263,8 +286,105 @@ router.route('/reset-password').post(async (req, res) => {
       .send({ status: 'Error resetting password', message: error.message });
   }
  
+
+
+  
   
 });
+
+router.route('/AccountDetails').post((req, res) => {
+  const { name, email, number, userEmail } = req.body;
+
+  // Update the user details based on userEmail
+  EmployeeModel.findOneAndUpdate({ email: userEmail }, { name, email, number }, { new: true })
+      .then(updatedUser => {
+          if (updatedUser) {
+              res.json({ status: 'success', updatedUser });
+          } else {
+              res.status(404).json({ status: 'error', message: 'User not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({ status: 'error', error: error.message });
+      });
+});
+
+
+
+router.get('/getUsers/:userEmail', (req, res) => {
+  const userEmail = req.params.userEmail;
+  EmployeeModel.findOne({ email: userEmail })
+      .then((user) => {
+          if (user) {
+              res.json(user); // Send the user details in the response
+          } else {
+              res.status(404).json({ error: 'User not found' });
+          }
+      })
+      .catch((err) => res.status(500).json({ error: err.message }));
+});
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+router.post('/upload-image', upload.single('image'), async (req, res) => {
+  console.log(req.body);
+
+  const userEmail = req.query.userEmail;
+
+  // Check if a file was uploaded
+  if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  try {
+      // Find the user with the provided email
+      const user = await EmployeeModel.findOne({ email: userEmail });
+
+      // If user not found, return an error
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Assuming you want to save the filename to MongoDB
+      const imageName = req.file.filename;
+
+      // Update the user's image field with the filename
+      user.image = imageName; // Fixed the assignment to 'image' field
+      await user.save();
+
+      res.status(200).json({ message: 'Image uploaded successfully', user });
+  } catch (error) {
+      console.error('Error saving image filename to MongoDB:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.get("/get-image/:userEmail", async (req, res) => {
+  const userEmail = req.params.userEmail;
+  EmployeeModel.findOne({ email: userEmail })
+    .then((user) => {
+      if (user) {
+        res.json({ image: user.image });
+      } else {
+        res.status(404).json({ error: 'Image not found' });
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
+
+
+
 //const PORT = process.env.PORT || 8181;
 
 

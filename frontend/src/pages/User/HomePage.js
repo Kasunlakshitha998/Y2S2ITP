@@ -14,34 +14,32 @@ function HomePage() {
 
   return (
     <>
-      <nav>
-        <UserNav />
-      </nav>
+      <UserNav />
 
-      <section className="home">
-        <div className="content">
-          <h1>
+      <section className="home flex justify-between items-center">
+        <div className="content max-w-lg">
+          <h1 className="text-4xl font-bold mb-4">
             <span>Mobile Phone Products</span>
             <br />
             Up To <span id="span2">50%</span> Off
           </h1>
-          <p>
+          <p className="text-lg mb-8">
             Welcome to our online mobile phone shop! We offer a wide range of
-            <br />
             smartphones and accessories at discounted prices. Whether you're
-            <br />
-            Explore our collection now and take advantage of our exclusive
-            <br />
+            exploring our collection now and take advantage of our exclusive
             discounts.
           </p>
           <div className="btn">
-            <button onClick={() => scrollToSection('section1')}>
+            <button
+              onClick={() => scrollToSection('section1')}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
               Shop Now
             </button>
           </div>
         </div>
         <div className="img">
-          <img src="image/background.jpg" alt="gg" />
+          <img src="image/background.jpg" alt="gg" className="max-w-lg" />
         </div>
       </section>
 

@@ -1,8 +1,11 @@
-import { useState } from "react";
+//import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import "./style1s.css"
+import React, { useState, useEffect } from "react";
+
+
 
 function Signup() {
     const [name, setName] = useState("");
@@ -11,6 +14,34 @@ function Signup() {
     const [reenterPassword, setReenterPassword] = useState("");
     const [number, setNumber] = useState(""); // Assuming this is for mobile number
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const inputs = document.querySelectorAll(".input");
+
+        function focusFunc() {
+            let parent = this.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function blurFunc() {
+            let parent = this.parentNode;
+            if (this.value === "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+        inputs.forEach((input) => {
+            input.addEventListener("focus", focusFunc);
+            input.addEventListener("blur", blurFunc);
+
+            // Cleanup function to remove event listeners when component unmounts
+            return () => {
+                input.removeEventListener("focus", focusFunc);
+                input.removeEventListener("blur", blurFunc);
+            };
+        });
+    }, []);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,89 +103,88 @@ function Signup() {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-            <div className="bg-white p-3 rounded w-25">
-                <h2>Register</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="name">
-                            <strong>Name</strong>
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Enter name"
-                            autoComplete="off"
-                            name="name"
-                            className="form-control rounded-0"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+        <div className="container">
+        <span className="big-circle"></span>
+        <img src="img/shape.png" className="square" alt="" />
+        <div className="form">
+            {/* Contact Info Section */}
+            <div className="contact-info">
+                <h3 className="title">Let's get in touch</h3>
+                <p className="text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
+                    dolorum adipisci recusandae praesentium dicta!
+                </p>
+                {/* Information */}
+                <div className="info">
+                <div className="information d-flex align-items-center">
+                   <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
+                   
+                   <p className="mb-0">92 Cherry Drive Uniondale, NY 11553</p>
+                 </div>
+                    <div className="information">
+                    <i className="bi bi-envelope-fill fs-5 me-3"></i>
+                        <p className="mb-0">lorem@ipsum.com</p>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="email">
-                            <strong>Email</strong>
-                        </label>
-                        <input
-                            type="email"
-                            placeholder="Enter email"
-                            autoComplete="off"
-                            name="email"
-                            className="form-control rounded-0"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                    <div className="information">
+                    <i className="bi bi-telephone-fill fs-5 me-3"></i>
+                        <p className="mb-0">123-456-789</p>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password">
-                            <strong>Password</strong>
-                        </label>
-                        <input
-                            type="password"
-                            placeholder="Enter password"
-                            name="password"
-                            className="form-control rounded-0"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                </div>
+                {/* Social Media Links */}
+                <div className="social-media">
+                  
+                    <div className="social-media">
+                        <p>Connect with us :</p>
+                        <div className="social-icons d-flex justify-content-center">
+                            <button onClick={() => {}} className="me-3">
+                                <i className="bi bi-facebook fs-5"></i>
+                            </button>
+                            <button onClick={() => {}}>
+                                <i className="bi bi-whatsapp fs-5"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="reenterPassword">
-                            <strong>Reenter Password</strong>
-                        </label>
-                        <input
-                            type="password"
-                            placeholder="Reenter password"
-                            name="reenterPassword"
-                            className="form-control rounded-0"
-                            value={reenterPassword}
-                            onChange={(e) => setReenterPassword(e.target.value)}
-                        />
+                </div>
+            </div>
+            {/* Contact Form Section */}
+            <div className="contact-form">
+                <span className="circle one"></span>
+                <span className="circle two"></span>
+                {/* Form */}
+                <form onSubmit={handleSubmit} autoComplete="off">
+                    <h3 className="title">Sign in</h3>
+                    <div className="input-container">
+                        <input type="text" name="name" className="input" value={name} onChange={(e) => setName(e.target.value)} />
+                        <label htmlFor="">Username</label>
+                        <span>Username</span>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="number">
-                            <strong>Mobile Number</strong>
-                        </label>
-                        <input
-                            type="number"
-                            placeholder="Enter mobile number"
-                            name="number"
-                            className="form-control rounded-0"
-                            value={number}
-                            onChange={(e) => setNumber(e.target.value)}
-                        />
+                    <div className="input-container">
+                        <input type="email" name="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <label htmlFor="">Email</label>
+                        <span>Email</span>
                     </div>
-
-                    <button type="submit" className="btn btn-success w-100 rounded-0">
-                        Register
-                    </button>
+                    <div className="input-container">
+                        <input type="password" name="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <label htmlFor="">Password</label>
+                        <span>Password</span>
+                    </div>
+                    <div className="input-container">
+                        <input type="password" name="reenterPassword" className="input" value={reenterPassword} onChange={(e) => setReenterPassword(e.target.value)} />
+                        <label htmlFor="">Re-enter Password</label>
+                        <span>Re-enter Password</span>
+                    </div>
+                    <div className="input-container">
+                        <input type="number" name="number" className="input" value={number} onChange={(e) => setNumber(e.target.value)} />
+                        <label htmlFor="">Mobile Number</label>
+                        <span>Mobile Number</span>
+                    </div>
+                    <input type="submit" value="Sign Up" className="btn" />
                 </form>
-                <p>Already Have an Account</p>
-                {/* Use the Link component for navigation */}
-                <Link to="/login" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
-                    Login
-                </Link>
+                <p>Already have an account? <Link to="/login">Login</Link></p>
             </div>
         </div>
+    </div>
+
     );
 }
 

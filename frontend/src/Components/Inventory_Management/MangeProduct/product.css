@@ -1,78 +1,9 @@
-.container {
-  margin-top: 200px;
-  margin-left: 10px;
+main{
+  margin-top: 60px;
+  margin-left: 250px;
 }
 
-.product-table thead tr {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  padding: 20px;
-}
 
-.table_container{
- 
-  max-height: 500px;
-	margin-bottom: 15px;
-  margin-right: 10px;
-	margin-top: 10px;
-	overflow-y: scroll;
-	padding: 0px;
-	font-family: 'Roboto Slab', serif;
-  
-}
-
-.product-table {
-  width: 80%;
-  margin: 50px auto;
-  border-collapse: collapse;
-}
-
-.product-table th, .product-table td {
-  border: 1px solid #cfcfcf;
-  padding: 8px;
-  text-align: left;
-}
-
-.product-table th {
-  background-color: #f2f2f2;
-}
-
-.edit-btn, .delete-btn {
-  padding: 5px 10px;
-  margin-right: 5px;
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-}
-
-.delete-btn:hover {
-  background-color: #cb3b3be2;
-}
-
-.edit-btn:hover{
-  background-color: #218838;
-}
-
-.addProductBtn button{
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.addProductBtn{
-  margin-top: 70px;
-  margin-left: 500px;
-}
 
 /*add product*/
 
@@ -189,13 +120,4 @@ form button:focus {
   width: 150vh;
   height: 150vh;
 }
-
-
-/* Apply animation to the success message */
-.success-message {
-  animation: fadeIn 0.5s ease-in-out;
-  color: #28a745;
-}
-
-/* Define CSS animation */
 

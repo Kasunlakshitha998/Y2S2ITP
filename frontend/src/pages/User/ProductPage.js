@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom';
-import UserNav from '../../Components/Nav/userNav';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import UserNav from '../../Components/Nav/userNav';
 import './product.css';
 
 function ProductPage() {
@@ -9,6 +9,32 @@ function ProductPage() {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  useEffect(() => {
+    async function getProduct() {
+      try {
+        const res = await axios.get(
+          `http://localhost:8175/product/getProduct/${id}`
+        );
+        setProduct(res.data.product);
+        setLoading(false);
+      } catch (err) {
+        alert(err.message);
+        setLoading(false);
+      }
+    }
+
+    getProduct();
+  }, [id]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIndex((prevIndex) => (prevIndex + 1) % product.image.length);
+    }, 8000);
+
+    return () => clearInterval(timer);
+  }, [product.image]);
 
   const decrementQuantity = () => {
     if (quantity > 0) {
@@ -22,7 +48,6 @@ function ProductPage() {
     }
   };
 
-  // order button click
   const updateStock = () => {
     const countInStock = product.countInStock - quantity;
 
@@ -40,43 +65,48 @@ function ProductPage() {
     }
   };
 
-  //get product details using id
-  useEffect(() => {
-    function getProduct() {
-      axios
-        .get(`http://localhost:8175/product/getProduct/${id}`)
-        .then((res) => {
-          console.log(res.data);
-          setProduct(res.data.product);
-          setLoading(false);
-        })
-        .catch((err) => {
-          alert(err.message);
-          setLoading(false);
-        });
-    }
-
-    getProduct();
-  }, [id]);
+  const showSlides = (index) => {
+    setSlideIndex(index);
+  };
 
   return (
     <>
       <header>
         <UserNav />
       </header>
-      <main className='maint' >
-        {loading ? ( // Display loading indicator
+      <main className="maint">
+        {loading ? (
           <div className="loader"></div>
         ) : (
           <div className="product-container">
             <div className="product-image">
-              {product.image &&
-              typeof product.image !== 'string' &&
-              product.image.url ? (
-                <img src={product.image.url} alt={product.name} />
-              ) : (
-                <img src={product.image} alt={product.name} />
-              )}
+              {product.image.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`${product.name}_${index}`}
+                  style={{ display: index === slideIndex ? 'block' : 'none' }}
+                />
+              ))}
+              <a
+                className="prev"
+                onClick={() =>
+                  showSlides(
+                    (slideIndex + product.image.length - 1) %
+                      product.image.length
+                  )
+                }
+              >
+                ❮
+              </a>
+              <a
+                className="next"
+                onClick={() =>
+                  showSlides((slideIndex + 1) % product.image.length)
+                }
+              >
+                ❯
+              </a>
             </div>
 
             <div className="product-details">
@@ -90,25 +120,7 @@ function ProductPage() {
 
               <div className="button-section">
                 {product.countInStock === 0 ? (
-                  <>
-                    <strong>Out of Stock</strong>
-                    {/* add to wichst list */}
-                    {/* <div className="quantity-selector">
-                  <button
-                    onClick={decrementQuantity}
-                    disabled
-                  >
-                    -
-                  </button>
-                  <span className="quantity-display">{quantity}</span>
-                  <button
-                    onClick={incrementQuantity}
-                    disabled
-                  >
-                    +
-                  </button>
-                </div> */}
-                  </>
+                  <strong>Out of Stock</strong>
                 ) : (
                   <>
                     <div className="quantity-selector">
@@ -129,7 +141,6 @@ function ProductPage() {
                     <button className="add-to-cart" disabled={quantity === 0}>
                       Add to Cart
                     </button>
-
                     <button
                       className="order-button"
                       onClick={updateStock}
@@ -144,6 +155,10 @@ function ProductPage() {
           </div>
         )}
       </main>
+
+
+      
+
     </>
   );
 }

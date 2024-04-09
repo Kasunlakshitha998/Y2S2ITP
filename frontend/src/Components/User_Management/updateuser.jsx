@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { useParams, useNavigate } from "react-router-dom";
+import './CreateUsers.css';
 
 function UpdateUsers() {
     const { id } = useParams();
@@ -12,7 +13,7 @@ function UpdateUsers() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8175/getUser/${id}`)
+        axios.get(`http://localhost:8175/user/getUser/${id}`)
             .then(result => {
                 setName(result.data.name);
                 setEmail(result.data.email);
@@ -128,7 +129,7 @@ function UpdateUsers() {
                         className="form-control rounded-0"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        disabled
+                        
                     />
                 </div>
                 <div className="mb-3">
@@ -142,7 +143,7 @@ function UpdateUsers() {
                         className="form-control rounded-0"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        disabled
+                        
                     />
                 </div>
                 <div className="mb-3">
