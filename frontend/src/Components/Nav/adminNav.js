@@ -17,7 +17,7 @@ function AdminNav() {
           <Link to="/">Admin Panel</Link>
         </div>
         <div className="profile">
-          <img src="profile.jpg" alt="Profile Picture" />
+          <img src="profile.jpg" alt="Profile" />
           <span>Admin User</span>
           <div className="dropdown">
             <button className="dropbtn">▼</button>
