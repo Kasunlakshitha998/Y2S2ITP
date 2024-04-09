@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-
 function SecuritySettings() {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -16,9 +15,7 @@ function SecuritySettings() {
         e.preventDefault();
         const userEmail = Cookies.get('userEmail');
 
-    
         if (newPassword !== confirmPassword) {
-          
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -27,11 +24,9 @@ function SecuritySettings() {
             });
             return;
         }
-    
-        // Make API call to change password with currentPassword and newPassword
+
         axios.post('http://localhost:8175/user/passwordchange', { userEmail, currentPassword, newPassword, confirmPassword })
             .then(response => {
-               
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
@@ -43,18 +38,13 @@ function SecuritySettings() {
             })
             .catch(error => {
                 if (error.response && error.response.status === 400 && error.response.data.message === 'Incorrect current password.') {
-                    // Handle incorrect current password error
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: 'Current password is incorrect.',
                         confirmButtonText: 'OK'
                     });
-                } else if (newPassword !== confirmPassword) {
-                    // Handle new password and confirm password mismatch error
-                    setErrorMessage('New password and confirm password must match.');
                 } else {
-                    // Handle other errors
                     console.error('Failed to change password:', error);
                     Swal.fire({
                         icon: 'error',
@@ -65,79 +55,111 @@ function SecuritySettings() {
                 }
             });
     }
+
+    const handleDeleteAccount = () => {
+        const userEmail = Cookies.get('userEmail');
+    
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete my account'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete('http://localhost:8175/user/delete', { data: { userEmail } })
+                    .then(response => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Your account has been deleted.',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = '/login';
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Failed to delete account:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to delete account. Please try again.',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+            }
+        });
+    }
     
 
     return (
         <div className="container-xl px-4 mt-4">
-        {/* Account page navigation*/}
-        <nav className="nav nav-borders">
-            <button className="nav-link">
-                <Link to="/AccountDetails">Profile</Link>
-            </button>
-            <button className="nav-link">Billing</button>
-            <button className="nav-link">Security</button>
-          
-        </nav>
-        <hr className="mt-0 mb-4" />
+            {/* Account page navigation*/}
+            <nav className="nav nav-borders">
+                <button className="nav-link">
+                    <Link to="/AccountDetails">Profile</Link>
+                </button>
+                <button className="nav-link">Billing</button>
+                <button className="nav-link">Security</button>
+            </nav>
+            <hr className="mt-0 mb-4" />
 
-        {/* Change password card*/}
-        
+            {/* Change password card*/}
             <div className="card-header">Change Password</div>
-            
-                <form>
-                    {/* Form Group (current password)*/}
-                    <div className="mb-3">
-                        <label className="small mb-1" htmlFor="currentPassword">Current Password</label>
-                        <input
-                            className="form-control"
-                            id="currentPassword"
-                            type="password"
-                            placeholder="Enter current password"
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
-                        />
-                    </div>
-                    {/* Form Group (new password)*/}
-                    <div className="mb-3">
-                        <label className="small mb-1" htmlFor="newPassword">New Password</label>
-                        <input
-                            className="form-control"
-                            id="newPassword"
-                            type="password"
-                            placeholder="Enter new password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                        />
-                    </div>
-                    {/* Form Group (confirm password)*/}
-                    <div className="mb-3">
-                        <label className="small mb-1" htmlFor="confirmPassword">Confirm Password</label>
-                        <input
-                            className="form-control"
-                            id="confirmPassword"
-                            type="password"
-                            placeholder="Confirm new password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                    </div>
-                    {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-                    <button className="btn btn-primary" type="button" onClick={handleChangePassword}>Save</button>
-                </form>
-            
-        
+            <form>
+                {/* Form Group (current password)*/}
+                <div className="mb-3">
+                    <label className="small mb-1" htmlFor="currentPassword">Current Password</label>
+                    <input
+                        className="form-control"
+                        id="currentPassword"
+                        type="password"
+                        placeholder="Enter current password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                    />
+                </div>
+                {/* Form Group (new password)*/}
+                <div className="mb-3">
+                    <label className="small mb-1" htmlFor="newPassword">New Password</label>
+                    <input
+                        className="form-control"
+                        id="newPassword"
+                        type="password"
+                        placeholder="Enter new password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                </div>
+                {/* Form Group (confirm password)*/}
+                <div className="mb-3">
+                    <label className="small mb-1" htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                        className="form-control"
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="Confirm new password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
+                {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+                <button className="btn btn-primary" type="button" onClick={handleChangePassword}>Save</button>
+            </form>
 
-        <hr className="my-4" />
+            <hr className="my-4" />
 
-        {/* Delete account card */}
-        <div className="card mb-4">
-            <div className="card-header">Delete Account</div>
-            <div className="card-body">
-                <p>Deleting your account is a permanent action and cannot be undone. If you are sure you want to delete your account, select the button below.</p>
-                <button className="btn btn-danger-soft text-danger" type="button">I understand, delete my account</button>
+            {/* Delete account card */}
+            <div className="card mb-4">
+                <div className="card-header">Delete Account</div>
+                <div className="card-body">
+                    <p>Deleting your account is a permanent action and cannot be undone. If you are sure you want to delete your account, select the button below.</p>
+                    <button className="btn btn-danger-soft text-danger" type="button" onClick={handleDeleteAccount}>I understand, delete my account</button>
+                </div>
             </div>
         </div>
-    </div>
     );
 }
 
