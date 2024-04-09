@@ -70,7 +70,7 @@ router.route('/login').post((req, res) => {
 });
 
 
-router.route('/userdetails').get((req, res) => {s
+router.route('/userdetails').get((req, res) => {
   EmployeeModel.find({ role: 'user' })
     .then((users) => {
       const userCount = users.length; // Get the count of regular users
@@ -323,6 +323,67 @@ router.get('/getUsers/:userEmail', (req, res) => {
       })
       .catch((err) => res.status(500).json({ error: err.message }));
 });
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+router.post('/upload-image', upload.single('image'), async (req, res) => {
+  console.log(req.body);
+
+  const userEmail = req.query.userEmail;
+
+  // Check if a file was uploaded
+  if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  try {
+      // Find the user with the provided email
+      const user = await EmployeeModel.findOne({ email: userEmail });
+
+      // If user not found, return an error
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Assuming you want to save the filename to MongoDB
+      const imageName = req.file.filename;
+
+      // Update the user's image field with the filename
+      user.image = imageName; // Fixed the assignment to 'image' field
+      await user.save();
+
+      res.status(200).json({ message: 'Image uploaded successfully', user });
+  } catch (error) {
+      console.error('Error saving image filename to MongoDB:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.get("/get-image/:userEmail", async (req, res) => {
+  const userEmail = req.params.userEmail;
+  EmployeeModel.findOne({ email: userEmail })
+    .then((user) => {
+      if (user) {
+        res.json({ image: user.image });
+      } else {
+        res.status(404).json({ error: 'Image not found' });
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
+
+
 
 //const PORT = process.env.PORT || 8181;
 

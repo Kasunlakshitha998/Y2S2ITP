@@ -80,6 +80,7 @@ function Users() {
                                         <th>Email</th>
                                         <th>Password</th>
                                         <th>Number</th>
+                                        <th>image</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -91,6 +92,7 @@ function Users() {
                                                 <td>{user.email}</td>
                                                 <td>{user.password}</td>
                                                 <td>{user.number}</td>
+                                                <td><img src={user.image} alt="User" /></td>
                                                 <td>
                                                     <Link to={`/userupdate/${user._id}`} className='btn btn-success'>Update</Link>
                                                     <button className='btn btn-danger ml-2' onClick={(e)=>handleDelete(user._id)}>Delete</button>
