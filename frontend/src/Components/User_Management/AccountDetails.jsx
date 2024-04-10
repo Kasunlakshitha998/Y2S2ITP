@@ -10,9 +10,32 @@ function AccountDetails() {
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const navigate = useNavigate(); 
-   const [image, setImage] = useState(null);
-    const [userImage, setUserImage] = useState(null); 
-  
+   const[File,setFile]=useState()
+   const[image,setImage]=useState();
+
+
+   const handleUpload = (e) => {
+    const userEmail = Cookies.get('userEmail');
+    const formData = new FormData();
+    formData.append('file', File);
+    formData.append('email', userEmail); // Append the email to the FormData
+    axios.post("http://localhost:8175/user/upload-image", formData)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+}
+
+/*useEffect(() => {
+    const userEmail = Cookies.get('userEmail');
+    if (userEmail) {
+        // Fetch the image URL based on user's email
+        axios.get(`http://localhost:8175/user/image/${userEmail}`)
+            .then(res => {
+                setImage(res.data.imageUrl);
+            })
+            .catch(err => console.log(err));
+    }
+}, []);
+*/  
 
     useEffect(() => {
         const userEmail = Cookies.get('userEmail');
@@ -59,42 +82,7 @@ function AccountDetails() {
                 }
             });
     }
-
-    const submitImage = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append("image", image);
-      
-        try {
-            const result = await axios.post(
-                "http://localhost:8175/user/upload-image",
-                formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                    params: { userEmail: Cookies.get('userEmail') } // Send userEmail as a query parameter
-                }
-            );
-            console.log(result);
-        } catch (error) {
-            console.error('Error uploading image:', error);
-            // Handle error
-        }
-    };
-      
-    const onInputChange = (e) => {
-        console.log(e.target.files[0]);
-        setImage(e.target.files[0]);
-    };
-
-    useEffect(() => {
-        const userEmail = Cookies.get('userEmail');
-        if (userEmail) {
-            axios.get(`http://localhost:8175/user/get-image/${userEmail}`)
-                .then(result => {
-                    setUserImage(result.data.image); // Assuming the response is an object with 'image' property
-                })
-                .catch(err => console.log(err));
-        }
-    }, []);
+   
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -111,16 +99,16 @@ function AccountDetails() {
                     <div className="card mb-4 mb-xl-0">
                         <div className="card-header">Profile Picture</div>
                         <div className="card-body text-center">
-                        <img src={userImage} alt="User" /> 
-                          
+                       
+                          <imag src={`http://localhost:8175/user/getUsers/`+image}/>  
                                 <p>No image available</p>
                             
-                            <form onSubmit={submitImage}>
+                         
                                 <div className="small font-italic text-muted mb-4">
-                                    <input type="file" onChange={onInputChange}/> 
+                                    <input type="file" onChange={e=>setFile(e.target.files[0])}/> 
                                 </div>
-                                <button className="btn btn-primary" type="submit">Upload new image</button>
-                            </form>
+                                <button className="btn btn-primary" onClick={handleUpload}>Upload new image</button>
+                          
                         </div>
                     </div>
                 </div>
