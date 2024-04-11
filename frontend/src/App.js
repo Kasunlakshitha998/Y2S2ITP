@@ -31,25 +31,23 @@ function App() {
         <Route path="/admin/" element={<Dashboard />} />
         <Route path="/admin/productsList" element={<ProductsList />} />
         <Route path="/admin/productsList/addProduct" element={<AddProduct />} />
-        <Route path="/admin/productsList/editProduct/:id" element={<EditProduct />} />
+        <Route
+          path="/admin/productsList/editProduct/:id"
+          element={<EditProduct />}
+        />
 
-
-        
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-otp" element={<OTPVerification />} />
-        <Route path="/userdetails" element={<Users />} /> 
+        <Route path="/userdetails" element={<Users />} />
         <Route path="/usercreate" element={<CreateUsers />} />
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
         <Route path="/AccountDetails" element={<AccountDetails />} />
         <Route path="/SecuritySettings" element={<SecuritySettings />} />
 
-
-
-        <Route path="/addForm" exact component={AddAForm}/>
-
+        <Route path="/addForm" element={<AddAForm />} />
       </Routes>
     </div>
   );

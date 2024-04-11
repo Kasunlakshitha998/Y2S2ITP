@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 
-export default function AddAFormForm() {
+function AddAFormForm() {
 
     return (
 
@@ -33,3 +33,5 @@ export default function AddAFormForm() {
 </div>
     );
 }
+
+export default AddAFormForm;
