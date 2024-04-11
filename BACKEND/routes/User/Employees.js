@@ -298,10 +298,10 @@ router.route('/reset-password').post(async (req, res) => {
 });
 
 router.route('/AccountDetails').post((req, res) => {
-  const { name, email, number, userEmail, id } = req.body;
+  const { name, email, number, userEmail, userId } = req.body;
 
   // Update the user details based on userEmail
-  EmployeeModel.findOneAndUpdate({ email: userEmail }, { name, email, number, id }, { new: true })
+  EmployeeModel.findOneAndUpdate({ _id: userId }, { name, email, number, userId }, { new: true })
       .then(updatedUser => {
           if (updatedUser) {
               // Set the cookie before sending the response
@@ -318,9 +318,9 @@ router.route('/AccountDetails').post((req, res) => {
 
 
 
-router.get('/getUsers/:userEmail', (req, res) => {
-  const userEmail = req.params.userEmail;
-  EmployeeModel.findOne({ email: userEmail })
+router.get('/getUsers/:userId', (req, res) => {
+  const userId = req.params.userId;
+  EmployeeModel.findOne({ _id: userId })
       .then((user) => {
           if (user) {
               res.json(user); // Send the user details in the response
@@ -397,10 +397,10 @@ router.get("/image/:userEmail", async (req, res) => {
 
 router.route('/passwordchange').post(async (req, res) => {
   try {
-    const { userEmail, currentPassword, newPassword } = req.body;
+    const {userId, currentPassword, newPassword } = req.body;
 
     
-    const user = await EmployeeModel.findOne({ email: userEmail });
+    const user = await EmployeeModel.findOne({ _id: userId });
     if (!user) {
         return res.status(404).json({ message: 'User not found.' });
     }
@@ -425,9 +425,9 @@ router.route('/passwordchange').post(async (req, res) => {
 })
 
 router.delete('/delete', (req, res) => {
-  const { userEmail } = req.body;
+  const { userId } = req.body;
 
-  EmployeeModel.findOneAndDelete({ email: userEmail })
+  EmployeeModel.findOneAndDelete({ _id: userId })
       .then(deletedEmployee => {
           if (!deletedEmployee) {
               return res.status(404).json({ message: 'User not found.' });

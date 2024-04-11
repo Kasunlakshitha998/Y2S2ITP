@@ -39,9 +39,9 @@ useEffect(() => {
 
 
     useEffect(() => {
-        const userEmail = Cookies.get('userEmail');
-        if (userEmail) {
-            axios.get(`http://localhost:8175/user/getUsers/${userEmail}`)
+        const userId = Cookies.get('userId');
+        if (userId) {
+            axios.get(`http://localhost:8175/user/getUsers/${userId}`)
                 .then(result => {
                 
                     setName(result.data.name);
@@ -61,6 +61,7 @@ useEffect(() => {
                 email,
                 number,
                 userEmail: Cookies.get('userEmail') ,
+                userId:Cookies.get('userId')
                 
             })
             .then((result) => {
