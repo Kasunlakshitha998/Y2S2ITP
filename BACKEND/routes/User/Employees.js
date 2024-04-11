@@ -13,7 +13,9 @@ const app = express();
 //app.use(express.static('uploads/images')); 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'uploads/images')))
+app.use(
+  express.static(path.join(__dirname, '../frontend/public/image/userProfile/'))
+);
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
@@ -335,7 +337,7 @@ router.get('/getUsers/:userId', (req, res) => {
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/images");
+    cb(null, '../frontend/public/image/userProfile/');
   },
   filename:  (req, file, cb)=> {
     //const uniqueSuffix = Date.now();
