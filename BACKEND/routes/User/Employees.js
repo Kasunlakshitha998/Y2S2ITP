@@ -10,9 +10,10 @@ const path = require('path');
 
 //const nodemailer = require('nodemailer');
 const app = express();
-app.use(express.static('uploads/images')); 
+//app.use(express.static('uploads/images')); 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads/images')))
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
@@ -54,12 +55,10 @@ router.route('/login').post((req, res) => {
                           });
                           // Set the token as a cookie
                           res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // Max age set to 1 day in milliseconds
-                          res.cookie('userEmail', user.email, { maxAge: 86400000 }); // Max age set to 1 day in milliseconds
-
-                          // Determine user's role and send it in response
-                          let isAdmin = user.role === 'admin';
-                          let isStaff = user.role === 'staff';
-                          res.json({ status: 'success', isAdmin, isStaff });
+                          res.cookie('userEmail', user.email, { maxAge: 86400000 });
+                        
+                          // Send user ID along with other data
+                          res.json({ status: 'success', userId: user._id, isAdmin: user.role === 'admin', isStaff: user.role === 'staff' });
                       } else {
                           res.status(401).json({ status: 'incorrect password' });
                       }
@@ -73,6 +72,7 @@ router.route('/login').post((req, res) => {
           res.status(500).json({ status: 'error', error: err.message });
       });
 });
+
 
 
 router.route('/userdetails').get((req, res) => {
@@ -298,12 +298,14 @@ router.route('/reset-password').post(async (req, res) => {
 });
 
 router.route('/AccountDetails').post((req, res) => {
-  const { name, email, number, userEmail } = req.body;
+  const { name, email, number, userEmail, id } = req.body;
 
   // Update the user details based on userEmail
-  EmployeeModel.findOneAndUpdate({ email: userEmail }, { name, email, number }, { new: true })
+  EmployeeModel.findOneAndUpdate({ email: userEmail }, { name, email, number, id }, { new: true })
       .then(updatedUser => {
           if (updatedUser) {
+              // Set the cookie before sending the response
+              //res.cookie('userid', updatedUser._id, { maxAge: 86400000 });
               res.json({ status: 'success', updatedUser });
           } else {
               res.status(404).json({ status: 'error', message: 'User not found' });
@@ -377,13 +379,13 @@ router.post('/upload-image', upload.single('file'), async (req, res) => {
   }
 });
 
-app.get("/image/:userEmail", async (req, res) => {
+router.get("/image/:userEmail", async (req, res) => {
   const userEmail = req.params.userEmail;
   try {
     const user = await EmployeeModel.findOne({ email: userEmail });
-    if (user && user.image) {
+    if (user ) {
       // If user and image exist, send back the image URL
-      res.json({ imageUrl: user.image });
+      res.json({user });
     } else {
       res.status(404).json({ error: "Image not found" });
     }

@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 
 function AccountDetails() {
+   
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
@@ -24,7 +25,7 @@ function AccountDetails() {
         .catch(err => console.log(err));
 }
 
-/*useEffect(() => {
+useEffect(() => {
     const userEmail = Cookies.get('userEmail');
     if (userEmail) {
         // Fetch the image URL based on user's email
@@ -35,13 +36,14 @@ function AccountDetails() {
             .catch(err => console.log(err));
     }
 }, []);
-*/  
+
 
     useEffect(() => {
         const userEmail = Cookies.get('userEmail');
         if (userEmail) {
             axios.get(`http://localhost:8175/user/getUsers/${userEmail}`)
                 .then(result => {
+                
                     setName(result.data.name);
                     setEmail(result.data.email);
                     setNumber(result.data.number);
@@ -58,10 +60,12 @@ function AccountDetails() {
                 name,
                 email,
                 number,
-                userEmail: Cookies.get('userEmail') 
+                userEmail: Cookies.get('userEmail') ,
+                
             })
             .then((result) => {
                 console.log(result);
+               // Cookies.set('userId', id, { expires: 1 });
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -117,6 +121,7 @@ function AccountDetails() {
                         <div className="card-header">Account Details</div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
+                           
                                 <div className="mb-3">
                                     <label className="small mb-1" htmlFor="inputUsername">Username (how your name will appear to other users on the site)</label>
                                     <input className="form-control" id="inputUsername" type="text" placeholder="Enter your username" value={name} onChange={(e) => setName(e.target.value)} />
