@@ -6,6 +6,10 @@
     font-family: 'Merriweather', serif;
 }
 
+.home{
+  margin-top: 50px;
+}
+
 .slider-container {
   height: 400px;
   width: 100%;
