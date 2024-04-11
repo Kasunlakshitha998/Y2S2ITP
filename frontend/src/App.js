@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/User/HomePage';
 import ProductPage from './pages/User/ProductPage';
 import Dashboard from './pages/Admin/Dashboard';
@@ -19,6 +19,8 @@ import Users from './Components/User_Management/displayuserdetails';
 import CreateUsers from'./Components/User_Management/createuser'
 import AccountDetails from'./Components/User_Management/AccountDetails';
 import SecuritySettings from'./Components/User_Management/SecuritySettings';
+
+import AddAForm from "./Components/Appointment_Management/AddAForm"
 
 function App() {
   return (
@@ -43,6 +45,10 @@ function App() {
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
         <Route path="/AccountDetails" element={<AccountDetails />} />
         <Route path="/SecuritySettings" element={<SecuritySettings />} />
+
+
+
+        <Route path="/addForm" exact component={AddAForm}/>
 
       </Routes>
     </div>

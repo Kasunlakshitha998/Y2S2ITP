@@ -115,6 +115,46 @@
     border-radius: 10px; /* Border radius */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow */
   }
+  /* Add this CSS to your existing stylesheet or create a new one */
+
+/* Style for the container of the table */
+.card-body {
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Style for the table */
+.table {
+  width: 100%; /* Make the table take up the entire width of its container */
+  border-collapse: collapse; /* Collapse the borders between table cells */
+}
+
+/* Style for table header */
+.table-header th {
+  background-color: #343a40; /* Dark background color */
+  color: #fff; /* Text color */
+}
+
+/* Style for table rows */
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternate row color */
+}
+
+/* Style for table cell */
+.table td, .table th {
+  padding: 8px; /* Add padding to cells */
+  border: 1px solid #ddd; /* Add border to cells */
+}
+
+/* Hover effect for table rows */
+.table tbody tr:hover {
+  background-color: #ddd; /* Light gray background on hover */
+}
+
+/* Style for buttons inside table cells */
+.table td button {
+  margin-left: 5px; /* Add margin between buttons */
+}
+
   
   /* Add more styles as needed */
     

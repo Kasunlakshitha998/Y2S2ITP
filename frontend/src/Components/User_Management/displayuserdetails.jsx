@@ -60,52 +60,51 @@ function Users() {
 
     return (
         <div className="container-fluid">
-           
-                {/* Add card-container class */}
-                        <div className="card-body">
-                            <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
-                            <input
-                                type="text"
-                                placeholder="Search by name"
-                                value={searchQuery}
-                                onChange={handleSearch}
-                                className="form-control mt-3"
-                            />
-                            <p className='btn total-users'>Total Users: {users.length}</p> {/* Add total-users class */}
-                           
-                            <table className="table mt-3">
-                                <thead className="thead-dark table-header"> {/* Add table-header class */}
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Password</th>
-                                        <th>Number</th>
-                                        <th>image</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredUsers.map((user) => {
-                                        return (
-                                            <tr key={user._id}>
-                                                <td>{user.name}</td>
-                                                <td>{user.email}</td>
-                                                <td>{user.password}</td>
-                                                <td>{user.number}</td>
-                                                <td><img src={user.image} alt="User" /></td>
-                                                <td>
-                                                    <Link to={`/userupdate/${user._id}`} className='btn btn-success'>Update</Link>
-                                                    <button className='btn btn-danger ml-2' onClick={(e)=>handleDelete(user._id)}>Delete</button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-             
-        
+        {/* Add card-container class */}
+        <div className="card-body">
+            <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
+            <input
+                type="text"
+                placeholder="Search by name"
+                value={searchQuery}
+                onChange={handleSearch}
+                className="form-control mt-3"
+            />
+            <p className='btn total-users'>Total Users: {users.length}</p> {/* Add total-users class */}
+
+            <div style={{ overflowX: 'auto' }}> {/* Add style for horizontal scrolling */}
+                <table className="table mt-3">
+                    <thead className="thead-dark table-header"> {/* Add table-header class */}
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Number</th>
+                            <th>Image</th> {/* Correct typo: 'image' to 'Image' */}
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredUsers.map((user) => {
+                            return (
+                                <tr key={user._id}>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.password}</td>
+                                    <td>{user.number}</td>
+                                    <td><img src={user.image} alt="User" /></td>
+                                    <td>
+                                        <Link to={`/userupdate/${user._id}`} className='btn btn-success'>Update</Link>
+                                        <button className='btn btn-danger ml-2' onClick={(e)=>handleDelete(user._id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     );
 }
 

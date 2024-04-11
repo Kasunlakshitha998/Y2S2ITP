@@ -6,11 +6,16 @@ const cookieParser = require('cookie-parser');
 const nodemailer=require('nodemailer')
 const cors = require('cors');
 const express = require('express');
+const path = require('path');
+
 //const nodemailer = require('nodemailer');
+const app = express();
+app.use(express.static('uploads/images')); 
+app.use(cors());
+app.use(express.json());
+//app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 
-
-
-
+//app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 router.route('/register').post((req, res) => {
     const { name, email, password, number } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
@@ -323,24 +328,26 @@ router.get('/getUsers/:userEmail', (req, res) => {
       })
       .catch((err) => res.status(500).json({ error: err.message }));
 });
+//app.use(express.static(path.join(__dirname, 'uploads/images')));
 
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "uploads/images");
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + file.originalname);
+  filename:  (req, file, cb)=> {
+    //const uniqueSuffix = Date.now();
+    cb(null,  file.fieldname+"_"+Date.now()+path.extname(file.originalname));
   }
 });
 
+
 const upload = multer({ storage: storage });
 
-router.post('/upload-image', upload.single('image'), async (req, res) => {
-  console.log(req.body);
+router.post('/upload-image', upload.single('file'), async (req, res) => {
+  console.log(req.file);
 
-  const userEmail = req.query.userEmail;
+  const userEmail = req.body.email; // Access email from req.body
 
   // Check if a file was uploaded
   if (!req.file) {
@@ -370,19 +377,66 @@ router.post('/upload-image', upload.single('image'), async (req, res) => {
   }
 });
 
-router.get("/get-image/:userEmail", async (req, res) => {
+app.get("/image/:userEmail", async (req, res) => {
   const userEmail = req.params.userEmail;
-  EmployeeModel.findOne({ email: userEmail })
-    .then((user) => {
-      if (user) {
-        res.json({ image: user.image });
-      } else {
-        res.status(404).json({ error: 'Image not found' });
-      }
-    })
-    .catch((err) => res.status(500).json({ error: err.message }));
+  try {
+    const user = await EmployeeModel.findOne({ email: userEmail });
+    if (user && user.image) {
+      // If user and image exist, send back the image URL
+      res.json({ imageUrl: user.image });
+    } else {
+      res.status(404).json({ error: "Image not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
+
+router.route('/passwordchange').post(async (req, res) => {
+  try {
+    const { userEmail, currentPassword, newPassword } = req.body;
+
+    
+    const user = await EmployeeModel.findOne({ email: userEmail });
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+
+    
+    const isPasswordValid = await bcrypt.compare(currentPassword, user. password);
+    if (!isPasswordValid) {
+        return res.status(400).json({ message: 'Incorrect current password.' });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10); // Hash the new password
+    user.password = hashedNewPassword;
+    await user.save();
+
+    return res.status(200).json({ message: 'Password changed successfully.' });
+} catch (error) {
+    console.error('Error changing password:', error);
+    return res.status(500).json({ message: 'Failed to change password. Please try again.' });
+}
+
+
+})
+
+router.delete('/delete', (req, res) => {
+  const { userEmail } = req.body;
+
+  EmployeeModel.findOneAndDelete({ email: userEmail })
+      .then(deletedEmployee => {
+          if (!deletedEmployee) {
+              return res.status(404).json({ message: 'User not found.' });
+          }
+          res.status(200).json({ message: 'User account deleted successfully.' });
+      })
+      .catch(error => {
+          console.error('Error deleting user account:', error);
+          res.status(500).json({ message: 'Failed to delete user account. Please try again.' });
+      });
+});
 
 
 //const PORT = process.env.PORT || 8181;
