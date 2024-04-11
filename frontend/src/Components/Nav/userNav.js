@@ -48,7 +48,6 @@ function UserNav() {
               </svg>
             </button>
           </div>
-<<<<<<< HEAD
         </div>
 
         <div className={`md:flex items-center ${isMenuOpen ? '' : 'hidden'}`}>
@@ -85,48 +84,6 @@ function UserNav() {
             >
               About
             </Link>
-=======
-          <div
-            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
-              isMenuOpen ? '' : 'hidden'
-            }`}
-          >
-            <ul className="flex flex-col p-1 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-900 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                  aria-current="page"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/addForm"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
->>>>>>> 20f09254865fdd57a4f8765b46f0f7ff76ce793d
           </div>
 
           <div className="flex items-center space-x-3">
