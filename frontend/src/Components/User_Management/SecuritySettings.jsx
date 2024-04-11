@@ -13,7 +13,7 @@ function SecuritySettings() {
 
     const handleChangePassword = (e) => {
         e.preventDefault();
-        const userEmail = Cookies.get('userEmail');
+        const userId = Cookies.get('userId');
 
         if (newPassword !== confirmPassword) {
             Swal.fire({
@@ -25,7 +25,7 @@ function SecuritySettings() {
             return;
         }
 
-        axios.post('http://localhost:8175/user/passwordchange', { userEmail, currentPassword, newPassword, confirmPassword })
+        axios.post('http://localhost:8175/user/passwordchange', { userId, currentPassword, newPassword, confirmPassword })
             .then(response => {
                 Swal.fire({
                     icon: 'success',
@@ -57,7 +57,7 @@ function SecuritySettings() {
     }
 
     const handleDeleteAccount = () => {
-        const userEmail = Cookies.get('userEmail');
+        const userId = Cookies.get('userId');
     
         Swal.fire({
             title: 'Are you sure?',
@@ -69,7 +69,7 @@ function SecuritySettings() {
             confirmButtonText: 'Yes, delete my account'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('http://localhost:8175/user/delete', { data: { userEmail } })
+                axios.delete('http://localhost:8175/user/delete', { data: { userId } })
                     .then(response => {
                         Swal.fire({
                             icon: 'success',
