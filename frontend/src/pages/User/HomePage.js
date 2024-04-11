@@ -16,7 +16,7 @@ function HomePage() {
     <>
       <UserNav />
 
-      <section className="home flex justify-between items-center">
+      <section className="home flex justify-between items-center m-5">
         <div className="content max-w-lg">
           <h1 className="text-4xl font-bold mb-4">
             <span>Mobile Phone Products</span>
