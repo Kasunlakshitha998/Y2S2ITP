@@ -63,7 +63,7 @@ function UserNav() {
               isMenuOpen ? '' : 'hidden'
             }`}
           >
-            <ul className="flex flex-col p-1 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
+            <ul className="flex flex-col p-1 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-900 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
               <li>
                 <Link
                   to="#"
@@ -103,11 +103,11 @@ function UserNav() {
             <button className="focus:outline-none">
               <FaShoppingCart className="w-8 h-8 text-gray-500 hover:text-gray-900" />
             </button>
-            <button onMouseMove={toggleProfile} className="focus:outline-none">
+            <button onClick={toggleProfile} className="focus:outline-none">
               <FaUserCircle className="w-8 h-8 text-gray-500 hover:text-gray-900" />
             </button>
             {isProfileOpen && (
-              <div className="absolute right-0 mt-12 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+              <div className="absolute right-0 mt-52 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <ul>
                   <li>
                     <Link to="/AccountDetails" className="block py-2 px-4 hover:bg-gray-100">

@@ -1,7 +1,7 @@
 .admin-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
+  background-color: #dbe9ff;
+  color: #0f1829;
+  padding: 15px;
   position: fixed;
   top: 0;
   left: 0;
@@ -14,8 +14,10 @@
 
 .admin-header .logo a {
   text-decoration: none;
-  color: #fff;
-  font-size: 1.2rem;
+  color: #0f1829f6;
+  font-size: 1.5rem;
+  padding-left: 200px;
+  font-weight: bold;
 }
 
 .admin-header .profile {
@@ -72,16 +74,19 @@
 
 
 .sidebar {
-  background-color: #333;
+  background-color: #0f1829;
   color: #fff;
-  width: 200px;
+  width: 180px;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   overflow-y: auto;
-  z-index: 50;
+  z-index: 200;
   padding-top: 50px;
+  border-radius: 0px 0px 15px 0px;
+  box-shadow: #0f1829;
+  padding-left: 5px;
 }
 
 .sidebar ul {
@@ -91,7 +96,7 @@
 }
 
 .sidebar ul li {
-  margin-bottom: 10px;
+  margin-bottom: 1px;
 }
 
 .sidebar ul li a {
@@ -102,11 +107,10 @@
 }
 
 .sidebar ul li a:hover {
-  background-color: #555;
+  color: #3e45fe;
 }
 
 .sidebar ul li.active a {
-  background-color: #555;
-  color: #fff;
+  color: #3e45fe;
 }
 

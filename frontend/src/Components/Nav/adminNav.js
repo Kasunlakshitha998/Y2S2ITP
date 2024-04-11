@@ -12,9 +12,9 @@ function AdminNav() {
 
   return (
     <>
-      <div className="admin-header">
+      <header className="admin-header">
         <div className="logo">
-          <Link to="/">Admin Panel</Link>
+          <Link to="/admin">Admin Panel</Link>
         </div>
         <div className="profile">
           <img src="profile.jpg" alt="Profile" />
@@ -28,9 +28,9 @@ function AdminNav() {
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="sidebar">
+      <aside className="sidebar">
         <ul>
           <li className={activeLink === '/admin' ? 'active' : ''}>
             <Link to="/admin">Dashboard</Link>
@@ -44,11 +44,11 @@ function AdminNav() {
           <li className={activeLink === '/orders' ? 'active' : ''}>
             <Link to="/orders">Orders</Link>
           </li>
-          <li className={activeLink === '/settings' ? 'active' : ''}>
-            <Link to="/settings">Settings</Link>
+          <li className={activeLink === '/appoinment' ? 'active' : ''}>
+            <Link to="/appoinment">Appoinment</Link>
           </li>
         </ul>
-      </div>
+      </aside>
     </>
   );
 }

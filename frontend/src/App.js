@@ -5,14 +5,13 @@ import Dashboard from './pages/Admin/Dashboard';
 import ProductsList from './Components/Inventory_Management/MangeProduct/ProductsList';
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import Signup from './Components/User_Management/signup';
 import Login from './Components/User_Management/Login';
 import ForgotPassword from './Components/User_Management/ForgotPassword';
-//import CreateUsers from './Components/User_Management/Create';
-//import Users from './Components/User_Management/Detail';
 import UpdateUsers from './Components/User_Management/updateuser';
 import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
