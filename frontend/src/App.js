@@ -15,16 +15,11 @@ import UpdateUsers from './Components/User_Management/updateuser';
 import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
 import Users from './Components/User_Management/displayuserdetails';
-<<<<<<< HEAD
-import CreateUsers from'./Components/User_Management/createuser'
-import AccountDetails from'./Components/User_Management/AccountDetails';
-import SecuritySettings from'./Components/User_Management/SecuritySettings';
-import Staff from'./Components/User_Management/staffdetails';
-=======
-import CreateUsers from './Components/User_Management/createuser';
+
+import CreateUsers from './Components/User_Management/createuser'; // Import once
 import AccountDetails from './Components/User_Management/AccountDetails';
 import SecuritySettings from './Components/User_Management/SecuritySettings';
->>>>>>> 4f2c99b8b0016ceca7310d44375bd824b23861cd
+import Staff from './Components/User_Management/staffdetails';
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 
@@ -50,16 +45,16 @@ function App() {
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
         <Route path="/AccountDetails" element={<AccountDetails />} />
         <Route path="/SecuritySettings" element={<SecuritySettings />} />
-<<<<<<< HEAD
+
         <Route path= "/staffdetails" element={<Staff/>}/>
 
       
         <Route path="/addForm" element={<AddAForm />}/>
 
-=======
+        <Route path="/staffdetails" element={<Staff/>}/>
 
         <Route path="/addForm" element={<AddAForm />} />
->>>>>>> 4f2c99b8b0016ceca7310d44375bd824b23861cd
+
       </Routes>
     </div>
   );

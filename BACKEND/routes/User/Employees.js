@@ -9,18 +9,10 @@ const nodemailer=require('nodemailer')
 const path = require('path');
 
 //const nodemailer = require('nodemailer');
-<<<<<<< HEAD
 
 
-=======
-const app = express();
-//app.use(express.static('uploads/images')); 
-app.use(cors());
-app.use(express.json());
-app.use(
-  express.static(path.join(__dirname, '../frontend/public/image/userProfile/'))
-);
->>>>>>> 4f2c99b8b0016ceca7310d44375bd824b23861cd
+
+
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));

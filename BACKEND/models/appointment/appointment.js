@@ -3,41 +3,40 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema({
-
     name: { 
-        type : String,
-        required: true
-    },
-    email:{
         type: String,
         required: true
     },
-    telephone:{
-        type:Number,
-        required: true
-    },
-    phoneType:{
+    email: {
         type: String,
         required: true
     },
-    serviceType:{
+    telephone: {
+        type: Number,
+        required: true
+    },
+    phoneType: {
         type: String,
         required: true
     },
-    date:{
+    serviceType: {
+        type: String,
+        required: true
+    },
+    date: {
         type: Date,
         required: true
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
         required: true
     },
-    reciept:{
-        type:File,
+    receipt: {
+        type: String,
         required: true
     }
-})
+});
 
-const appointment = mongoose.model("appointment",appointmentSchema )
+const Appointment = mongoose.model("Appointment", appointmentSchema);
 
-module.exports = appointment;
+module.exports = Appointment;
