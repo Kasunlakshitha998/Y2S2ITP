@@ -1,4 +1,4 @@
- import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/User/HomePage';
 import ProductPage from './pages/User/ProductPage';
 import Dashboard from './pages/Admin/Dashboard';
@@ -11,33 +11,27 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Signup from './Components/User_Management/signup';
 import Login from './Components/User_Management/Login';
 import ForgotPassword from './Components/User_Management/ForgotPassword';
-//import CreateUsers from './Components/User_Management/Create';
-//import Users from './Components/User_Management/Detail';
 import UpdateUsers from './Components/User_Management/updateuser';
 import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
 import Users from './Components/User_Management/displayuserdetails';
-import CreateUsers from'./Components/User_Management/createuser'
-import AccountDetails from'./Components/User_Management/AccountDetails';
-import SecuritySettings from'./Components/User_Management/SecuritySettings';
+import CreateUsers from './Components/User_Management/createuser';
+import AccountDetails from './Components/User_Management/AccountDetails';
+import SecuritySettings from './Components/User_Management/SecuritySettings';
 
-import AddAForm from "./Components/Appointment_Management/AddAForm"
+import AddAForm from "./Components/Appointment_Management/AddAForm";
 
 function App() {
   return (
     <div>
       <Routes>
-
-      
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductPage />} />
-        <Route path="/admin/" element={<Dashboard />} />
+        <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/productsList" element={<ProductsList />} />
         <Route path="/admin/productsList/addProduct" element={<AddProduct />} />
         <Route path="/admin/productsList/editProduct/:id" element={<EditProduct />} />
 
-
-      
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -49,10 +43,7 @@ function App() {
         <Route path="/AccountDetails" element={<AccountDetails />} />
         <Route path="/SecuritySettings" element={<SecuritySettings />} />
 
-
-      
-        <Route path="/addForm" element={<AddAForm />}/>
-s
+        <Route path="/addForm" element={<AddAForm />} />
       </Routes>
     </div>
   );
