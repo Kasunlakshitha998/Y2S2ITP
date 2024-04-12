@@ -145,7 +145,7 @@ const uploadImage = async (event) => {
                     <option value="iphone">iPhone</option>
                     <option value="android">Android Phones</option>
                     <option value="windows">Windows Phones</option>
-                    <option value="other">Other Phones</option>
+                    <option value="Tablets & Ipads">Tablets & Ipads</option>
                     <option value="accessories">Accessories</option>
                   </select>
                 </div>

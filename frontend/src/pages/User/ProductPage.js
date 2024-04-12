@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import UserNav from '../../Components/Nav/userNav';
-import './product.css';
+import './productPage.css';
 
 function ProductPage() {
   const { id } = useParams();
@@ -111,13 +111,12 @@ function ProductPage() {
 
             <div className="product-details">
               <h1>{product.name}</h1>
-              <h3>{product.description}</h3>
+              <h2>Price: Rs. {product.price.toLocaleString()}</h2>
               <strong>
                 <p>Brand: {product.brand}</p>
-                <p>Price: Rs. {product.price}</p>
                 <p>Category: {product.category}</p>
               </strong>
-
+              <h3>{product.description}</h3>
               <div className="button-section">
                 {product.countInStock === 0 ? (
                   <strong>Out of Stock</strong>
@@ -155,10 +154,6 @@ function ProductPage() {
           </div>
         )}
       </main>
-
-
-      
-
     </>
   );
 }

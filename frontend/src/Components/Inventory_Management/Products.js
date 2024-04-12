@@ -159,14 +159,14 @@ function Products() {
                   .map((product) => (
                     <Link to={`/product/${product._id}`}>
                       <div
-                        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                        className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl"
                         key={product._id}
                       >
-                        <div>
+                        <div className="overflow-hidden">
                           <img
                             src={product.image[0]}
                             alt={`${product.name}_0`}
-                            className="h-50 w-80 object-cover rounded-t-xl"
+                            className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
                           />
                         </div>
 
@@ -228,16 +228,14 @@ function Products() {
                             </span>
                           </div>
 
-                          
                           <div class="flex items-center">
-                            
-                            <p class="text-lg font-semibold text-black cursor-auto my-3">
+                            <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
                               Rs.149,000
                             </p>
-                            
+
                             <del>
                               <p class="text-sm text-gray-600 cursor-auto ml-2">
-                                Rs.{product.price}
+                                Rs.{product.price.toLocaleString()}
                               </p>
                             </del>
 
@@ -284,14 +282,14 @@ function Products() {
                   .map((product) => (
                     <Link to={`/product/${product._id}`}>
                       <div
-                        className="w-72 bg-white shadow-md rounded-xl duration-100 hover:scale-105 hover:shadow-xl"
+                        className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl"
                         key={product._id}
                       >
-                        <div>
+                        <div className="overflow-hidden">
                           <img
                             src={product.image[0]}
                             alt={`${product.name}_0`}
-                            className="h-50 w-80 object-cover rounded-t-xl"
+                            className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
                           />
                         </div>
 
@@ -354,12 +352,12 @@ function Products() {
                           </div>
 
                           <div class="flex items-center">
-                            <p class="text-lg font-semibold text-black cursor-auto my-3">
+                            <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
                               Rs.149,000
                             </p>
                             <del>
-                              <p class="text-sm text-gray-600 cursor-auto ml-2">
-                                Rs.{product.price}
+                              <p class="text-sm text-red-600 cursor-auto ml-2">
+                                Rs.{product.price.toLocaleString()}
                               </p>
                             </del>
 
