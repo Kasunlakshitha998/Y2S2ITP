@@ -20,8 +20,10 @@ import Users from './Components/User_Management/displayuserdetails';
 import CreateUsers from'./Components/User_Management/createuser'
 import AccountDetails from'./Components/User_Management/AccountDetails';
 import SecuritySettings from'./Components/User_Management/SecuritySettings';
+import Staff from'./Components/User_Management/staffdetails';
 
 import AddAForm from "./Components/Appointment_Management/AddAForm"
+
 
 function App() {
   return (
@@ -48,11 +50,11 @@ function App() {
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
         <Route path="/AccountDetails" element={<AccountDetails />} />
         <Route path="/SecuritySettings" element={<SecuritySettings />} />
-
+        <Route path= "/staffdetails" element={<Staff/>}/>
 
       
         <Route path="/addForm" element={<AddAForm />}/>
-s
+
       </Routes>
     </div>
   );

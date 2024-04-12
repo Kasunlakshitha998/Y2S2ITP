@@ -48,6 +48,11 @@ const productRouter = require('./routes/Inventory_Management/products.js');
 const userRouter = require('./routes/User/Employees.js');
 const appointmentRouter = require("./routes/appointment/appointments.js");
 
+
+
+app.use(express.static('uploads/images'));
+app.use(express.json());
+
 app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment',appointmentRouter);//Appointment 

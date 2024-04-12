@@ -12,7 +12,16 @@ function AccountDetails() {
     const [number, setNumber] = useState("");
     const navigate = useNavigate(); 
    const[File,setFile]=useState()
-   const[image,setImage]=useState();
+   const [userImage, setUserImage] = useState(null); // 
+
+
+   
+
+   
+
+
+
+
 
 
    const handleUpload = (e) => {
@@ -25,17 +34,7 @@ function AccountDetails() {
         .catch(err => console.log(err));
 }
 
-useEffect(() => {
-    const userEmail = Cookies.get('userEmail');
-    if (userEmail) {
-        // Fetch the image URL based on user's email
-        axios.get(`http://localhost:8175/user/image/${userEmail}`)
-            .then(res => {
-                setImage(res.data.imageUrl);
-            })
-            .catch(err => console.log(err));
-    }
-}, []);
+
 
 
     useEffect(() => {
@@ -87,6 +86,9 @@ useEffect(() => {
                 }
             });
     }
+    
+   
+    
    
 
     return (
@@ -104,9 +106,9 @@ useEffect(() => {
                     <div className="card mb-4 mb-xl-0">
                         <div className="card-header">Profile Picture</div>
                         <div className="card-body text-center">
-                       
-                          <imag src={`http://localhost:8175/user/getUsers/`+image}/>  
-                                <p>No image available</p>
+                             
+                        
+                                <p>Let uplaod image</p>
                             
                          
                                 <div className="small font-italic text-muted mb-4">
