@@ -14,15 +14,12 @@ const employeeSchema = new mongoose.Schema({
     },
     otp: String,
      // Add a field to store OTP
-     image: [String] 
-        
-        
-    
+     image: {
+        type: String
+     }  
+} ,
 
-        
-        
-    
-});
+);
 
 const EmployeeModel = mongoose.model("employee", employeeSchema);
 

@@ -2,20 +2,17 @@ const router = require('express').Router();
 const EmployeeModel = require('../../models/User/Employee');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const nodemailer=require('nodemailer')
-const cors = require('cors');
-const express = require('express');
+//const cors = require('cors');
+//const express = require('express');
 const path = require('path');
 
 //const nodemailer = require('nodemailer');
-const app = express();
-//app.use(express.static('uploads/images')); 
-app.use(cors());
-app.use(express.json());
-app.use(
-  express.static(path.join(__dirname, '../frontend/public/image/userProfile/'))
-);
+
+
+
+
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
@@ -381,20 +378,25 @@ router.post('/upload-image', upload.single('file'), async (req, res) => {
   }
 });
 
-router.get("/image/:userEmail", async (req, res) => {
-  const userEmail = req.params.userEmail;
+router.get('/user/image/:userEmail', async (req, res) => {
   try {
-    const user = await EmployeeModel.findOne({ email: userEmail });
-    if (user ) {
-      // If user and image exist, send back the image URL
-      res.json({user });
+    const user = await EmployeeModel.findOne({ email: req.params.userEmail });
+    console.log('User:', user);
+    if (user && user.image) {
+      console.log('Image found:', user.image);
+      const imagePath = path.join(__dirname, '..', '..', 'uploads', 'images', user.image);
+
+      res.sendFile(imagePath);
     } else {
-      res.status(404).json({ error: "Image not found" });
+      console.log('Image not found for user:', req.params.userEmail);
+      res.status(404).json({ error: req.params.userEmail });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 router.route('/passwordchange').post(async (req, res) => {
@@ -440,6 +442,67 @@ router.delete('/delete', (req, res) => {
           console.error('Error deleting user account:', error);
           res.status(500).json({ message: 'Failed to delete user account. Please try again.' });
       });
+});
+
+
+router.route('/staffdetails').get((req, res) => {
+  EmployeeModel.find({ role: 'staff' })
+    .then((users) => {
+      const userCount = users.length; // Get the count of regular users
+      res.json({ users, userCount }); // Send both users and userCount in the response
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
+router.route('/getUser/:id').get((req, res) => {
+  const id = req.params.id;
+  EmployeeModel.findById(id) // Using findById to directly search by _id
+    .then((user) => {
+      if (user) {
+        res.json(user); // Send the user details in the response
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
+
+
+router.route('/userupdate/:id').put(async (req, res) => {
+  try {
+    const id = req.params.id;
+    let updatedUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      number: req.body.number,
+    };
+
+    // Check if password is provided and hash it
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      updatedUserData.password = hashedPassword;
+    }
+
+    // Check if reentered password is provided and hash it
+    if (req.body.reenterPassword) {
+      const hashedReenterPassword = await bcrypt.hash(req.body.reenterPassword, 10);
+      updatedUserData.reenterPassword = hashedReenterPassword;
+    }
+
+    const updatedUser = await EmployeeModel.findByIdAndUpdate(
+      id,
+      updatedUserData,
+      { new: true }
+    ); // Set { new: true } to return the updated document
+
+    if (updatedUser) {
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 
