@@ -64,7 +64,7 @@ const StockChart = () => {
 
   return (
     <main>
-      <canvas ref={chartRef} id="stockChart" width="400" height="200"></canvas>
+      <canvas ref={chartRef} id="stockChart" width="1000" height="550"></canvas>
     </main>
   );
 };

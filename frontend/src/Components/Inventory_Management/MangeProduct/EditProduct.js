@@ -125,7 +125,7 @@ function EditProduct() {
       <header>
         <AdminNav />
       </header>
-      <main>
+      <main className="padd">
         {loading ? (
           <div className="loader"></div>
         ) : (
@@ -162,11 +162,11 @@ function EditProduct() {
                       required
                     >
                       <option value="">Select a category</option>
-                      <option value="iphone">iPhone</option>
-                      <option value="android">Android Phones</option>
-                      <option value="windows">Windows Phones</option>
-                      <option value="Tablets & Ipads">Tablets & Ipads</option>
-                      <option value="accessories">Accessories</option>
+                      <option value="Iphone">iPhone</option>
+                      <option value="Android">Android Phones</option>
+                      <option value="Windows">Windows Phones</option>
+                      <option value="Tablets">Tablets</option>
+                      <option value="Accessories">Accessories</option>
                     </select>
                   </div>
 
@@ -225,7 +225,7 @@ function EditProduct() {
                 <div className="formRight">
                   <div className="form-group">
                     <label htmlFor="image">Image:</label>
-                    <div>
+                    <div className="w-full mx-auto grid grid-cols-2 justify-items-center justify-center gap-y-5 gap-x-8 mt-4 mb-4">
                       {Array.isArray(image) ? (
                         image.map((img, index) => (
                           <img
@@ -234,6 +234,7 @@ function EditProduct() {
                             height={200}
                             src={img}
                             alt={`productImage${index}`}
+                            className="image hover:scale-110"
                           />
                         ))
                       ) : image ? (
@@ -242,6 +243,7 @@ function EditProduct() {
                           height={200}
                           src={image}
                           alt="productImage"
+                          className="image hover:scale-110"
                         />
                       ) : (
                         <p>No Image Selected</p>
@@ -252,7 +254,7 @@ function EditProduct() {
                       type="file"
                       id="image"
                       name="image"
-                      accept="image/"
+                      accept="image/png, image/jpeg, image/jpg"
                       onChange={uploadImage}
                       multiple
                     />

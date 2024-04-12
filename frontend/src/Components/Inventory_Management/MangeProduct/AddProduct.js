@@ -110,7 +110,7 @@ const uploadImage = async (event) => {
       <header>
         <AdminNav />
       </header>
-      <main>
+      <main className="padd">
         {loading ? (
           <div className="loader"></div>
         ) : (
@@ -142,11 +142,11 @@ const uploadImage = async (event) => {
                     required
                   >
                     <option value="">Select a category</option>
-                    <option value="iphone">iPhone</option>
-                    <option value="android">Android Phones</option>
-                    <option value="windows">Windows Phones</option>
-                    <option value="Tablets & Ipads">Tablets & Ipads</option>
-                    <option value="accessories">Accessories</option>
+                    <option value="Iphone">IPhone</option>
+                    <option value="Android">Android Phones</option>
+                    <option value="Windows">Windows Phones</option>
+                    <option value="Tablets">Tablets</option>
+                    <option value="Accessories">Accessories</option>
                   </select>
                 </div>
 
@@ -205,24 +205,29 @@ const uploadImage = async (event) => {
               <div className="formRight">
                 <div className="form-group">
                   <label htmlFor="image">Image:</label>
-                  <div>
+                  <div className="w-full mx-auto grid grid-cols-2 justify-items-center justify-center gap-y-5 gap-x-8 mt-4 mb-4">
                     {Array.isArray(image) ? (
                       image.map((img, index) => (
-                        <img
-                          key={index}
-                          width={200}
-                          height={200}
-                          src={img}
-                          alt={`productImage${index}`}
-                        />
+                        <div key={index} className="image-container">
+                          <img
+                            className="image hover:scale-110"
+                            width={200}
+                            height={200}
+                            src={img}
+                            alt={`productImage${index}`}
+                          />
+                        </div>
                       ))
                     ) : image ? (
-                      <img
-                        width={200}
-                        height={200}
-                        src={image}
-                        alt="productImage"
-                      />
+                      <div className="image-container">
+                        <img
+                          className="image hover:scale-110"
+                          width={200}
+                          height={200}
+                          src={image}
+                          alt="productImage"
+                        />
+                      </div>
                     ) : (
                       <p>No Image Selected</p>
                     )}
@@ -232,9 +237,10 @@ const uploadImage = async (event) => {
                     type="file"
                     id="image"
                     name="image"
-                    accept="image/"
+                    accept="image/png, image/jpeg, image/jpg"
                     onChange={uploadImage}
                     multiple
+                    required
                   />
                 </div>
                 <button disabled={loading} type="submit">

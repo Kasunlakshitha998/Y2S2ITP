@@ -102,6 +102,22 @@ function Products() {
                           Android
                         </button>
                       </li>
+                      <li>
+                        <button
+                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                          onClick={() => filterRes('Tablets')}
+                        >
+                          Tablets
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                          onClick={() => filterRes('accessories')}
+                        >
+                          Accessories
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 )}
