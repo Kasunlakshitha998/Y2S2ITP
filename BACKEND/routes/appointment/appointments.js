@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const Appointment = require("../../models/appointment/appointment"); // Adjusted import to match the model name
 
+
+
+
 // Create operation (Create a new appointment)
 router.route("/add").post((req, res) => {
     // Extract data from request body

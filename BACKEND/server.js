@@ -10,12 +10,23 @@ const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 8175;
 
 // Middleware
+app.use(express.json({ extended: false, limit: '50mb' }));
+app.use(
+  express.urlencoded({ limit: '50mb', extended: false, parameterLimit: 50000 })
+);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+//const express = require('express');
+const path = require('path');
 
-app.use(bodyParser.json({ limit: '50mb' })); 
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+//const nodemailer = require('nodemailer');
+//const app = express();
+
+
+
+
+
 
 
 

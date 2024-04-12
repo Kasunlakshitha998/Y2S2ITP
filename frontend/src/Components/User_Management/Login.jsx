@@ -46,6 +46,7 @@ function Login() {
                 if (result.data.status === 'success') {
                     Cookies.set('token', result.data.token, { expires: 1 });
                     Cookies.set('userEmail', email, { expires: 1 });
+                    Cookies.set('userId', result.data.userId, { expires: 1 }); // Store user ID in cookies
     
                     const isAdmin = result.data.isAdmin;
                     const isStaff = result.data.isStaff; // New
@@ -80,7 +81,7 @@ function Login() {
                 });
             });
     }
-
+    
     return (
         <div class="login-wrapper">
     

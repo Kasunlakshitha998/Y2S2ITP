@@ -2,6 +2,7 @@ const router = require('express').Router();
 let Product = require('../../models/Inventory_Management/product');
 const cloudinary = require('../../Utils/cloudinary');
 
+
 //add product
 router.route('/add').post(async (req, res) => {
   try {
