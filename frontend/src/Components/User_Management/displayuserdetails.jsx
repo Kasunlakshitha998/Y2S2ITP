@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import "./displayuser.css"; // Import your CSS file
 import Swal from 'sweetalert2';
+//import AdminNav from '../../Nav/adminNav';
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -59,7 +60,9 @@ function Users() {
     
 
     return (
+        
         <div className="container-fluid">
+        
         {/* Add card-container class */}
         <div className="card-body">
             <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
