@@ -69,22 +69,10 @@
   /* displayuser.css */
 
 /* Define 3D background animation */
-@keyframes rotate3DBackground {
-    0% {
-      background-position: 0% 50%;
-    }
-    100% {
-      background-position: 100% 50%;
-    }
-  }
+
   
   /* Apply animation to container */
-  .container-fluid {
-    animation: rotate3DBackground 10s linear infinite; /* Apply 3D background rotation animation */
-    background: linear-gradient(-45deg, #ff9966, #ff5e62, #ff66a3, #6610f2, #003366, #3399ff); /* Define gradient colors */
-    background-size: 400% 400%; /* Set background size */
-    overflow: hidden; /* Hide overflow */
-  }
+  
 /* displayuser.css */
 
 /* Ensure the container covers the entire screen */
