@@ -116,7 +116,7 @@ function AccountDetails() {
                         <div className="card-body text-center">
                              
                         
-                                <p>Let uplaod image</p>
+                           
                             
                                 <img src={`http://localhost:3000/image/`+userImage} alt="User" />
 
