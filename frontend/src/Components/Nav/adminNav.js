@@ -5,16 +5,24 @@ import './adminNav.css';
 function AdminNav() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <>
       <header className="admin-header">
+        <button className="burger-menu" onClick={toggleSidebar}>
+          ☰
+        </button>
         <div className="logo">
-          <Link to="/admin">Admin Panel</Link>
+          <Link to="/admin">Admin Dashboard</Link>
         </div>
         <div className="profile">
           <img src="profile.jpg" alt="Profile" />
@@ -30,7 +38,7 @@ function AdminNav() {
         </div>
       </header>
 
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <ul>
           <li className={activeLink === '/admin' ? 'active' : ''}>
             <Link to="/admin">Dashboard</Link>

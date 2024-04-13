@@ -58,7 +58,8 @@ app.use(express.json());
 
 app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
-app.use('/appointment',appointmentRouter);//Appointment 
+app.use('/appointment', appointmentRouter);//Appointment 
+//order
 //feedback
 //leave
 //promotion
