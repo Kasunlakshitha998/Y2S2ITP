@@ -118,7 +118,8 @@ function AccountDetails() {
                         
                            
                             
-                                <img src={`http://localhost:3000/image/`+userImage} alt="User" />
+                        <img src={userImage ? `http://localhost:3000/image/${userImage}` : 'broken-image-url.png'}  />
+
 
                                 <div className="small font-italic text-muted mb-4">
                                     <input type="file" onChange={e=>setFile(e.target.files[0])}/> 
