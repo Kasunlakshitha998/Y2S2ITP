@@ -92,7 +92,8 @@ function Users() {
                                     <td>{user.email}</td>
                                     <td>{user.password}</td>
                                     <td>{user.number}</td>
-                                    <td><img src={`./image/userProfile/${user.image}`} alt="User" /></td>
+                                    <td><img src={`http://localhost:3000/image/${user.image}`} alt="User" /></td>
+
 
                                     <td>
                                         <Link to={`/userupdate/${user._id}`} className='btn btn-success'>Update</Link>
