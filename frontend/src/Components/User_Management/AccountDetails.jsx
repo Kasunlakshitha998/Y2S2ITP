@@ -23,16 +23,22 @@ function AccountDetails() {
 
 
 
-
    const handleUpload = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
     const userEmail = Cookies.get('userEmail');
     const formData = new FormData();
     formData.append('file', File);
-    formData.append('email', userEmail); // Append the email to the FormData
+    formData.append('email', userEmail);
+
     axios.post("http://localhost:8175/user/upload-image", formData)
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res);
+            // Refresh the page after successful upload
+            window.location.reload();
+        })
         .catch(err => console.log(err));
-}
+};
 
 
 
@@ -46,6 +52,7 @@ function AccountDetails() {
                     setName(result.data.name);
                     setEmail(result.data.email);
                     setNumber(result.data.number);
+                    setUserImage(result.data.image)
                 })
                 .catch(err => console.log(err));
         }
@@ -88,6 +95,7 @@ function AccountDetails() {
     }
     
    
+
     
    
 
@@ -110,7 +118,8 @@ function AccountDetails() {
                         
                                 <p>Let uplaod image</p>
                             
-                         
+                                <img src={`http://localhost:3000/image/`+userImage} alt="User" />
+
                                 <div className="small font-italic text-muted mb-4">
                                     <input type="file" onChange={e=>setFile(e.target.files[0])}/> 
                                 </div>
