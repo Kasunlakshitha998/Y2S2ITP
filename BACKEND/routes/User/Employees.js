@@ -505,6 +505,31 @@ router.route('/userupdate/:id').put(async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.post('/remove-image', async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+      // Find the user with the provided userId
+      const user = await EmployeeModel.findOne({ _id: userId });
+
+      // If user not found, return an error
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Remove the image filename from the user document
+      user.image = null; // Assuming 'image' is the field storing the filename
+      await user.save();
+
+      res.status(200).json({ message: 'Image removed successfully', user });
+  } catch (error) {
+      console.error('Error removing image from MongoDB:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 
 
 //const PORT = process.env.PORT || 8181;

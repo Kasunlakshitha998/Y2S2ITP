@@ -57,3 +57,12 @@ body{margin-top:20px;
         margin-left: 1rem;
         margin-right: 1rem;
     }
+    /* Styles for left-aligned labels */
+.form-label {
+    text-align: left; /* Align labels to the left */
+}
+
+/* Adjust margin and padding for better spacing */
+.form-control {
+    margin-bottom: 10px; /* Add margin below each form control */
+}
