@@ -14,10 +14,9 @@ const employeeSchema = new mongoose.Schema({
     },
     otp: String,
      // Add a field to store OTP
-     image: {
-        type: String
-     }  
-} ,
+     image: String
+     
+} 
 
 );
 

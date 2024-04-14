@@ -334,7 +334,7 @@ router.get('/getUsers/:userId', (req, res) => {
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../frontend/public/image/userProfile/');
+    cb(null, 'C:/Users/User/Documents/GitHub/Y2S2ITP/Frontend/public/image');
   },
   filename:  (req, file, cb)=> {
     //const uniqueSuffix = Date.now();
@@ -384,18 +384,19 @@ router.get('/user/image/:userEmail', async (req, res) => {
     console.log('User:', user);
     if (user && user.image) {
       console.log('Image found:', user.image);
-      const imagePath = path.join(__dirname, '..', '..', 'uploads', 'images', user.image);
+      const imagePath = path.join('C:/Users/User/Documents/GitHub/Y2S2ITP/Frontend/public/image', user.image);
 
       res.sendFile(imagePath);
     } else {
       console.log('Image not found for user:', req.params.userEmail);
-      res.status(404).json({ error: req.params.userEmail });
+      res.status(404).json({ error: 'Image not found for user' });
     }
   } catch (error) {
     console.error('Error fetching image:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 
@@ -504,6 +505,31 @@ router.route('/userupdate/:id').put(async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.post('/remove-image', async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+      // Find the user with the provided userId
+      const user = await EmployeeModel.findOne({ _id: userId });
+
+      // If user not found, return an error
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Remove the image filename from the user document
+      user.image = null; // Assuming 'image' is the field storing the filename
+      await user.save();
+
+      res.status(200).json({ message: 'Image removed successfully', user });
+  } catch (error) {
+      console.error('Error removing image from MongoDB:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 
 
 //const PORT = process.env.PORT || 8181;
