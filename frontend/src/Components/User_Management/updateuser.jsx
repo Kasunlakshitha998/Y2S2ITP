@@ -115,7 +115,8 @@ function UpdateUsers() {
                         className="form-control rounded-0"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                       
+                        disabled
+                
                     />
                 </div>
                 <div className="mb-3">

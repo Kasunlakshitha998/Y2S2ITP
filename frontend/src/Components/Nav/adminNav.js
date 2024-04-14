@@ -5,16 +5,24 @@ import './adminNav.css';
 function AdminNav() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <>
-      <div className="admin-header">
+      <header className="admin-header">
+        <button className="burger-menu" onClick={toggleSidebar}>
+          ☰
+        </button>
         <div className="logo">
-          <Link to="/">Admin Panel</Link>
+          <Link to="/admin">Admin Dashboard</Link>
         </div>
         <div className="profile">
           <img src="profile.jpg" alt="Profile" />
@@ -22,15 +30,15 @@ function AdminNav() {
           <div className="dropdown">
             <button className="dropbtn">▼</button>
             <div className="dropdown-content">
-              <Link to="#">Profile</Link>
+              <Link to="/AccountDetails">Profile</Link>
               <Link to="#">Settings</Link>
               <Link to="#">Logout</Link>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <ul>
           <li className={activeLink === '/admin' ? 'active' : ''}>
             <Link to="/admin">Dashboard</Link>
@@ -38,17 +46,20 @@ function AdminNav() {
           <li className={activeLink === '/userdetails' ? 'active' : ''}>
             <Link to="/userdetails">Users</Link>
           </li>
+          <li className={activeLink === '/staffdetails' ? 'active' : ''}>
+            <Link to="/staffdetails">staff</Link>
+          </li>
           <li className={activeLink === '/admin/productsList' ? 'active' : ''}>
             <Link to="/admin/productsList">Products</Link>
           </li>
           <li className={activeLink === '/orders' ? 'active' : ''}>
             <Link to="/orders">Orders</Link>
           </li>
-          <li className={activeLink === '/settings' ? 'active' : ''}>
-            <Link to="/settings">Settings</Link>
+          <li className={activeLink === '/appoinment' ? 'active' : ''}>
+            <Link to="/appoinment">Appoinment</Link>
           </li>
         </ul>
-      </div>
+      </aside>
     </>
   );
 }

@@ -53,7 +53,7 @@ function Products() {
           <div className="ListCategory">
             <div className="flex">
               <button
-                onMouseMove={toggleCategory}
+                onClick={toggleCategory}
                 className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-lg hover:bg-gray-200"
                 type="button"
               >
@@ -102,6 +102,22 @@ function Products() {
                           Android
                         </button>
                       </li>
+                      <li>
+                        <button
+                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                          onClick={() => filterRes('Tablets')}
+                        >
+                          Tablets
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                          onClick={() => filterRes('accessories')}
+                        >
+                          Accessories
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 )}
@@ -143,7 +159,7 @@ function Products() {
 
           {filter ? (
             <>
-              <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+              <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-8 mt-4 mb-4">
                 {cat
                   .filter((product) => {
                     if (searchItem === '') {
@@ -159,14 +175,14 @@ function Products() {
                   .map((product) => (
                     <Link to={`/product/${product._id}`}>
                       <div
-                        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                        className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl"
                         key={product._id}
                       >
-                        <div>
+                        <div className="overflow-hidden">
                           <img
                             src={product.image[0]}
                             alt={`${product.name}_0`}
-                            className="h-80 w-72 object-cover rounded-t-xl"
+                            className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
                           />
                         </div>
 
@@ -228,16 +244,14 @@ function Products() {
                             </span>
                           </div>
 
-                          
                           <div class="flex items-center">
-                            
-                            <p class="text-lg font-semibold text-black cursor-auto my-3">
+                            <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
                               Rs.149,000
                             </p>
-                            
+
                             <del>
                               <p class="text-sm text-gray-600 cursor-auto ml-2">
-                                Rs.{product.price}
+                                Rs.{product.price.toLocaleString()}
                               </p>
                             </del>
 
@@ -268,7 +282,7 @@ function Products() {
             </>
           ) : (
             <>
-              <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+              <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-8 mt-4 mb-4">
                 {products
                   .filter((product) => {
                     if (searchItem === '') {
@@ -284,14 +298,14 @@ function Products() {
                   .map((product) => (
                     <Link to={`/product/${product._id}`}>
                       <div
-                        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                        className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl"
                         key={product._id}
                       >
-                        <div>
+                        <div className="overflow-hidden">
                           <img
                             src={product.image[0]}
                             alt={`${product.name}_0`}
-                            className="h-80 w-72 object-cover rounded-t-xl"
+                            className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
                           />
                         </div>
 
@@ -354,12 +368,12 @@ function Products() {
                           </div>
 
                           <div class="flex items-center">
-                            <p class="text-lg font-semibold text-black cursor-auto my-3">
+                            <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
                               Rs.149,000
                             </p>
                             <del>
-                              <p class="text-sm text-gray-600 cursor-auto ml-2">
-                                Rs.{product.price}
+                              <p class="text-sm text-red-600 cursor-auto ml-2">
+                                Rs.{product.price.toLocaleString()}
                               </p>
                             </del>
 

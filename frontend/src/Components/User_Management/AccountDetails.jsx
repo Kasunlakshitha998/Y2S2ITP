@@ -4,24 +4,40 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
+import { BsPersonFill } from 'react-icons/bs'; 
 
 function AccountDetails() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const navigate = useNavigate(); 
-   const [image, setImage] = useState(null);
-    const [userImage, setUserImage] = useState(null); 
-  
+    const [File, setFile] = useState("");
+    const [userImage, setUserImage] = useState(null); // 
+
+    const handleUpload = (e) => {
+        e.preventDefault();
+        const userEmail = Cookies.get('userEmail');
+        const formData = new FormData();
+        formData.append('file', File);
+        formData.append('email', userEmail);
+
+        axios.post("http://localhost:8175/user/upload-image", formData)
+            .then(res => {
+                console.log(res);
+                window.location.reload();
+            })
+            .catch(err => console.log(err));
+    };
 
     useEffect(() => {
-        const userEmail = Cookies.get('userEmail');
-        if (userEmail) {
-            axios.get(`http://localhost:8175/user/getUsers/${userEmail}`)
+        const userId = Cookies.get('userId');
+        if (userId) {
+            axios.get(`http://localhost:8175/user/getUsers/${userId}`)
                 .then(result => {
                     setName(result.data.name);
                     setEmail(result.data.email);
                     setNumber(result.data.number);
+                    setUserImage(result.data.image);
                 })
                 .catch(err => console.log(err));
         }
@@ -35,7 +51,8 @@ function AccountDetails() {
                 name,
                 email,
                 number,
-                userEmail: Cookies.get('userEmail') 
+                userEmail: Cookies.get('userEmail'),
+                userId: Cookies.get('userId')
             })
             .then((result) => {
                 console.log(result);
@@ -45,7 +62,7 @@ function AccountDetails() {
                     title: "Update successful",
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
                 navigate('/AccountDetails'); 
             })
             .catch((err) => {
@@ -60,42 +77,16 @@ function AccountDetails() {
             });
     }
 
-    const submitImage = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append("image", image);
-      
-        try {
-            const result = await axios.post(
-                "http://localhost:8175/user/upload-image",
-                formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                    params: { userEmail: Cookies.get('userEmail') } // Send userEmail as a query parameter
-                }
-            );
-            console.log(result);
-        } catch (error) {
-            console.error('Error uploading image:', error);
-            // Handle error
-        }
+    const handleRemovePhoto = () => {
+        axios.post(`http://localhost:8175/user/remove-image`, { userId: Cookies.get('userId') })
+            .then(res => {
+                console.log(res);
+                setUserImage(null);
+            })
+            .catch(err => console.log(err));
     };
-      
-    const onInputChange = (e) => {
-        console.log(e.target.files[0]);
-        setImage(e.target.files[0]);
-    };
-
-    useEffect(() => {
-        const userEmail = Cookies.get('userEmail');
-        if (userEmail) {
-            axios.get(`http://localhost:8175/user/get-image/${userEmail}`)
-                .then(result => {
-                    setUserImage(result.data.image); // Assuming the response is an object with 'image' property
-                })
-                .catch(err => console.log(err));
-        }
-    }, []);
-
+    
+    
     return (
         <div className="container-xl px-4 mt-4">
             <nav className="nav nav-borders">
@@ -111,16 +102,19 @@ function AccountDetails() {
                     <div className="card mb-4 mb-xl-0">
                         <div className="card-header">Profile Picture</div>
                         <div className="card-body text-center">
-                        <img src={userImage} alt="User" /> 
-                          
-                                <p>No image available</p>
-                            
-                            <form onSubmit={submitImage}>
-                                <div className="small font-italic text-muted mb-4">
-                                    <input type="file" onChange={onInputChange}/> 
-                                </div>
-                                <button className="btn btn-primary" type="submit">Upload new image</button>
-                            </form>
+                            {userImage ? (
+                                <img src={`http://localhost:3000/image/${userImage}`} alt="Profile" style={{ borderRadius: '50%' }} />
+
+                            ) : (
+                                <BsPersonFill size={100} color="#adb5bd" />
+                            )}
+                            <div className="small font-italic text-muted mb-4">
+                                <input type="file" onChange={e => setFile(e.target.files[0])}/> 
+                                <button className="btn btn-primary mt-2" onClick={handleUpload}>Upload new image</button>
+                                {userImage && (
+                                    <button className="btn btn-danger mt-2" onClick={handleRemovePhoto}>Remove photo</button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,7 +129,7 @@ function AccountDetails() {
                                 </div>
                                 <div className="mb-3">
                                     <label className="small mb-1" htmlFor="inputEmailAddress">Email address</label>
-                                    <input className="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <input className="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
                                 </div>
                                 <div className="row gx-3 mb-3">
                                     <div className="col-md-6">
@@ -143,7 +137,7 @@ function AccountDetails() {
                                         <input className="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value={number} onChange={(e) => setNumber(e.target.value)} />
                                     </div>
                                 </div>
-                                <button className="btn btn-primary" type="submit" >Save changes</button>
+                                <button className="btn btn-primary" type="submit">Save changes</button>
                             </form>
                         </div>
                     </div>

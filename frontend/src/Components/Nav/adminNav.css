@@ -1,7 +1,7 @@
 .admin-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
+  background-color: #0f1829;
+  color: #f0f0f0;
+  padding: 15px;
   position: fixed;
   top: 0;
   left: 0;
@@ -9,13 +9,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100; 
+  z-index: 500; 
 }
 
 .admin-header .logo a {
   text-decoration: none;
-  color: #fff;
-  font-size: 1.2rem;
+  color: #ecececf6;
+  font-size: 1.5rem;
+  padding: 50px;
+  font-weight: bold;
 }
 
 .admin-header .profile {
@@ -72,26 +74,30 @@
 
 
 .sidebar {
-  background-color: #333;
+  background-color: #0f1829;
   color: #fff;
-  width: 200px;
+  width: 180px;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   overflow-y: auto;
-  z-index: 50;
+  z-index: 200;
   padding-top: 50px;
+  border-radius: 0px 0px 15px 0px;
+  box-shadow: #0f1829;
+  padding-left: 5px;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+  padding-top: 25px;
   margin: 0;
 }
 
 .sidebar ul li {
-  margin-bottom: 10px;
+  margin-bottom: 1px;
 }
 
 .sidebar ul li a {
@@ -102,11 +108,23 @@
 }
 
 .sidebar ul li a:hover {
-  background-color: #555;
+  color: #3e45fe;
 }
 
 .sidebar ul li.active a {
-  background-color: #555;
-  color: #fff;
+  color: #3e45fe;
 }
 
+.sidebar {
+  /* your existing styles */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.burger-menu {
+  font-size: 3vh;
+}
