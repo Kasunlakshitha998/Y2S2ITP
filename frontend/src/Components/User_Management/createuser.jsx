@@ -51,8 +51,8 @@ function CreateUsers() {
     }
 
     return (
-        <div className="create-users-container">
-            <div className="create-users-form">
+        <div className="container">
+             <div className="form-container">
                 <h2>Register</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">

@@ -52,11 +52,12 @@ function Signup() {
       }
 
         // Validate name (should contain only letters)
-        const nameRegex = /^[a-zA-Z]+$/;
+        const nameRegex = /^[a-zA-Z\s]+$/;
         if (!name.match(nameRegex)) {
             alert("Name should only contain letters");
             return;
         }
+     
 
         // Check if passwords match
         if (password !== reenterPassword) {

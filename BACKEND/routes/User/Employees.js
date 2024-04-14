@@ -96,11 +96,10 @@ router.route('/getUser/:id').get((req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
-
-router.route('/userupdate/:id').put(async (req, res) => {
+router.put('/userupdate/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    let updatedUserData = {
+    const updatedUserData = {
       name: req.body.name,
       email: req.body.email,
       number: req.body.number,
@@ -122,7 +121,7 @@ router.route('/userupdate/:id').put(async (req, res) => {
       id,
       updatedUserData,
       { new: true }
-    ); // Set { new: true } to return the updated document
+    );
 
     if (updatedUser) {
       res.json(updatedUser);
@@ -447,7 +446,7 @@ router.delete('/delete', (req, res) => {
 
 
 router.route('/staffdetails').get((req, res) => {
-  EmployeeModel.find({ role: 'staff' })
+  EmployeeModel.find({ role: { $in: ['staff', 'admin'] } }) // Use $in operator to match multiple values
     .then((users) => {
       const userCount = users.length; // Get the count of regular users
       res.json({ users, userCount }); // Send both users and userCount in the response
@@ -469,42 +468,8 @@ router.route('/getUser/:id').get((req, res) => {
 });
 
 
-router.route('/userupdate/:id').put(async (req, res) => {
-  try {
-    const id = req.params.id;
-    let updatedUserData = {
-      name: req.body.name,
-      email: req.body.email,
-      number: req.body.number,
-    };
 
-    // Check if password is provided and hash it
-    if (req.body.password) {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      updatedUserData.password = hashedPassword;
-    }
 
-    // Check if reentered password is provided and hash it
-    if (req.body.reenterPassword) {
-      const hashedReenterPassword = await bcrypt.hash(req.body.reenterPassword, 10);
-      updatedUserData.reenterPassword = hashedReenterPassword;
-    }
-
-    const updatedUser = await EmployeeModel.findByIdAndUpdate(
-      id,
-      updatedUserData,
-      { new: true }
-    ); // Set { new: true } to return the updated document
-
-    if (updatedUser) {
-      res.json(updatedUser);
-    } else {
-      res.status(404).json({ error: 'User not found' });
-    }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 router.post('/remove-image', async (req, res) => {
   const { userId } = req.body;
 
@@ -527,8 +492,61 @@ router.post('/remove-image', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
   }
 });
+router.post(`/userimageupdate/:id`, upload.single('file'), async (req, res) => {
+  console.log(req.file);
 
+  const id = req.params.id;
 
+  // Check if a file was uploaded
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  try {
+    // Find the user by ID
+    const user = await EmployeeModel.findById(id);
+
+    // If user not found, return an error
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Assuming you want to save the filename to MongoDB
+    const imageName = req.file.filename;
+
+    // Update the user's image field with the filename
+    user.image = imageName;
+    await user.save();
+
+    res.status(200).json({ message: 'Image uploaded successfully', user });
+  } catch (error) {
+    console.error('Error saving image filename to MongoDB:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.post('/userremove-image/:id', async (req, res) =>   {
+  const id = req.params.id;
+
+  try {
+      // Find the user with the provided id
+      const user = await EmployeeModel.findById(id);
+
+      // If user not found, return an error
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Remove the image filename from the user document
+      user.image = null; // Assuming 'image' is the field storing the filename
+      await user.save();
+
+      res.status(200).json({ message: 'Image removed successfully', user });
+  } catch (error) {
+      console.error('Error removing image from MongoDB:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 
