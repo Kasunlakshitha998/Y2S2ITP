@@ -57,7 +57,7 @@ router.route('/login').post((req, res) => {
                           res.cookie('userEmail', user.email, { maxAge: 86400000 });
                         
                           // Send user ID along with other data
-                          res.json({ status: 'success', userId: user._id, isAdmin: user.role === 'admin', isStaff: user.role === 'staff' });
+                          res.json({ status: 'success', userId: user._id,role:user.role, isAdmin: user.role === 'admin', isStaff: user.role === 'staff' });
                       } else {
                           res.status(401).json({ status: 'incorrect password' });
                       }

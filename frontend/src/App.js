@@ -1,4 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route,Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
+
+
 import HomePage from './pages/User/HomePage';
 import ProductPage from './pages/User/ProductPage';
 import Dashboard from './pages/Admin/Dashboard';
@@ -27,14 +31,27 @@ import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 
+const AdminRouteGuard = ({ element }) => {
+  const userRole = Cookies.get('role');
+
+  if (userRole === 'admin') {
+    return element;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+
 
 function App() {
+ 
+
   return (
     <div>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductPage />} />
-        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin/*" element={<AdminRouteGuard element={<Dashboard />} />} />
         <Route path="/admin/productsList" element={<ProductsList />} />
         <Route path="/admin/productsList/addProduct" element={<AddProduct />} />
         <Route path="/admin/productsList/editProduct/:id" element={<EditProduct />} />

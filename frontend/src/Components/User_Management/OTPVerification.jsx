@@ -9,6 +9,32 @@ function OTPVerification() {
   const [otp, setOTP] = useState('');
   const [verificationStatus, setVerificationStatus] = useState('');
   const navigate = useNavigate();
+  const [countdown, setCountdown] = useState(60);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prevCountdown => prevCountdown - 1);
+    }, 1000);
+
+   
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "try again time is over ",
+      });
+      navigate('/forgot-password');
+    }
+  }, [countdown, navigate]);
+
+
+
+
 
   useEffect(() => {
     const inputs = document.querySelectorAll(".input");
@@ -29,7 +55,7 @@ function OTPVerification() {
         input.addEventListener("focus", focusFunc);
         input.addEventListener("blur", blurFunc);
 
-        // Cleanup function to remove event listeners when component unmounts
+       
         return () => {
             input.removeEventListener("focus", focusFunc);
             input.removeEventListener("blur", blurFunc);
@@ -129,7 +155,7 @@ function OTPVerification() {
             </div>
             <button type="submit" className="btn">Send</button>
             {verificationStatus && <p className="mt-3">{verificationStatus}</p>}
-
+            <p className="mt-3">Time Left: {countdown} seconds</p>
           </form>
         </div>
       </div>

@@ -47,7 +47,7 @@ function Login() {
                     Cookies.set('token', result.data.token, { expires: 1 });
                     Cookies.set('userEmail', email, { expires: 1 });
                     Cookies.set('userId', result.data.userId, { expires: 1 }); // Store user ID in cookies
-    
+                    Cookies.set('role', result.data.role, { expires: 1 });
                     const isAdmin = result.data.isAdmin;
                     const isStaff = result.data.isStaff; // New
     
