@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
+import Cookies from 'js-cookie';
 
 function UserNav() {
   const location = useLocation();
@@ -19,6 +20,17 @@ function UserNav() {
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
+
+  const logout = () => {
+    // Clear frontend cookies
+    Cookies.remove('token');
+    Cookies.remove('userEmail');
+    Cookies.remove('userId');
+    Cookies.remove('role');
+    
+    // Redirect to login page
+    window.location.href = '/login';
+  };
 
   return (
     <nav className="bg-white shadow fixed w-full z-20 top-0 left-0 border-b max-h-25">
@@ -107,9 +119,9 @@ function UserNav() {
                   </li>
 
                   <li>
-                    <Link to="#" className="block py-2 px-4 hover:bg-gray-100">
+                    <Link onClick={logout} className="block py-2 px-4 hover:bg-gray-100">
                       Logout
-                    </Link>
+                    </Link> 
                   </li>
                 </ul>
               </div>

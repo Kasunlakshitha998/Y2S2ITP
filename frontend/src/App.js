@@ -41,6 +41,18 @@ const AdminRouteGuard = ({ element }) => {
   }
 };
 
+const UserRouteGuard = ({ element }) => {
+  const userRole = Cookies.get('role');
+
+  if (userRole === 'user') {
+    return element;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+
+
 
 
 function App() {
@@ -50,11 +62,13 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/product/:id" element={<AdminRouteGuard element={<ProductPage />} />} />
+
         <Route path="/admin/*" element={<AdminRouteGuard element={<Dashboard />} />} />
-        <Route path="/admin/productsList" element={<ProductsList />} />
-        <Route path="/admin/productsList/addProduct" element={<AddProduct />} />
-        <Route path="/admin/productsList/editProduct/:id" element={<EditProduct />} />
+        <Route path="/admin/productsList" element={<AdminRouteGuard element={<ProductsList />} />} />
+        <Route path="/admin/productsList/addProduct" element={<AdminRouteGuard element={<AddProduct />} />} />
+        <Route path="/admin/productsList/editProduct/:id" element={<AdminRouteGuard element={<EditProduct />} />} />
+
         <Route path="/admin/reg" element={<RegistrationForm />} />
 
         <Route path="/register" element={<Signup />} />
@@ -62,11 +76,12 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-otp" element={<OTPVerification />} />
-        <Route path="/userdetails" element={<Users />} /> 
-        <Route path="/usercreate" element={<CreateUsers />} />
-        <Route path="/userupdate/:id" element={<UpdateUsers />} />
-        <Route path="/AccountDetails" element={<AccountDetails />} />
-        <Route path="/SecuritySettings" element={<SecuritySettings />} />
+        <Route path="/userdetails" element={<AdminRouteGuard element={<Users />} />} /> 
+        <Route path="/usercreate" element={<AdminRouteGuard element={<CreateUsers />} />} />
+        <Route path="/userupdate/:id" element={<AdminRouteGuard element={<UpdateUsers />} />} />
+
+        <Route path="/AccountDetails" element={<UserRouteGuard element={<AccountDetails />} />} />
+        <Route path="/SecuritySettings" element={<UserRouteGuard element={<SecuritySettings />} />} />
         <Route path="/createstaff" element={<CreateStaff />} />
 
 

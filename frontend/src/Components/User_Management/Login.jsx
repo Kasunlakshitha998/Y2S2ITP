@@ -44,7 +44,7 @@ function Login() {
             .then((result) => {
                 console.log(result);
                 if (result.data.status === 'success') {
-                    Cookies.set('token', result.data.token, { expires: 1 });
+                   // Cookies.set('token', result.data.token, { expires: 1 });
                     Cookies.set('userEmail', email, { expires: 1 });
                     Cookies.set('userId', result.data.userId, { expires: 1 }); // Store user ID in cookies
                     Cookies.set('role', result.data.role, { expires: 1 });
