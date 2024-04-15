@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import './CreateUsers.css';
 import { BsPersonFill } from 'react-icons/bs'; 
 
-function UpdateUsers() {
+function UpdateStaff() {
     const { id } = useParams();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -12,6 +12,7 @@ function UpdateUsers() {
     const [reenterPassword, setReenterPassword] = useState("");
     const [number, setNumber] = useState("");
     const [image, setImage] = useState("");
+    const [role, setRole] = useState(""); // State for role
     const navigate = useNavigate();
     const [file, setFile] = useState("");
 
@@ -20,10 +21,10 @@ function UpdateUsers() {
             .then(result => {
                 setName(result.data.name);
                 setEmail(result.data.email);
-               // setPassword(result.data.password);
                 setReenterPassword(result.data.reenterPassword);
                 setNumber(result.data.number);
                 setImage(result.data.image);
+                setRole(result.data.role); // Set role from the data
             })
             .catch(err => console.log(err));
     }, [id]);
@@ -50,18 +51,18 @@ function UpdateUsers() {
         }
 
         // If all validations pass, proceed with the update request
-        axios.put(`http://localhost:8175/user/userupdate/${id}`, {
+        axios.put(`http://localhost:8175/user/staffupdate/${id}`, {
             name,
             email,
             password,
             reenterPassword,
             number,
-            
+            role, // Include role in the update request
         })
         .then((result) => {
             console.log(result);
             // Assuming you're using a navigation library like react-router-dom
-            navigate('/userdetails');
+            navigate('/staffdetails');
         })
         .catch((err) => {
             if (
@@ -97,28 +98,23 @@ function UpdateUsers() {
             .catch(err => console.log(err));
     };
     
-
-    
-    
-    
-
     return (
         <div className="container">
-        <div className="image-container">
-    {image ? (
-        <img src={`http://localhost:3000/image/${image}`} alt="Profile" style={{ borderRadius: '50%' }} />
-    ) : (
-        <BsPersonFill size={100} color="#adb5bd" />
-    )}
-    <div className="upload-remove-buttons">
-        <input type="file" onChange={e => setFile(e.target.files[0])}/> 
-        <button className="btn btn-primary mt-2 upload-btn" onClick={handleUpload}>Upload photo</button>
+            <div className="image-container">
+                {image ? (
+                    <img src={`http://localhost:3000/image/${image}`} alt="Profile" style={{ borderRadius: '50%' }} />
+                ) : (
+                    <BsPersonFill size={100} color="#adb5bd" />
+                )}
+                <div className="upload-remove-buttons">
+                    <input type="file" onChange={e => setFile(e.target.files[0])}/> 
+                    <button className="btn btn-primary mt-2 upload-btn" onClick={handleUpload}>Upload photo</button>
 
-        {image && (
-            <button className="btn btn-danger" onClick={handleRemovePhoto}>Remove photo</button>
-        )}
-    </div>
-</div>
+                    {image && (
+                        <button className="btn btn-danger" onClick={handleRemovePhoto}>Remove photo</button>
+                    )}
+                </div>
+            </div>
 
             <div className="form-container">
                 <h2>Update user</h2>
@@ -191,6 +187,21 @@ function UpdateUsers() {
                             onChange={(e) => setNumber(e.target.value)}
                         />
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="role">
+                            <strong>Role</strong>
+                        </label>
+                        <select
+                            className="form-control rounded-0"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                        >
+                            <option value="">Select role</option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
+                            
+                        </select>
+                    </div>
                     <button type="submit" className="btn btn-success w-100 rounded-0">
                         Update
                     </button>
@@ -200,4 +211,4 @@ function UpdateUsers() {
     );
 }
 
-export default UpdateUsers;
+export default UpdateStaff;

@@ -63,7 +63,7 @@ function Staff() {
         <div className="container-fluid">
         {/* Add card-container class */}
         <div className="card-body">
-            <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
+            <Link to="/createstaff" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
             <input
                 type="text"
                 placeholder="Search by name"
@@ -103,7 +103,7 @@ function Staff() {
                                             )}</td>
                                     <td>{user.role}</td>
                                     <td>
-                                            <Link to={`/userupdate/${user._id}`} className='btn btn-success'>
+                                            <Link to={`/staffupdate/${user._id}`} className='btn btn-success'>
                                                 <i className="bi bi-pencil-fill"></i> Update
                                             </Link>
                                             <button className='btn btn-danger ml-2' onClick={(e)=>handleDelete(user._id)}>

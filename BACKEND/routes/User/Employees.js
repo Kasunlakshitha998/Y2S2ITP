@@ -548,6 +548,67 @@ router.post('/userremove-image/:id', async (req, res) =>   {
   }
 });
 
+router.route('/staffregister').post((req, res) => {
+  const { name, email, password, number, role } = req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+    EmployeeModel.findOne({ email: email })
+      .then((existingUser) => {
+        if (existingUser) {
+          // Email already exists, return an error
+          res.status(400).json({ error: 'Email already registered' });
+        } else {
+          // Email is unique, create a new user
+          EmployeeModel.create({ name, email, password: hash, number, role })
+            .then((newEmployee) => res.json(newEmployee))
+            .catch((err) => res.status(500).json({ error: err.message }));
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+});
+
+router.put('/staffupdate/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      number: req.body.number,
+      role: req.body.role
+    };
+
+    // Check if password is provided and hash it
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      updatedUserData.password = hashedPassword;
+    }
+
+    // Check if reentered password is provided and hash it
+    if (req.body.reenterPassword) {
+      const hashedReenterPassword = await bcrypt.hash(req.body.reenterPassword, 10);
+      updatedUserData.reenterPassword = hashedReenterPassword;
+    }
+
+    const updatedUser = await EmployeeModel.findByIdAndUpdate(
+      id,
+      updatedUserData,
+      { new: true }
+    );
+
+    if (updatedUser) {
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 
 
 //const PORT = process.env.PORT || 8181;

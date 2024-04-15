@@ -22,6 +22,8 @@ import CreateUsers from './Components/User_Management/createuser'; // Import onc
 import AccountDetails from './Components/User_Management/AccountDetails';
 import SecuritySettings from './Components/User_Management/SecuritySettings';
 import Staff from './Components/User_Management/staffdetails';
+import CreateStaff from'./Components/User_Management/createstaff'
+import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 
@@ -48,8 +50,12 @@ function App() {
         <Route path="/userupdate/:id" element={<UpdateUsers />} />
         <Route path="/AccountDetails" element={<AccountDetails />} />
         <Route path="/SecuritySettings" element={<SecuritySettings />} />
+        <Route path="/createstaff" element={<CreateStaff />} />
+
 
         <Route path= "/staffdetails" element={<Staff/>}/>
+        <Route path= "/staffupdate/:id" element={<UpdateStaff/>}/>
+       
 
       
         <Route path="/addForm" element={<AddAForm />}/>
