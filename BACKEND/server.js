@@ -36,6 +36,7 @@ const feedbackRouter = require('./routes/feedbacks.js');
 
 app.use('/product', productRouter);
 app.use('/user', userRouter);
+app.use('/feedback',feedbackRouter);
 
 // Start server
 app.listen(PORT, () => {
