@@ -7,32 +7,50 @@ import './product.css';
 
 function AddProduct() {
   const [name, setName] = useState('');
-  const [image, setImages] = useState('');
+  const [image, setImages] = useState([]);
   const [category, setCategory] = useState('');
   const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
-
   const [loading, setLoading] = useState(false);
 
-  const handelImage = (e) => {
-    const file = e.target.files[0];
-    TransFormFile(file);
+  
+const convertBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
   };
+  
+const uploadImage = async (event) => {
+  const files = event.target.files;
+  console.log(files.length);
 
-  const TransFormFile = (file) => {
-    const reader = new FileReader();
+  if (files.length === 1) {
+    const base64 = await convertBase64(files[0]);
+    setImages(base64);
+    return;
+  }
 
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImages(reader.result);
-      };
-    } else {
-      setImages('');
+  const base64s = [];
+    for (var i = 0; i < files.length; i++) {
+      var base = await convertBase64(files[i]);
+      base64s.push(base);
     }
-  };
+    setImages(base64s);
+
+};
+
+
 
   function AddData(e) {
     e.preventDefault();
@@ -92,7 +110,7 @@ function AddProduct() {
       <header>
         <AdminNav />
       </header>
-      <main>
+      <main className="padd">
         {loading ? (
           <div className="loader"></div>
         ) : (
@@ -124,11 +142,11 @@ function AddProduct() {
                     required
                   >
                     <option value="">Select a category</option>
-                    <option value="iphone">iPhone</option>
-                    <option value="android">Android Phones</option>
-                    <option value="windows">Windows Phones</option>
-                    <option value="other">Other Phones</option>
-                    <option value="accessories">Accessories</option>
+                    <option value="Iphone">IPhone</option>
+                    <option value="Android">Android Phones</option>
+                    <option value="Windows">Windows Phones</option>
+                    <option value="Tablets">Tablets</option>
+                    <option value="Accessories">Accessories</option>
                   </select>
                 </div>
 
@@ -187,24 +205,42 @@ function AddProduct() {
               <div className="formRight">
                 <div className="form-group">
                   <label htmlFor="image">Image:</label>
-                  <div>
-                    {image ? (
-                      <img
-                        width={200}
-                        height={200}
-                        src={image}
-                        alt="productImage"
-                      />
+                  <div className="w-full mx-auto grid grid-cols-2 justify-items-center justify-center gap-y-5 gap-x-8 mt-4 mb-4">
+                    {Array.isArray(image) ? (
+                      image.map((img, index) => (
+                        <div key={index} className="image-container">
+                          <img
+                            className="image hover:scale-110"
+                            width={200}
+                            height={200}
+                            src={img}
+                            alt={`productImage${index}`}
+                          />
+                        </div>
+                      ))
+                    ) : image ? (
+                      <div className="image-container">
+                        <img
+                          className="image hover:scale-110"
+                          width={200}
+                          height={200}
+                          src={image}
+                          alt="productImage"
+                        />
+                      </div>
                     ) : (
                       <p>No Image Selected</p>
                     )}
                   </div>
+
                   <input
                     type="file"
                     id="image"
                     name="image"
-                    accept="image/"
-                    onChange={handelImage}
+                    accept="image/png, image/jpeg, image/jpg"
+                    onChange={uploadImage}
+                    multiple
+                    required
                   />
                 </div>
                 <button disabled={loading} type="submit">

@@ -11,7 +11,7 @@ function EditProduct() {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const history = useNavigate();
-  
+
   useEffect(() => {
     axios
       .get(`http://localhost:8175/product/getProduct/${id}`)
@@ -47,22 +47,37 @@ function EditProduct() {
     }
   }, [loading, product]);
 
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    TransFormFile(file);
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
 
-  const TransFormFile = (file) => {
-    const reader = new FileReader();
+  const uploadImage = async (event) => {
+    const files = event.target.files;
+    console.log(files.length);
 
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImages(reader.result);
-      };
-    } else {
-      setImages('');
+    if (files.length === 1) {
+      const base64 = await convertBase64(files[0]);
+      setImages(base64);
+      return;
     }
+
+    const base64s = [];
+    for (var i = 0; i < files.length; i++) {
+      var base = await convertBase64(files[i]);
+      base64s.push(base);
+    }
+    setImages(base64s);
   };
 
   function UpdateData(e) {
@@ -110,7 +125,7 @@ function EditProduct() {
       <header>
         <AdminNav />
       </header>
-      <main>
+      <main className="padd">
         {loading ? (
           <div className="loader"></div>
         ) : (
@@ -147,11 +162,11 @@ function EditProduct() {
                       required
                     >
                       <option value="">Select a category</option>
-                      <option value="iphone">iPhone</option>
-                      <option value="android">Android Phones</option>
-                      <option value="windows">Windows Phones</option>
-                      <option value="other">Other Phones</option>
-                      <option value="accessories">Accessories</option>
+                      <option value="Iphone">iPhone</option>
+                      <option value="Android">Android Phones</option>
+                      <option value="Windows">Windows Phones</option>
+                      <option value="Tablets">Tablets</option>
+                      <option value="Accessories">Accessories</option>
                     </select>
                   </div>
 
@@ -210,29 +225,38 @@ function EditProduct() {
                 <div className="formRight">
                   <div className="form-group">
                     <label htmlFor="image">Image:</label>
-                    <div>
-                      {image.url ? (
-                        <img
-                          width={200}
-                          height={200}
-                          src={image.url}
-                          alt="productImage"
-                        />
-                      ) : (
+                    <div className="w-full mx-auto grid grid-cols-2 justify-items-center justify-center gap-y-5 gap-x-8 mt-4 mb-4">
+                      {Array.isArray(image) ? (
+                        image.map((img, index) => (
+                          <img
+                            key={index}
+                            width={200}
+                            height={200}
+                            src={img}
+                            alt={`productImage${index}`}
+                            className="image hover:scale-110"
+                          />
+                        ))
+                      ) : image ? (
                         <img
                           width={200}
                           height={200}
                           src={image}
                           alt="productImage"
+                          className="image hover:scale-110"
                         />
+                      ) : (
+                        <p>No Image Selected</p>
                       )}
                     </div>
+
                     <input
                       type="file"
                       id="image"
                       name="image"
-                      accept="image/"
-                      onChange={handleImage}
+                      accept="image/png, image/jpeg, image/jpg"
+                      onChange={uploadImage}
+                      multiple
                     />
                   </div>
                   <button disabled={loading} type="submit">

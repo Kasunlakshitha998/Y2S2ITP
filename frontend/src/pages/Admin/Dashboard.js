@@ -1,20 +1,20 @@
-import { Link, Outlet } from 'react-router-dom';
+
 import AdminNav from '../../Components/Nav/adminNav';
 import "./dash.css"
-import StockChart from '../../Components/Inventory_Management/MangeProduct/StockChart'
+
 
 function Dashboard() {
   return (
-    <div>
-      <header>
-        <AdminNav />
-      </header>
+    <div class="flex h-screen overflow-hidden">
+      <AdminNav />
 
-      <main className='main'>
-        <Outlet />
+      <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
         
 
-      </main>
+        <main>
+
+        </main>
+      </div>
     </div>
   );
 }
