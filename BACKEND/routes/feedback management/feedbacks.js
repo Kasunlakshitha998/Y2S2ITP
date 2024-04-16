@@ -1,5 +1,7 @@
 const router = require("express").Router();
-let Feedback = ("../models/Feedback");
+//let Feedback = ("../models/Feedback");
+let Feedback = require("../models/Feedback");
+
 
 
 http://Localhost:8070/feedback/add
