@@ -62,7 +62,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/product/:id" element={<AdminRouteGuard element={<ProductPage />} />} />
+        <Route path="/product/:id" element={<ProductPage />}  />
 
         <Route path="/admin/*" element={<AdminRouteGuard element={<Dashboard />} />} />
         <Route path="/admin/productsList" element={<AdminRouteGuard element={<ProductsList />} />} />
