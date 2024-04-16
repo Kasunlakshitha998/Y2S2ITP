@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const feedbackSchema = new Schema({
 
-    feedbackId:{
+    productId:{
         type : String,
         required:true
     },
@@ -25,7 +25,7 @@ const feedbackSchema = new Schema({
         required:true
     },
     rating:{
-        type : integer,
+        type : Number,
         required:true
     },
     feedbackType:{
