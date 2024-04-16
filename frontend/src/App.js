@@ -9,7 +9,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import ProductsList from './Components/Inventory_Management/MangeProduct/ProductsList';
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
-import RegistrationForm from './Components/Inventory_Management/reg';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -63,14 +63,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductPage />}  />
-
         <Route path="/admin/*" element={<AdminRouteGuard element={<Dashboard />} />} />
         <Route path="/admin/productsList" element={<AdminRouteGuard element={<ProductsList />} />} />
         <Route path="/admin/productsList/addProduct" element={<AdminRouteGuard element={<AddProduct />} />} />
         <Route path="/admin/productsList/editProduct/:id" element={<AdminRouteGuard element={<EditProduct />} />} />
 
-        <Route path="/admin/reg" element={<RegistrationForm />} />
-
+        
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
