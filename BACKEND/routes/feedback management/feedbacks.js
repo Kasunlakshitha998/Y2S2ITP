@@ -1,10 +1,14 @@
+
 const router = require("express").Router();
+
 //let Feedback = ("../models/Feedback");
-let Feedback = require("../models/Feedback");
+//let Feedback = require("../models/Feedback");
+
+let Feedback = require('../../models/feedback_management/feedback');
 
 
 
-http://Localhost:8070/feedback/add
+//http://Localhost:8070/feedback/add
 
 router.route("/add").post((req,res)=>{
 
@@ -49,7 +53,7 @@ router.route("/").get((req,res)=>{
 
 })
 
-http//Localhost:8070/feedback/update/
+//http//Localhost:8070/feedback/update/
 
 router.route("/update/:id").put(async (req, res)=>{
 
