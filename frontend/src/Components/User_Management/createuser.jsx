@@ -19,7 +19,7 @@ function CreateUsers() {
             return;
         }
 
-        const nameRegex = /^[a-zA-Z]+$/;
+        const nameRegex = /^[a-zA-Z\s]+$/;
         if (!name.match(nameRegex)) {
             alert("Name should only contain letters");
             return;

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import './CreateUsers.css';
 import { BsPersonFill } from 'react-icons/bs'; 
+import Swal from 'sweetalert2';
 
 function UpdateUsers() {
     const { id } = useParams();
@@ -37,7 +38,7 @@ function UpdateUsers() {
             alert("Name should only contain letters");
             return;
         }
-
+      
         const validNumberLength = 10;
         if (number.length !== validNumberLength) {
             alert("Mobile number should be 10 digits");
@@ -98,15 +99,32 @@ function UpdateUsers() {
     };
     
 
-    
+    const handleClickProfilePicture = () => {
+   
+        Swal.fire({
+            imageUrl: `http://localhost:3000/image/${image}`,
+            imageAlt: 'Profile Picture',
+            showCloseButton: true,
+            showConfirmButton: false,
+            width: '20%',
+            height: 'auto',
+        });
+    };
     
     
 
     return (
+        
         <div className="container">
+        
         <div className="image-container">
     {image ? (
-        <img src={`http://localhost:3000/image/${image}`} alt="Profile" style={{ borderRadius: '50%' }} />
+        <img
+            src={`http://localhost:3000/image/${image}`}
+            alt="Profile"
+            style={{ borderRadius: '50%', cursor: 'pointer' }} // Add cursor pointer for indicating it's clickable
+            onClick={handleClickProfilePicture} // Call handleClickProfilePicture function on click
+        />
     ) : (
         <BsPersonFill size={100} color="#adb5bd" />
     )}
@@ -149,7 +167,7 @@ function UpdateUsers() {
                             className="form-control rounded-0"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            disabled
+                            
                         />
                     </div>
                     <div className="mb-3">
