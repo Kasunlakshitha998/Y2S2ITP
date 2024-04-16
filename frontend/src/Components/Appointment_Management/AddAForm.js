@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import UserNav from '../Nav/userNav';
+import Footer from '../Nav/footer';
 import Axios from 'axios';
 
 export default function AddAForm() {
@@ -23,6 +25,8 @@ export default function AddAForm() {
   }
 
   return (
+    <>
+    <UserNav />
     <div className="container">
       <form>
         <h2>Appointment For Repair Services</h2>
@@ -78,5 +82,7 @@ export default function AddAForm() {
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     </div>
+    <Footer />
+    </>
   );
 }
