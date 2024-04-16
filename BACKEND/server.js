@@ -60,7 +60,7 @@ app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment', appointmentRouter);//Appointment 
 //order
-//feedback
+app.use('/feedback',feedbackRoute);//feedback 
 //leave
 //promotion
 //financial
