@@ -32,6 +32,7 @@ mongoose
 // Routes
 const productRouter = require('./routes/Inventory_Management/products.js');
 const userRouter = require('./routes/User/Employees.js');
+const feedbackRouter = require('./routes/feedbacks.js');
 
 app.use('/product', productRouter);
 app.use('/user', userRouter);
