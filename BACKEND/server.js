@@ -61,7 +61,7 @@ app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment', appointmentRouter);//Appointment 
 //order
-app.use('/feedback',feedbackRoute);//feedback 
+app.use('/feedback',feedbackRouter);//feedback 
 //leave
 //promotion
 //financial
