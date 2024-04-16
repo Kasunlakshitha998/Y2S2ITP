@@ -49,13 +49,6 @@ mongoose
 // Routes
 const productRouter = require('./routes/Inventory_Management/products.js');
 const userRouter = require('./routes/User/Employees.js');
-<<<<<<< HEAD
-const feedbackRouter = require('./routes/feedbacks.js');
-
-app.use('/product', productRouter);
-app.use('/user', userRouter);
-app.use('/feedback',feedbackRouter);
-=======
 const appointmentRouter = require("./routes/appointment/appointments.js");
 
 
@@ -67,12 +60,11 @@ app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment', appointmentRouter);//Appointment 
 //order
-//feedback
+app.use('/feedback',feedbackRoute);//feedback 
 //leave
 //promotion
 //financial
 //payment
->>>>>>> ab6186efe7611a45353b282905c9ac74a6259049
 
 // Start server
 app.listen(PORT, () => {
