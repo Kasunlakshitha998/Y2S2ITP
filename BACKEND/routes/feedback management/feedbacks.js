@@ -1,6 +1,5 @@
 const router = require("express").Router();
-//let Feedback = ("../models/Feedback");
-let Feedback = require("../models/Feedback");
+let Feedback = require("../../models/feedback_management/feedback");
 
 
 
@@ -8,7 +7,7 @@ http://Localhost:8070/feedback/add
 
 router.route("/add").post((req,res)=>{
 
-    const feedbackId = req.body.feedbackId;
+    const productId = req.body.productId;
     const userId = req.body.userId;
     const date = req.body.date;
     const name = req.body.name;
@@ -18,15 +17,14 @@ router.route("/add").post((req,res)=>{
 
 
     const newFeedback = new Feedback({
-
-        feedbackId,
-        userId,
-        date,
-        name,
-        email,
-        rating,
-        feedbackType
-    })
+      productId,
+      userId,
+      date,
+      name,
+      email,
+      rating,
+      feedbackType,
+    });
 
     newFeedback.save().then(()=>{
         res.json("Feedback Added")
@@ -49,19 +47,22 @@ router.route("/").get((req,res)=>{
 
 })
 
-//http//Localhost:8175/feedback/update/
+//http//localhost:8175/feedback/update/
 
 router.route("/update/:id").put(async (req, res)=>{
 
     let feedbackId = req.params.id;
-    const { name,email,rating,feedbackType } = req.body;
+    const { productId, userId, date, name, email, rating, feedbackType } = req.body;
 
     const updateFeedback = {
-        name,
-        email,
-        rating,
-        feedbackType
-    }
+      productId,
+      userId,
+      date,
+      name,
+      email,
+      rating,
+      feedbackType,
+    };
 
     const update = await Feedback.findByAndUpdate(feedbackId, updateFeedback)
     .then(() => {
@@ -78,8 +79,8 @@ router.route("/delete/:id").delete(async (req, res) => {
 
     await Feedback.findByIdAndDelete(feedbackId)
     .then(() => {
-        res.status(200).send({status: "User deleted"});
-    }).catch((errr) => {
+        res.status(200).send({ status: 'feedback deleted' });
+    }).catch((err) => {
         console.log(err.message);
         res.status(500).send({status: "Error with delete feedback",error:err.message})
     })
@@ -88,12 +89,15 @@ router.route("/delete/:id").delete(async (req, res) => {
 router.route("/get/:id").get(async (req,res) => {
     let feedbackId = req.params.id;
     await Feedback.findById(feedbackId)
-    .then(() => {
-        res.status(200).send({status: "Feedback fetched",feedback: feedback})
-    }).catch(() => {
+      .then((feedback) => {
+        res.status(200).send({ status: 'Feedback fetched', feedback });
+      })
+      .catch(() => {
         console.log(err.message);
-        res.status(500).send({status: "Error with get user",error: err.message});
-    })
+        res
+          .status(500)
+          .send({ status: 'Error with get user', error: err.message });
+      });
 })
 
 
