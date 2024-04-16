@@ -23,7 +23,7 @@ const feedbackSchema = new Schema({
         required: true
     },
     rating: {
-        type: Number, // Assuming you fixed this from previous errors
+        type: Number,
         required: true
     },
     feedbackType: {
