@@ -1,6 +1,7 @@
 import UserNav from '../../Components/Nav/userNav';
 import Products from '../../Components/Inventory_Management/Products'
 import Footer from '../../Components/Nav/footer';
+import Sidebar from '../../Components/Leave_Management/Admin/Sidebar';
 
 function HomePage() {
 
@@ -13,6 +14,7 @@ function HomePage() {
       <h2>Item List </h2>
       
         <Products />
+        <Sidebar/>
 
 
       <Footer />

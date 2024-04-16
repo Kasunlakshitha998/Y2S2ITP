@@ -31,8 +31,10 @@ connection.once("open", ()=>{
 
 
 const productRouter = require("./routes/Inventory_Management/products.js");
+const LeaveRouter = require("./routes/Leave_Management/LeavesR.js");
 
 app.use("/product",productRouter);
+app.use("/Leave",LeaveRouter);
 
 app.listen( PORT, ()=>{
 

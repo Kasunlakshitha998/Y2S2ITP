@@ -1,7 +1,7 @@
 const mongoose =require('mongoose');
 const Schema =mongoose.Schema;
 
-const L_RequestSchema = new schema({
+const L_RequestSchema = new Schema({
 
     requestId: {
         type: String,
