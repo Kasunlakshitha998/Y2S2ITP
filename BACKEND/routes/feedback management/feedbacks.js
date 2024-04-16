@@ -45,7 +45,7 @@ router.route("/").get((req,res)=>{
 
 })
 
-//http//Localhost:8175/feedback/update/
+//http//localhost:8175/feedback/update/
 
 router.route("/update/:id").put(async (req, res)=>{
 
