@@ -17,16 +17,7 @@ app.use(
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
-//const express = require('express');
 const path = require('path');
-
-//const nodemailer = require('nodemailer');
-//const app = express();
-
-
-
-
-
 
 
 

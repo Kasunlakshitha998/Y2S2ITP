@@ -54,7 +54,7 @@ axios.post("http://localhost:8175/appointment/add",newappointment)
   //   const formData = new FormData();
   //   formData.append('image', image);
 
-  //   Axios.post('url', formData)
+  //   axios.post('url', formData)
   //     .then((res) => {
   //       console.log(res);
   //     })
