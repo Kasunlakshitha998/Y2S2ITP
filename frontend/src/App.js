@@ -37,6 +37,11 @@ import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
 import DeleteFeedback from "./Components/Feedback Management/DeleteFeedback";
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 
+import FinanceHome from './Components/FinanceHome';
+import ExpendituresHome from './Components/ExpendituresHome';
+import SalaryHome from './Components/SalaryHome';
+import UpdateExpense from './Components/UpdateExpense';
+
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
 
@@ -119,6 +124,11 @@ function App() {
         <Route path="/giveFeedback" element={<GiveFeedback />}/>
         <Route path="/updatefeedback" element={<UpdateFeedback />}/>
         <Route path="/deletefeedback" element={<DeleteFeedback />}/>
+
+        <Route path = "/financial-analysis" element={<FinanceHome/>}/>
+        <Route path = "/expenditures" element={<ExpendituresHome/>}/>
+        <Route path = "/expenditures/get/:id" element={<UpdateExpense/>}/>
+        <Route path = "/salary-management" element={<SalaryHome/>}/>
 
         
 
