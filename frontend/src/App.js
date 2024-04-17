@@ -33,6 +33,8 @@ import AddAForm from "./Components/Appointment_Management/AddAForm";
 import UpdateDeleteAppointment from './Components/Appointment_Management/UpdateDeleteAppointment';
 
 import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
+import DeleteFeedback from "./Components/Feedback Management/DeleteFeedback";
+import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -117,6 +119,8 @@ function App() {
         <Route path="/staffdetails" element={<Staff/>}/>
 
         <Route path="/giveFeedback" element={<GiveFeedback />}/>
+        <Route path="/updatefeedback" element={<UpdateFeedback />}/>
+        <Route path="/deletefeedback" element={<DeleteFeedback />}/>
 
         
 
