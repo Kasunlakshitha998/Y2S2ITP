@@ -80,10 +80,12 @@ function ForgotPassword() {
       <div className="form">
         {/* Contact Info Section */}
         <div className="contact-info">
-          <h3 className="title">Let's get in touch</h3>
+          <h3 className="title">Tech-Connect</h3>
           <p className="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            dolorum adipisci recusandae praesentium dicta!
+                    Tech-Connect Mobile Phone Shop is a hub for cutting-edge mobile technology and outstanding customer service. 
+                    They offer the latest smartphones, accessories, and expert advice to keep customers connected and productive.
+                     With a focus on innovation and meeting digital needs, Tech-Connect provides convenience, reliability, and expertise.
+                      Visit Tech-Connect today to enhance your mobile lifestyle.
           </p>
           {/* Information */}
           <div className="info">

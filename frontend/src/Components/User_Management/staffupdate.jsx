@@ -117,7 +117,7 @@ function UpdateStaff() {
             </div>
 
             <div className="form-container">
-                <h2>Update user</h2>
+                <h2>update staff</h2>
                 <form onSubmit={Update}>
                     <div className="mb-3">
                         <label htmlFor="name">
