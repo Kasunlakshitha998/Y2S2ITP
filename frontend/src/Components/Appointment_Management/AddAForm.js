@@ -11,7 +11,7 @@ export default function AddAForm() {
   const [serviceType, setServiceType] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  //const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null);
 
   function sendData(e) {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function AddAForm() {
       serviceType,
       date,
       description,
-      //image
+      image
     }
     
 
@@ -38,7 +38,7 @@ axios.post("http://localhost:8175/appointment/add",newappointment)
   setServiceType("");
   setDescription("");
   setDate("");
- // setImage("");
+  setImage("");
 })
 .catch((err)=>{
   alert(err)
@@ -46,22 +46,18 @@ axios.post("http://localhost:8175/appointment/add",newappointment)
 
   }
 
-  // function handleImage(e) {
-  //   setImage(e.target.files[0]);
-  // }
+  function handleImageChange(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
-  // function handleApi() {
-  //   const formData = new FormData();
-  //   formData.append('image', image);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
 
-  //   axios.post('url', formData)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error uploading image:', error);
-  //     });
-  // }
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
 
   return (
     <>
@@ -183,16 +179,16 @@ axios.post("http://localhost:8175/appointment/add",newappointment)
             ></textarea>
           </div>
 
-          {/* <div className="form-group">
+          <div>
+            <label htmlFor="image">Image:</label>
             <input
               type="file"
-              className="form-control-file"
+              id="image"
               name="image"
-              htmlFor="image"
-              onChange={handleImage}
+              accept="image/*"
+              onChange={handleImageChange}
             />
-            <button type="button" onClick={handleApi}>Add Receipt</button>
-          </div> */}
+          </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
