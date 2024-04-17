@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import {useDispatch} from "react-redux"
 import axios from 'axios';
 import UserNav from '../../Components/Nav/userNav';
 import './productPage.css';
+import { addToCart } from '../../Components/Order_Management/cartSlice';
+
 
 function ProductPage() {
   const { id } = useParams();
@@ -96,6 +99,14 @@ const handleProductClick = (productId) => {
   const clickedProduct = products.find((product) => product._id === productId);
   setProduct(clickedProduct);
   window.scrollTo(0, 0);
+
+  //cart 
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  }
 };
 
   
@@ -168,7 +179,7 @@ const handleProductClick = (productId) => {
                           +
                         </button>
                       </div>
-                      <button className="add-to-cart" disabled={quantity === 0}>
+                      <button onClick={()=> handleAddToCart(product)}className="add-to-cart" disabled={quantity === 0}>
                         Add to Cart
                       </button>
                       <button

@@ -9,6 +9,19 @@ const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8175;
 
+app.get("/", (req, res) => {
+  res.send("welcome api>>>");
+});
+app.get("/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // Middleware
 app.use(express.json({ extended: false, limit: '50mb' }));
 app.use(

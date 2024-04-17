@@ -30,6 +30,7 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
+import Cart from './Components/Order_Management/Cart';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -113,6 +114,9 @@ function App() {
         <Route path="/staffdetails" element={<Staff/>}/>
 
         <Route path="/addForm" element={<AddAForm />} />
+
+        <Route path="/cart" element={<Cart />} />
+
 
       </Routes>
     </div>
