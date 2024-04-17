@@ -86,7 +86,7 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="#" className="hover:text-gray-300">
+                <Link to="/giveFeedback" className="hover:text-gray-300">
                   Feedback
                 </Link>
               </li>
