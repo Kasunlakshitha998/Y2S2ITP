@@ -24,7 +24,7 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="tel"],
-textarea {
+textarea{
   width: 100%; /* Make text inputs and textareas fill their container */
   padding: 10px; /* Adjust padding as needed */
   margin-bottom: 10px; /* Adjust margin as needed */

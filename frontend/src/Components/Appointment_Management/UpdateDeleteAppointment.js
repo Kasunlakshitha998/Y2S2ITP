@@ -18,6 +18,8 @@ export default function UpdateDeleteAppointment() {
   // useEffect to fetch appointments when component mounts
   useEffect(() => {
     getAppointments();
+
+    
   }, []);
 
   // Function to handle appointment deletion
