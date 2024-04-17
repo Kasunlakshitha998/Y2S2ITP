@@ -1,16 +1,11 @@
 .container {
-    margin: 20px auto; /* Center the container horizontally with top and bottom margin */
-    max-width: 1000px; /* Set maximum width of the container */
-    background-color: #007bff; /* Set background color to blue */
-    padding: 20px; /* Add padding */
+
+
     border-radius: 10px; /* Add border radius */
-    color: #fff; /* Set text color to white */
+   /* Set text color to white */
   }
   
-  form {
-    display: flex;
-    flex-direction: column;
-  }
+
   
   label {
     margin-bottom: 10px; /* Adjust margin as needed */
