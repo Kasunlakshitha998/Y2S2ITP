@@ -37,10 +37,10 @@ import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
 import DeleteFeedback from "./Components/Feedback Management/DeleteFeedback";
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 
-import FinanceHome from './Components/FinanceHome';
-import ExpendituresHome from './Components/ExpendituresHome';
-import SalaryHome from './Components/SalaryHome';
-import UpdateExpense from './Components/UpdateExpense';
+import FinanceHome from './Components/Financial_Management/FinanceHome';
+import ExpendituresHome from './Components/Financial_Management/ExpendituresHome';
+import SalaryHome from './Components/Financial_Management/SalaryHome';
+import UpdateExpense from './Components/Financial_Management/UpdateExpense';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');

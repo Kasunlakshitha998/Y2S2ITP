@@ -17,6 +17,10 @@ form {
   flex-direction: column;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 334ab2ffdd3f8c79216df14a46a8e984654ccee6
   
   label {
     margin-bottom: 10px; /* Adjust margin as needed */
@@ -45,4 +49,37 @@ form {
     cursor: pointer; /* Add cursor pointer */
   }
   
+<<<<<<< HEAD
  
+=======
+
+label {
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea{
+  width: 100%; /* Make text inputs and textareas fill their container */
+  padding: 10px; /* Adjust padding as needed */
+  margin-bottom: 10px; /* Adjust margin as needed */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius */
+}
+
+button[type="submit"] {
+  width: 100%; /* Make button fill its container */
+  padding: 10px; /* Adjust padding as needed */
+  margin-top: 10px; /* Adjust margin as needed */
+  border: none; /* Remove border */
+  background-color: #000; /* Set background color to black */
+  color: #fff; /* Set text color to white */
+  border-radius: 5px; /* Add border radius */
+  cursor: pointer; /* Add cursor pointer */
+}
+
+button[type="submit"]:hover {
+  background-color: #333; /* Change background color on hover */
+}
+>>>>>>> 334ab2ffdd3f8c79216df14a46a8e984654ccee6
