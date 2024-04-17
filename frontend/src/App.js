@@ -30,7 +30,17 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
-import UpdateDeleteAppointment from './Components/Appointment_Management/UpdateDeleteAppointment';
+import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
+import DeleteAppointment from './Components/Appointment_Management/DeleteAppointment';
+
+import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
+import DeleteFeedback from "./Components/Feedback Management/DeleteFeedback";
+import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
+
+import FinanceHome from './Components/FinanceHome';
+import ExpendituresHome from './Components/ExpendituresHome';
+import SalaryHome from './Components/SalaryHome';
+import UpdateExpense from './Components/UpdateExpense';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -96,10 +106,6 @@ function App() {
         
         
 
-
-
-
-        
         <Route path="/SecuritySettings" element={<AllUsersRouteGuard element={<SecuritySettings />} />} />
         <Route path="/createstaff" element={<CreateStaff />} />
 
@@ -110,9 +116,19 @@ function App() {
 
       
         <Route path="/addForm" element={<AddAForm />}/>
-        <Route path="/updateD" element={<UpdateDeleteAppointment />} />
+        <Route path="/updateApp" element={<UpdateAppointment />} />
+        <Route path="/DeleteApp" element={<DeleteAppointment />} />
 
         <Route path="/staffdetails" element={<Staff/>}/>
+
+        <Route path="/giveFeedback" element={<GiveFeedback />}/>
+        <Route path="/updatefeedback" element={<UpdateFeedback />}/>
+        <Route path="/deletefeedback" element={<DeleteFeedback />}/>
+
+        <Route path = "/financial-analysis" element={<FinanceHome/>}/>
+        <Route path = "/expenditures" element={<ExpendituresHome/>}/>
+        <Route path = "/expenditures/get/:id" element={<UpdateExpense/>}/>
+        <Route path = "/salary-management" element={<SalaryHome/>}/>
 
         
 
