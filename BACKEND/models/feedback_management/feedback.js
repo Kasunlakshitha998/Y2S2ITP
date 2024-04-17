@@ -31,6 +31,10 @@ const feedbackSchema = new Schema({
     feedbackType:{
         type : String,
         required:true
+    },
+    descript:{
+        type : String,
+        required:true
     }
 
 })

@@ -1,11 +1,23 @@
 .container {
+  margin: 0 auto; /* Center the container horizontally */
+  max-width: 500px; /* Set maximum width of the container */
+ /*background-color: #007bff;
+  /* Set background color to blue */
+  padding: 20px; /* Add padding */
+  border-radius: 10px; /* Add border radius */
+  color: #fff; /* Set text color to white */
+}
 
+.container {
+  background-color: #007bff; /* Set background color to blue */
+}
 
-    border-radius: 10px; /* Add border radius */
-   /* Set text color to white */
-  }
-  
+form {
+  display: flex;
+  flex-direction: column;
+}
 
+<<<<<<< HEAD
   
   label {
     margin-bottom: 10px; /* Adjust margin as needed */
@@ -35,3 +47,34 @@
   }
   
  
+=======
+label {
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%; /* Make text inputs and textareas fill their container */
+  padding: 10px; /* Adjust padding as needed */
+  margin-bottom: 10px; /* Adjust margin as needed */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius */
+}
+
+button[type="submit"] {
+  width: 100%; /* Make button fill its container */
+  padding: 10px; /* Adjust padding as needed */
+  margin-top: 10px; /* Adjust margin as needed */
+  border: none; /* Remove border */
+  background-color: #000; /* Set background color to black */
+  color: #fff; /* Set text color to white */
+  border-radius: 5px; /* Add border radius */
+  cursor: pointer; /* Add cursor pointer */
+}
+
+button[type="submit"]:hover {
+  background-color: #333; /* Change background color on hover */
+}
+>>>>>>> f945d64c2ace2fe97fa10072f99db1e4aacc57d8
