@@ -31,8 +31,8 @@ const appointmentSchema = new Schema({
         type: String,
         required: true
     },
-    receipt: {
-        type: String,
+    image: {
+        type: File,
         required: true
     }
 });

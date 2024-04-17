@@ -94,7 +94,7 @@ function App() {
 
         <Route path="/staffdetails" element={<Staff/>}/>
 
-        <Route path="/addForm" element={<AddAForm />} />
+        
 
       </Routes>
     </div>
