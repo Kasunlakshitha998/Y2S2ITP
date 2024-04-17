@@ -45,11 +45,11 @@ const appointmentRouter = require("./routes/appointment/appointments.js");
 const feedbackRouter = require('./routes/feedback management/feedbacks.js');
 
 const expenseRoutes = require('./routes/Financial_Management/expense');
-const salaryRoutes = require('./routesFinancial_Management/salary');
+const salaryRoutes = require('./routes/Financial_Management/salary');
 
 //Models
-const Expense = require('./models/expense');//Finance
-const Salary = require('./models/salary');//Finance
+//const Expense = require('./models/expense');//Finance
+//const Salary = require('./models/salary');//Finance
 
 
 

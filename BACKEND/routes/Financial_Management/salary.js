@@ -1,5 +1,5 @@
 const express = require('express');
-const Salary = require('../models/salary'); // Import Salary model
+const Salary = require('../../models/Financial_Management/salary'); // Import Salary model
 
 const router = express.Router();
 

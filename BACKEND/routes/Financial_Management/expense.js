@@ -1,6 +1,7 @@
 const express = require('express');
-const Expense = require('../models/expense'); // Import Expense model
+const Expense = require('../../models/Financial_Management/expense'); // Import Expense model
 const bodyParser = require('body-parser');
+
 //const mongoose = require('mongoose');
 
 const router = express.Router();
