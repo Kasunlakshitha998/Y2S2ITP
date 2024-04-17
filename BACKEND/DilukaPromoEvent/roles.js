@@ -1,0 +1,7 @@
+const USER_ROLES = {
+  CUSTOMER: "CUSTOMER",
+  PE_MANAGER: "PE_MANAGER",
+  EA_MANAGER: "EA_MANAGER",
+};
+
+module.exports = USER_ROLES;
