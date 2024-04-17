@@ -11,7 +11,6 @@ export default function AddAForm() {
   const [serviceType, setServiceType] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
 
   function sendData(e) {
     e.preventDefault();
@@ -23,40 +22,24 @@ export default function AddAForm() {
       phoneType,
       serviceType,
       date,
-      description,
-      image
+      description
     }
-    
 
-axios.post("http://localhost:8175/appointment/add",newappointment)
-.then(()=>{
-  alert("Appointment SuccessfullY Submit");
-  setName("");
-  setEmail("");
-  setTelephone("");
-  setPhoneType("");
-  setServiceType("");
-  setDescription("");
-  setDate("");
-  setImage("");
-})
-.catch((err)=>{
-  alert(err)
-});
-
-  }
-
-  function handleImageChange(e) {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    axios.post("http://localhost:8175/appointment/add", newappointment)
+      .then(() => {
+        alert("Appointment Successfully Submitted");
+        // Clear input fields after successful submission
+        setName("");
+        setEmail("");
+        setTelephone("");
+        setPhoneType("");
+        setServiceType("");
+        setDescription("");
+        setDate("");
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
   return (
@@ -179,16 +162,6 @@ axios.post("http://localhost:8175/appointment/add",newappointment)
             ></textarea>
           </div>
 
-          <div>
-            <label htmlFor="image">Image:</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
