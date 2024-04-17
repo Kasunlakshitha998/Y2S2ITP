@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserNav from '../Nav/userNav';
 import Footer from '../Nav/footer';
-import Axios from 'axios';
+import axios from 'axios';
 
 export default function AddAForm() {
   const [name, setName] = useState("");
@@ -28,7 +28,7 @@ export default function AddAForm() {
     }
     
 
-Axios.post("http://localhost:8075/appointment/add",newappointment)
+axios.post("http://localhost:8175/appointment/add",newappointment)
 .then(()=>{
   alert("Appointment SuccessfullY Submit");
   setName("");
