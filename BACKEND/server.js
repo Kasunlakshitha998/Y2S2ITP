@@ -50,6 +50,10 @@ mongoose
 const productRouter = require('./routes/Inventory_Management/products.js');
 const userRouter = require('./routes/User/Employees.js');
 const appointmentRouter = require("./routes/appointment/appointments.js");
+<<<<<<< HEAD
+=======
+const feedbackRouter = require('./routes/feedback management/feedbacks.js');
+>>>>>>> 896c59b8180d943fc3f2def239dfc53150e64217
 
 
 

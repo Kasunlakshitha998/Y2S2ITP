@@ -51,6 +51,16 @@ const UserRouteGuard = ({ element }) => {
   }
 };
 
+const AllUsersRouteGuard = ({ element }) => {
+  const userRole = Cookies.get('role');
+
+  if (userRole === 'admin' || userRole === 'user') {
+    return element;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
 
 
 
@@ -78,10 +88,18 @@ function App() {
         <Route path="/verify-otp" element={<OTPVerification />} />
         <Route path="/userdetails" element={<AdminRouteGuard element={<Users />} />} /> 
         <Route path="/usercreate" element={<AdminRouteGuard element={<CreateUsers />} />} />
+
         <Route path="/userupdate/:id" element={<AdminRouteGuard element={<UpdateUsers />} />} />
 
-        <Route path="/AccountDetails" element={<UserRouteGuard element={<AccountDetails />} />} />
-        <Route path="/SecuritySettings" element={<UserRouteGuard element={<SecuritySettings />} />} />
+        <Route path="/AccountDetails" element={<AllUsersRouteGuard element={<AccountDetails />} />} />
+        
+        
+
+
+
+
+        
+        <Route path="/SecuritySettings" element={<AllUsersRouteGuard element={<SecuritySettings />} />} />
         <Route path="/createstaff" element={<CreateStaff />} />
 
 
