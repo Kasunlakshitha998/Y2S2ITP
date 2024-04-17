@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserNav from '../Nav/userNav';
 import Footer from '../Nav/footer';
-import './AddAForm.css';
+//import './AddAForm.css';
 import axios from 'axios';
 
 export default function AddAForm() {

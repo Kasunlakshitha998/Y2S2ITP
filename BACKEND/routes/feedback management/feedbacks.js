@@ -14,6 +14,7 @@ router.route("/add").post((req,res)=>{
     const email = req.body.email;
     const rating = Number (req.body.rating);
     const feedbackType = req.body.feedbackType;
+    const descript = req.body.descript;
 
 
     const newFeedback = new Feedback({
@@ -24,6 +25,7 @@ router.route("/add").post((req,res)=>{
       email,
       rating,
       feedbackType,
+      descript,
     });
 
     newFeedback.save().then(()=>{
@@ -52,7 +54,7 @@ router.route("/").get((req,res)=>{
 router.route("/update/:id").put(async (req, res)=>{
 
     let feedbackId = req.params.id;
-    const { productId, userId, date, name, email, rating, feedbackType } = req.body;
+    const { productId, userId, date, name, email, rating, feedbackType,descript } = req.body;
 
     const updateFeedback = {
       productId,
@@ -62,6 +64,7 @@ router.route("/update/:id").put(async (req, res)=>{
       email,
       rating,
       feedbackType,
+      descript
     };
 
     const update = await Feedback.findByAndUpdate(feedbackId, updateFeedback)
