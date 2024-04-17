@@ -4,30 +4,22 @@ import Footer from '../Nav/footer';
 //import './AddAForm.css';
 import axios from 'axios';
 
-export default function AddAForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
-  const [phoneType, setPhoneType] = useState("");
-  const [serviceType, setServiceType] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
+export default function GiveFeedback() {
+  const [feedbackType, setFeedbackType] = useState("");
+  const [descript, setDescription] = useState("");
+
 
       
   function sendData(e) {
     e.preventDefault();
 
-    const newappointment = {
-      name,
-      email,
-      telephone,
-      phoneType,
-      serviceType,
-      date,
-      description
+    const newFeedback = {
+    
+        feedbackType,
+      descript
     }
 
-    axios.post("http://localhost:8175/appointment/add", newappointment)
+    axios.post("http://localhost:8175/feedback/add", newappointment)
       .then(() => {
         alert("Appointment Successfully Submitted");
         // Clear input fields after successful submission

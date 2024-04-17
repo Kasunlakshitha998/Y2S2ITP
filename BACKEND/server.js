@@ -30,16 +30,7 @@ app.use(
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
-//const express = require('express');
 const path = require('path');
-
-//const nodemailer = require('nodemailer');
-//const app = express();
-
-
-
-
-
 
 
 
@@ -63,7 +54,9 @@ mongoose
 const productRouter = require('./routes/Inventory_Management/products.js');
 const userRouter = require('./routes/User/Employees.js');
 const appointmentRouter = require("./routes/appointment/appointments.js");
+
 const feedbackRouter = require('./routes/feedback management/feedbacks.js');
+
 
 
 
