@@ -17,7 +17,7 @@ form {
   flex-direction: column;
 }
 
-<<<<<<< HEAD
+
   
   label {
     margin-bottom: 10px; /* Adjust margin as needed */
@@ -47,7 +47,7 @@ form {
   }
   
  
-=======
+
 label {
   margin-bottom: 10px; /* Adjust margin as needed */
 }
@@ -77,4 +77,3 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #333; /* Change background color on hover */
 }
->>>>>>> f945d64c2ace2fe97fa10072f99db1e4aacc57d8

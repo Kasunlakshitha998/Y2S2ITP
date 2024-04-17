@@ -30,7 +30,8 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
-import UpdateDeleteAppointment from './Components/Appointment_Management/UpdateDeleteAppointment';
+import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
+import DeleteAppointment from './Components/Appointment_Management/DeleteAppointment';
 
 import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
 import DeleteFeedback from "./Components/Feedback Management/DeleteFeedback";
@@ -100,10 +101,6 @@ function App() {
         
         
 
-
-
-
-        
         <Route path="/SecuritySettings" element={<AllUsersRouteGuard element={<SecuritySettings />} />} />
         <Route path="/createstaff" element={<CreateStaff />} />
 
@@ -114,7 +111,8 @@ function App() {
 
       
         <Route path="/addForm" element={<AddAForm />}/>
-        <Route path="/updateD" element={<UpdateDeleteAppointment />} />
+        <Route path="/updateApp" element={<UpdateAppointment />} />
+        <Route path="/DeleteApp" element={<DeleteAppointment />} />
 
         <Route path="/staffdetails" element={<Staff/>}/>
 
