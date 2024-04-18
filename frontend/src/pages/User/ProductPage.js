@@ -102,11 +102,7 @@ const handleProductClick = (productId) => {
 
   //cart 
 
-  const dispatch = useDispatch();
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  }
+ 
 };
 
   
@@ -179,7 +175,7 @@ const handleProductClick = (productId) => {
                           +
                         </button>
                       </div>
-                      <button onClick={()=> handleAddToCart(product)}className="add-to-cart" disabled={quantity === 0}>
+                      <button className="add-to-cart" disabled={quantity === 0}>
                         Add to Cart
                       </button>
                       <button

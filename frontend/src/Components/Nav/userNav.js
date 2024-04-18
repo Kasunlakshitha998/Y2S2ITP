@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
 import Cookies from 'js-cookie';
+import Cart from '../Order_Management/Cart';
 
 function UserNav() {
   const location = useLocation();

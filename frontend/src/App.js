@@ -1,6 +1,7 @@
 import { Routes, Route,Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
+import React, {useState} from 'react';
+import Amzon from './Components/Order_Management/Amzon';
 
 
 import HomePage from './pages/User/HomePage';
@@ -32,6 +33,8 @@ import UpdateStaff from'./Components/User_Management/staffupdate'
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 import Cart from './Components/Order_Management/Cart';
 
+
+
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
 
@@ -61,13 +64,18 @@ const AllUsersRouteGuard = ({ element }) => {
     return <Navigate to="/login" />;
   }
 };
-
-
+   
+const handleClick = (item) => {
+  console.log(item);
+}
+ 
 
 
 
 function App() {
- 
+  
+  const [show, setShow] = useState(true);
+  const [cart, setCart] = useState([]);
 
   return (
     <div>
@@ -115,7 +123,8 @@ function App() {
 
         <Route path="/addForm" element={<AddAForm />} />
 
-        <Route path="/cart" element={<Cart />} />
+
+        <Route path="/cart" component={<Cart/>} />
 
 
       </Routes>
