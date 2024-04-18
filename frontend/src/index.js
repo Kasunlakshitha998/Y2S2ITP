@@ -1,25 +1,33 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
+import App from './App'; // Import your root component
+import { BrowserRouter } from 'react-router-dom';
+
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './Components/Order_Management/cartSlice';
+
+import cartReducer, { getTotals } from './pages/User/CartSlice';
+
 
 const store = configureStore({
   reducer: {
+    
     cart: cartReducer,
-  }
+    
+  },
+  
 });
 
+
+store.dispatch(getTotals());
+
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );

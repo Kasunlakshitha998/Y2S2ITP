@@ -110,10 +110,7 @@ function OTPVerification() {
         <div className="contact-info">
           <h3 className="title">Tech-Connect </h3>
           <p className="text">
-          Tech-Connect Mobile Phone Shop is a hub for cutting-edge mobile technology and outstanding customer service. 
-                    They offer the latest smartphones, accessories, and expert advice to keep customers connected and productive.
-                     With a focus on innovation and meeting digital needs, Tech-Connect provides convenience, reliability, and expertise.
-                      Visit Tech-Connect today to enhance your mobile lifestyle.
+          Tech-Connect: Top tech hub, latest smartphones, expert advice, innovation, convenience, reliability. Upgrade your mobile lifestyle!
           </p>
           {/* Information */}
           <div className="info">

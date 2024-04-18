@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
 import Cookies from 'js-cookie';
-import Cart from '../Order_Management/Cart';
 
 function UserNav() {
   const location = useLocation();
@@ -100,10 +99,10 @@ function UserNav() {
           </div>
 
           <div className="flex items-center space-x-3">
-          <Link to="/cart" className="relative text-gray-700 hover:text-gray-600 mx-3">
-            <FaShoppingCart className="w-6 h-6" />
-            <span className="absolute top-0 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs">4</span>
-        </Link>
+            <Link to="/cart" className="relative text-gray-700 hover:text-gray-600 mx-3">
+              <FaShoppingCart className="w-6 h-6" />
+              <span className="absolute top-0 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
+            </Link>
             <button onClick={toggleProfile} className="focus:outline-none mx-3">
               <FaUserCircle className="w-8 h-8 text-gray-500 hover:text-gray-900" />
             </button>

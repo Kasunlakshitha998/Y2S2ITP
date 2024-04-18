@@ -19,17 +19,13 @@ export default function GiveFeedback() {
       descript
     }
 
-    axios.post("http://localhost:8175/feedback/add", newappointment)
+    axios.post("http://localhost:8175/feedback/add", newFeedback)
       .then(() => {
-        alert("Appointment Successfully Submitted");
+        alert("Feedback Successfully Submitted");
         // Clear input fields after successful submission
-        setName("");
-        setEmail("");
-        setTelephone("");
-        setPhoneType("");
-        setServiceType("");
+        
         setDescription("");
-        setDate("");
+        setFeedbackType("");
       })
       .catch((err) => {
         alert(err);
@@ -41,117 +37,35 @@ export default function GiveFeedback() {
       <UserNav />
       <div className="container">
         <form onSubmit={sendData}>
-          <h2>Appointment For Repair Services</h2>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+          <h2>Give your feedback</h2>
+          
 
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <div class="dropdown show">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="FeedbackType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown link
+  </a>
 
-          <div>
-            <label htmlFor="telephone">Telephone:</label>
-            <input
-              type="tel"
-              id="telephone"
-              name="telephone"
-              value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
-            />
-          </div>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="#">Product</a>
+    <a class="dropdown-item" href="#">Repair Services</a>
+    <a class="dropdown-item" href="#">Delivery Services</a>
+    <a class="dropdown-item" href="#">Promotional</a>
 
-          <div>
-            <label>Phone Type:</label><br/>
-            <input
-              type="checkbox"
-              id="android"
-              name="phoneType"
-              value="Android"
-              onChange={(e) => setPhoneType(e.target.value)}
-            />
-            <label htmlFor="android">Android</label><br/>
-            <input
-              type="checkbox"
-              id="apple"
-              name="phoneType"
-              value="Apple"
-              onChange={(e) => setPhoneType(e.target.value)}
-            />
-            <label htmlFor="apple">Apple</label><br/>
-            <input
-              type="checkbox"
-              id="windows"
-              name="phoneType"
-              value="Windows"
-              onChange={(e) => setPhoneType(e.target.value)}
-            />
-            <label htmlFor="windows">Windows</label>
-          </div>
+    value={feedbackType}
+              onChange={(e) => setFeedbackType(e.target.value)}
+  </div>
+</div>
 
-          <div>
-            <label>Service Type:</label><br/>
-            <input
-              type="checkbox"
-              id="display"
-              name="serviceType"
-              value="Display Services"
-              onChange={(e) => setServiceType(e.target.value)}
-            />
-            <label htmlFor="display">Display Services</label><br/>
-            <input
-              type="checkbox"
-              id="motherboard"
-              name="serviceType"
-              value="Motherboard Services"
-              onChange={(e) => setServiceType(e.target.value)}
-            />
-            <label htmlFor="motherboard">Motherboard Services</label><br/>
-            <input
-              type="checkbox"
-              id="other"
-              name="serviceType"
-              value="Other Services"
-              onChange={(e) => setServiceType(e.target.value)}
-            />
-            <label htmlFor="other">Other Services</label>
-          </div>
+          
 
-          <div>
-            <label htmlFor="date">Date:</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              //required
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
 
           <div>
             <label htmlFor="description">Description:</label><h4>Insert a </h4>
             <textarea
-              id="description"
-              name="description"
-              //required
-              value={description}
+              id="descript"
+              name="descript"
+              //t
+              value={descript}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
