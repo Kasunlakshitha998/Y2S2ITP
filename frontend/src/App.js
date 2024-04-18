@@ -30,7 +30,7 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
-import UpdateDeleteAppointment from './Components/Appointment_Management/UpdateDeleteAppointment';
+import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
 import CartPage from './pages/User/CartPage';
 
 const AdminRouteGuard = ({ element }) => {
@@ -65,8 +65,6 @@ const AllUsersRouteGuard = ({ element }) => {
 
 
 
-
-
 function App() {
  
 
@@ -98,11 +96,6 @@ function App() {
         <Route path="/AccountDetails" element={<AllUsersRouteGuard element={<AccountDetails />} />} />
         
         
-
-
-
-
-        
         <Route path="/SecuritySettings" element={<AllUsersRouteGuard element={<SecuritySettings />} />} />
         <Route path="/createstaff" element={<CreateStaff />} />
 
@@ -113,7 +106,7 @@ function App() {
 
       
         <Route path="/addForm" element={<AddAForm />}/>
-        <Route path="/updateD" element={<UpdateDeleteAppointment />} />
+        <Route path="/updateD" element={<UpdateAppointment />} />
 
         <Route path="/staffdetails" element={<Staff/>}/>
 
