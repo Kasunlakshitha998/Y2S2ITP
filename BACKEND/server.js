@@ -44,6 +44,12 @@ const appointmentRouter = require("./routes/appointment/appointments.js");
 
 const feedbackRouter = require('./routes/feedback management/feedbacks.js');
 
+const expenseRoutes = require('./routes/Financial_Management/expense');
+const salaryRoutes = require('./routes/Financial_Management/salary');
+
+//Models
+//const Expense = require('./models/expense');//Finance
+//const Salary = require('./models/salary');//Finance
 
 
 
@@ -58,7 +64,8 @@ app.use('/appointment', appointmentRouter);//Appointment
 app.use('/feedback',feedbackRouter);//feedback 
 //leave
 //promotion
-//financial
+app.use('/expenses', expenseRoutes);//Finance
+app.use('/salaries', salaryRoutes);//Finance
 //payment
 
 // Start server
