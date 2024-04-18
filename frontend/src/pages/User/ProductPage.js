@@ -7,6 +7,7 @@ import './productPage.css';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { addToCart } from './CartSlice';
+import { useNavigate } from 'react-router-dom';
 
 function ProductPage() {
   const { id } = useParams();
@@ -17,6 +18,7 @@ function ProductPage() {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const userId = Cookies.get('userId');
+  const navigate = useNavigate();
 
   console.log(userId);
 
@@ -110,7 +112,7 @@ function ProductPage() {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
-    
+    navigate('/cart');
   };
 
   return (
@@ -302,7 +304,10 @@ function ProductPage() {
                           </del>
 
                           <div class="ml-auto">
-                            <Link to="/cart">
+                            <Link
+                              to="/cart"
+                              onClick={() => handleAddToCart(product)}
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"

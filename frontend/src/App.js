@@ -9,6 +9,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import ProductsList from './Components/Inventory_Management/MangeProduct/ProductsList';
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
+import ViewProduct from './Components/Inventory_Management/MangeProduct/ViewProduct';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,6 +33,7 @@ import UpdateStaff from'./Components/User_Management/staffupdate'
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
 import CartPage from './pages/User/CartPage';
+
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -78,6 +80,7 @@ function App() {
         <Route path="/admin/productsList" element={<AdminRouteGuard element={<ProductsList />} />} />
         <Route path="/admin/productsList/addProduct" element={<AdminRouteGuard element={<AddProduct />} />} />
         <Route path="/admin/productsList/editProduct/:id" element={<AdminRouteGuard element={<EditProduct />} />} />
+        <Route path="/admin/productsList/viewProduct/:id" element={<AdminRouteGuard element={<ViewProduct />} />} />
 
         <Route path="/cart" element={<CartPage />} />
 

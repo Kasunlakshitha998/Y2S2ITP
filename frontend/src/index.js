@@ -12,10 +12,8 @@ import cartReducer, { getTotals } from './pages/User/CartSlice';
 
 
 const store = configureStore({
-  reducer: {
-    
-    cart: cartReducer,
-    
+  reducer: {  
+    cart: cartReducer,    
   },
   
 });
