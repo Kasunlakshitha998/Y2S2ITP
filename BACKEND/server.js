@@ -47,13 +47,14 @@ const feedbackRouter = require('./routes/feedback management/feedbacks.js');
 
 
 
+
 app.use(express.static('uploads/images'));
 app.use(express.json());
 
 app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment', appointmentRouter);//Appointment 
-//order
+//order 
 app.use('/feedback',feedbackRouter);//feedback 
 //leave
 //promotion

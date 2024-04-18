@@ -1,7 +1,7 @@
 import { Routes, Route,Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-
+import 'react-toastify/dist/ReactToastify.css';
 
 import HomePage from './pages/User/HomePage';
 import ProductPage from './pages/User/ProductPage';
@@ -9,7 +9,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import ProductsList from './Components/Inventory_Management/MangeProduct/ProductsList';
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
-import RegistrationForm from './Components/Inventory_Management/reg';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -31,6 +31,7 @@ import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 import UpdateDeleteAppointment from './Components/Appointment_Management/UpdateDeleteAppointment';
+import CartPage from './pages/User/CartPage';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -80,7 +81,9 @@ function App() {
         <Route path="/admin/productsList/addProduct" element={<AdminRouteGuard element={<AddProduct />} />} />
         <Route path="/admin/productsList/editProduct/:id" element={<AdminRouteGuard element={<EditProduct />} />} />
 
-        <Route path="/admin/reg" element={<RegistrationForm />} />
+        <Route path="/cart" element={<CartPage />} />
+
+        
 
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
