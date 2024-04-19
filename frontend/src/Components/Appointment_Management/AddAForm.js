@@ -33,18 +33,18 @@ export default function AddAForm() {
   const handlePhoneTypeChange = (e) => {
     const { checked, value } = e.target;
     if (checked) {
-      setPhoneType(prevPhoneType => [...prevPhoneType, value]); // Append value to array
+      setPhoneType(prevPhoneType => [...prevPhoneType, value]); 
     } else {
-      setPhoneType(prevPhoneType => prevPhoneType.filter(type => type !== value)); // Remove value from array
+      setPhoneType(prevPhoneType => prevPhoneType.filter(type => type !== value)); 
     }
   };
 
   const handleServiceTypeChange = (e) => {
     const { checked, value } = e.target;
     if (checked) {
-      setServiceType(prevServiceType => [...prevServiceType, value]); // Append value to array
+      setServiceType(prevServiceType => [...prevServiceType, value]); 
     } else {
-      setServiceType(prevServiceType => prevServiceType.filter(type => type !== value)); // Remove value from array
+      setServiceType(prevServiceType => prevServiceType.filter(type => type !== value)); 
     }
   };
 
