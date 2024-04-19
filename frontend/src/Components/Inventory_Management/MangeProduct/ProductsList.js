@@ -184,6 +184,7 @@ function ProductsList() {
           </div>
 
           {isPopupOpen && <PopupComponent onClose={togglePopup} />}
+          
 
           {/* Out of Stock Products Card */}
           <div className="rounded-lg bg-red-200 shadow-md p-4 mb-4 mr-4 duration-500 hover:scale-105 hover:shadow-xl w-50">
@@ -371,7 +372,7 @@ function ProductsList() {
                           </td>
                           <td className="px-5 py-3 font-semibold text-black">
                             <Link
-                              to={`/admin/productsList/view/${product._id}`}
+                              to={`/admin/productsList/viewProduct/${product._id}`}
                             >
                               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 m-2 rounded">
                                 <FaEye />

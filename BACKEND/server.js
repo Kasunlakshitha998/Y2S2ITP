@@ -9,6 +9,19 @@ const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8175;
 
+app.get("/", (req, res) => {
+  res.send("welcome api>>>");
+});
+app.get("/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // Middleware
 app.use(express.json({ extended: false, limit: '50mb' }));
 app.use(
@@ -53,13 +66,14 @@ const salaryRoutes = require('./routes/Financial_Management/salary');
 
 
 
+
 app.use(express.static('uploads/images'));
 app.use(express.json());
 
 app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment', appointmentRouter);//Appointment 
-//order
+//order 
 app.use('/feedback',feedbackRouter);//feedback 
 //leave
 //promotion

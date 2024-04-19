@@ -1,7 +1,7 @@
 import { Routes, Route,Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-
+import 'react-toastify/dist/ReactToastify.css';
 
 import HomePage from './pages/User/HomePage';
 import ProductPage from './pages/User/ProductPage';
@@ -9,7 +9,8 @@ import Dashboard from './pages/Admin/Dashboard';
 import ProductsList from './Components/Inventory_Management/MangeProduct/ProductsList';
 import AddProduct from './Components/Inventory_Management/MangeProduct/AddProduct';
 import EditProduct from './Components/Inventory_Management/MangeProduct/EditProduct';
-import RegistrationForm from './Components/Inventory_Management/reg';
+import ViewProduct from './Components/Inventory_Management/MangeProduct/ViewProduct';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -31,16 +32,8 @@ import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
-import DeleteAppointment from './Components/Appointment_Management/DeleteAppointment';
+import CartPage from './pages/User/CartPage';
 
-import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
-import DeleteFeedback from "./Components/Feedback Management/DeleteFeedback";
-import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
-
-import FinanceHome from './Components/Financial_Management/FinanceHome';
-import ExpendituresHome from './Components/Financial_Management/ExpendituresHome';
-import SalaryHome from './Components/Financial_Management/SalaryHome';
-import UpdateExpense from './Components/Financial_Management/UpdateExpense';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -74,8 +67,6 @@ const AllUsersRouteGuard = ({ element }) => {
 
 
 
-
-
 function App() {
  
 
@@ -89,8 +80,11 @@ function App() {
         <Route path="/admin/productsList" element={<AdminRouteGuard element={<ProductsList />} />} />
         <Route path="/admin/productsList/addProduct" element={<AdminRouteGuard element={<AddProduct />} />} />
         <Route path="/admin/productsList/editProduct/:id" element={<AdminRouteGuard element={<EditProduct />} />} />
+        <Route path="/admin/productsList/viewProduct/:id" element={<AdminRouteGuard element={<ViewProduct />} />} />
 
-        <Route path="/admin/reg" element={<RegistrationForm />} />
+        <Route path="/cart" element={<CartPage />} />
+
+        
 
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -105,7 +99,6 @@ function App() {
         <Route path="/AccountDetails" element={<AllUsersRouteGuard element={<AccountDetails />} />} />
         
         
-
         <Route path="/SecuritySettings" element={<AllUsersRouteGuard element={<SecuritySettings />} />} />
         <Route path="/createstaff" element={<CreateStaff />} />
 
@@ -116,19 +109,9 @@ function App() {
 
       
         <Route path="/addForm" element={<AddAForm />}/>
-        <Route path="/updateApp" element={<UpdateAppointment />} />
-        <Route path="/DeleteApp" element={<DeleteAppointment />} />
+        <Route path="/updateD" element={<UpdateAppointment />} />
 
         <Route path="/staffdetails" element={<Staff/>}/>
-
-        <Route path="/giveFeedback" element={<GiveFeedback />}/>
-        <Route path="/updatefeedback" element={<UpdateFeedback />}/>
-        <Route path="/deletefeedback" element={<DeleteFeedback />}/>
-
-        <Route path = "/financial-analysis" element={<FinanceHome/>}/>
-        <Route path = "/expenditures" element={<ExpendituresHome/>}/>
-        <Route path = "/expenditures/get/:id" element={<UpdateExpense/>}/>
-        <Route path = "/salary-management" element={<SalaryHome/>}/>
 
         
 

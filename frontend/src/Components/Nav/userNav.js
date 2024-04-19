@@ -99,7 +99,7 @@ function UserNav() {
           </div>
 
           <div className="flex items-center space-x-3">
-            <Link className="relative text-gray-700 hover:text-gray-600 mx-3" to="#">
+            <Link to="/cart" className="relative text-gray-700 hover:text-gray-600 mx-3">
               <FaShoppingCart className="w-6 h-6" />
               <span className="absolute top-0 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
             </Link>
