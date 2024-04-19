@@ -9,7 +9,7 @@ const Appointment = require("../../models/appointment/appointment"); // Adjusted
 // Create operation (Create a new appointment)
 router.route("/add").post((req, res) => {
     // Extract data from request body
-    const { name, email, telephone,phoneType,serviceType, date, description} = req.body;
+    const { name, email, telephone, phoneType, serviceType, date, description } = req.body;
 
     // Create a new appointment object
     const newAppointment = new Appointment({
@@ -21,24 +21,19 @@ router.route("/add").post((req, res) => {
         date,
         description
         //image
-
     });
 
     // Save the new appointment to the database
-    newAppointment.save().then(()=>{
-        res.json("Appointmrnt Added")
-    }).catch((err)=>{
-        console.log(err);
-    })
-
+    newAppointment.save()
         .then(() => {
             res.json({ message: "Appointment added successfully" }); // Adjusted response message format
         })
         .catch((err) => {
-            console.log(err);
-            res.status(500).json({ error: err.message }); // Adjusted response status and error message
+            console.error(err);
+            res.status(500).json({ error: "Failed to add appointment" }); // Adjusted response status and error message
         });
 });
+
 
 // Read operation (Get all appointments)
 router.get("/", (req, res) => {

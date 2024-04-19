@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import UserNav from '../Nav/userNav';
-import Footer from '../Nav/footer';
-//import './AddAForm.css';
-import axios from 'axios';
+import React, { useState } from 'react';
+import axios from 'axios'; // Assuming you're using axios for HTTP requests
+
 
 export default function AddAForm() {
   const [name, setName] = useState("");
@@ -13,40 +11,29 @@ export default function AddAForm() {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
 
-      
-  function sendData(e) {
+  const sendData = async (e) => {
     e.preventDefault();
 
-    const newappointment = {
-      name,
-      email,
-      telephone,
-      phoneType,
-      serviceType,
-      date,
-      description
-    }
-
-    axios.post("http://localhost:8175/appointment/add", newappointment)
-      .then(() => {
-        alert("Appointment Successfully Submitted");
-        // Clear input fields after successful submission
-        setName("");
-        setEmail("");
-        setTelephone("");
-        setPhoneType("");
-        setServiceType("");
-        setDescription("");
-        setDate("");
-      })
-      .catch((err) => {
-        alert(err);
+    try {
+      // Send form data to the server using axios or any other HTTP library
+      const response = await axios.post("http://localhost:8175/appointment/add", {
+        name,
+        email,
+        telephone,
+        phoneType,
+        serviceType,
+        date,
+        description
       });
-  }
 
+      console.log(response.data); // Handle the response from the server
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
   return (
     <>
-      <UserNav />
+     
       <div className="container">
         <form onSubmit={sendData}>
           <h2>Appointment For Repair Services</h2>
@@ -167,7 +154,7 @@ export default function AddAForm() {
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
-      <Footer />
+   
     </>
   );
 }
