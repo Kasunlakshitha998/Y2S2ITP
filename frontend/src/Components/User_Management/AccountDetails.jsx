@@ -103,7 +103,10 @@ function AccountDetails() {
             <nav className="nav nav-borders">
                 <button className="nav-link active ms-0">Profile</button>
                 <button className="nav-link">Billing</button>
-                <button className="nav-link">Appoinment</button>
+                <button className="nav-link"> <Link to="/addForm">Appoinment</Link>
+
+                </button>
+                
                 <button className="nav-link">
                     <Link to="/SecuritySettings">Security</Link>
                 </button>
