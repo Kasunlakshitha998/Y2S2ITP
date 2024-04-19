@@ -196,7 +196,7 @@ function UpdateStaff() {
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                         >
-                            <option value="">Select role</option>
+                            
                             <option value="admin">Admin</option>
                             <option value="staff">Staff</option>
                             

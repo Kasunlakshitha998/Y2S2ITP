@@ -94,7 +94,7 @@ function Login() {
                     <h3 className="title">Tech-Connect</h3>
                     <p className="text">
                        
-                    Tech-Connect: Top tech hub, latest smartphones, expert advice, innovation, convenience, reliability. Upgrade your mobile lifestyle!
+                    Welcome to our online mobile phone shop!
                     </p>
                     <div className="info">
                         <div className="information d-flex align-items-center">
