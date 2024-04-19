@@ -26,11 +26,11 @@ router.route("/add").post((req, res) => {
     // Save the new appointment to the database
     newAppointment.save()
         .then(() => {
-            res.json({ message: "Appointment added successfully" }); // Adjusted response message format
+            res.json({ message: "Appointment added successfully" });
         })
         .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: "Failed to add appointment" }); // Adjusted response status and error message
+            console.log(err);
+            res.status(500).json({ error: err.message }); // Adjusted response status and error message
         });
 });
 

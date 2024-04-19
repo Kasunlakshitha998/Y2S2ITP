@@ -16,11 +16,11 @@ const appointmentSchema = new Schema({
         required: true
     },
     phoneType: {
-        type: String,
+        type: [String], // Change type to an array of strings
         required: true
     },
     serviceType: {
-        type: String,
+        type: [String], // Change type to an array of strings
         required: true
     },
     date: {
@@ -31,10 +31,6 @@ const appointmentSchema = new Schema({
         type: String,
         required: true
     }
-    // image: {
-    //     type: Object,
-    //     required: true
-    // }
 });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);
