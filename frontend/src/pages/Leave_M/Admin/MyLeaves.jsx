@@ -8,7 +8,7 @@ import "./Myleaves.scss";
 const MyLeaves = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [newLeaveRequest, setNewLeaveRequest] = useState({
-    requestID: '', // Corrected field name
+    
     EmpID: '',
     name: '',
     Email: '',
@@ -47,7 +47,6 @@ const MyLeaves = () => {
     try {
       await axios.post('http://localhost:8175/Leave/create', newLeaveRequest);
       console.log('Leave request created successfully');
-      fetchLeaveRequests();
     } catch (error) {
       console.error('Error creating leave request:', error);
       if (error.response) {
@@ -78,7 +77,7 @@ const MyLeaves = () => {
         {/* Form to create a new leave request */}
         <h2 >Create New Leave Request</h2>
         <div className=' L_inputs'>
-        <input type="text" name="requestID" value={newLeaveRequest.requestID} onChange={handleInputChange} placeholder="Request ID" />
+        {/* <input type="text" name="requestID" value={newLeaveRequest.requestID} onChange={handleInputChange} placeholder="Request ID" /> */}
         <input type="text" name="EmpID" value={newLeaveRequest.EmpID} onChange={handleInputChange} placeholder="Employee ID" />
         <input type="text" name="name" value={newLeaveRequest.name} onChange={handleInputChange} placeholder="Your name" />
         <input type="text" name="Email" value={newLeaveRequest.Email} onChange={handleInputChange} placeholder="Email" />

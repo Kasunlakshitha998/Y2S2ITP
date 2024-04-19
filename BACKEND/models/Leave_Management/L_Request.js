@@ -3,11 +3,6 @@ const Schema =mongoose.Schema;
 
 const L_RequestSchema = new Schema({
 
-    requestId: {
-        type: String,
-        unique: true, 
-        required: true
-      },
       
     EmpID:{
         type:String,
@@ -51,7 +46,7 @@ const L_RequestSchema = new Schema({
 
     LType:{
         type:String,
-        required : true
+        
     },
 
     Lduration:{
