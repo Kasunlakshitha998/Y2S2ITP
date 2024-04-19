@@ -66,13 +66,7 @@ export default function AddAForm() {
   };
 
   return (
-    <div>
-    <nav className="nav nav-borders justify-center"> {/* Center the navigation links */}
-      <button className="nav-link active ms-0"><Link to="/AccountDetails">Profile</Link></button>
-      <button className="nav-link">Billing</button>
-      <button className="nav-link"><Link to="/addForm">Appointment</Link></button>
-      <button className="nav-link"><Link to="/SecuritySettings">Security</Link></button>
-    </nav>
+    
 
 
 
@@ -227,6 +221,6 @@ export default function AddAForm() {
         </button>
       </form>
     </div>
-    </div>
+   
   );
 }
