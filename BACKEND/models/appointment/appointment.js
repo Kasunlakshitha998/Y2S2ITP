@@ -30,11 +30,11 @@ const appointmentSchema = new Schema({
     description: {
         type: String,
         required: true
-    },
-    receipt: {
-        type: String,
-        required: true
     }
+    // image: {
+    //     type: Object,
+    //     required: true
+    // }
 });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);

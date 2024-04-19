@@ -1,4 +1,6 @@
+
 const forgotPasswordEmailTemplate = (userName, resetLink) => `
+
 <!DOCTYPE html>
 <html>
 <head>

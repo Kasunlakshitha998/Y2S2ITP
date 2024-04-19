@@ -9,6 +9,32 @@ function OTPVerification() {
   const [otp, setOTP] = useState('');
   const [verificationStatus, setVerificationStatus] = useState('');
   const navigate = useNavigate();
+  const [countdown, setCountdown] = useState(60);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prevCountdown => prevCountdown - 1);
+    }, 1000);
+
+   
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "try again time is over ",
+      });
+      navigate('/forgot-password');
+    }
+  }, [countdown, navigate]);
+
+
+
+
 
   useEffect(() => {
     const inputs = document.querySelectorAll(".input");
@@ -29,7 +55,7 @@ function OTPVerification() {
         input.addEventListener("focus", focusFunc);
         input.addEventListener("blur", blurFunc);
 
-        // Cleanup function to remove event listeners when component unmounts
+       
         return () => {
             input.removeEventListener("focus", focusFunc);
             input.removeEventListener("blur", blurFunc);
@@ -82,10 +108,9 @@ function OTPVerification() {
       <div className="form">
         {/* Contact Info Section */}
         <div className="contact-info">
-          <h3 className="title">Let's get in touch</h3>
+          <h3 className="title">Tech-Connect </h3>
           <p className="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            dolorum adipisci recusandae praesentium dicta!
+          Tech-Connect: Top tech hub, latest smartphones, expert advice, innovation, convenience, reliability. Upgrade your mobile lifestyle!
           </p>
           {/* Information */}
           <div className="info">
@@ -129,7 +154,7 @@ function OTPVerification() {
             </div>
             <button type="submit" className="btn">Send</button>
             {verificationStatus && <p className="mt-3">{verificationStatus}</p>}
-
+            <p className="mt-3">Time Left: {countdown} seconds</p>
           </form>
         </div>
       </div>

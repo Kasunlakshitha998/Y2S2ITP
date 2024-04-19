@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import "./displayuser.css"; // Import your CSS file
 import Swal from 'sweetalert2';
+import { BsPersonFill } from 'react-icons/bs'; 
 
 function Staff() {
     const [users, setUsers] = useState([]);
@@ -62,7 +63,7 @@ function Staff() {
         <div className="container-fluid">
         {/* Add card-container class */}
         <div className="card-body">
-            <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
+            <Link to="/createstaff" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
             <input
                 type="text"
                 placeholder="Search by name"
@@ -80,7 +81,9 @@ function Staff() {
                             <th>Email</th>
                             <th>Password</th>
                             <th>Number</th>
-                            <th>Image</th> {/* Correct typo: 'image' to 'Image' */}
+                            <th>Image</th>
+                            <th>role</th>
+                             {/* Correct typo: 'image' to 'Image' */}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -91,12 +94,22 @@ function Staff() {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.password}</td>
+
                                     <td>{user.number}</td>
-                                    <td><img src={user.image} alt="User" /></td>
+                                    <td> {user.image ? (
+                                                <img src={`http://localhost:3000/image/${user.image}`} alt="User" style={{ width: '100px', height: '90px' }} />
+                                            ) : (
+                                                <BsPersonFill size={60} color="#adb5bd" />
+                                            )}</td>
+                                    <td>{user.role}</td>
                                     <td>
-                                        <Link to={`/userupdate/${user._id}`} className='btn btn-success'>Update</Link>
-                                        <button className='btn btn-danger ml-2' onClick={(e)=>handleDelete(user._id)}>Delete</button>
-                                    </td>
+                                            <Link to={`/staffupdate/${user._id}`} className='btn btn-success'>
+                                                <i className="bi bi-pencil-fill"></i> Update
+                                            </Link>
+                                            <button className='btn btn-danger ml-2' onClick={(e)=>handleDelete(user._id)}>
+                                                <i className="bi bi-trash-fill"></i> Delete
+                                            </button>
+                                        </td>
                                 </tr>
                             );
                         })}

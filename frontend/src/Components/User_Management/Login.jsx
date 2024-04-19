@@ -44,10 +44,10 @@ function Login() {
             .then((result) => {
                 console.log(result);
                 if (result.data.status === 'success') {
-                    Cookies.set('token', result.data.token, { expires: 1 });
+                   // Cookies.set('token', result.data.token, { expires: 1 });
                     Cookies.set('userEmail', email, { expires: 1 });
                     Cookies.set('userId', result.data.userId, { expires: 1 }); // Store user ID in cookies
-    
+                    Cookies.set('role', result.data.role, { expires: 1 });
                     const isAdmin = result.data.isAdmin;
                     const isStaff = result.data.isStaff; // New
     
@@ -91,10 +91,10 @@ function Login() {
             <img src="img/shape.png" className="square" alt="" />
             <div className="form">
                 <div className="contact-info">
-                    <h3 className="title">Let's get in touch</h3>
+                    <h3 className="title">Tech-Connect</h3>
                     <p className="text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-                        dolorum adipisci recusandae praesentium dicta!
+                       
+                    Tech-Connect: Top tech hub, latest smartphones, expert advice, innovation, convenience, reliability. Upgrade your mobile lifestyle!
                     </p>
                     <div className="info">
                         <div className="information d-flex align-items-center">

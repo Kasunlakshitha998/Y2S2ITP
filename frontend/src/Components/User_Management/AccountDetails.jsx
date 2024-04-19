@@ -86,12 +86,24 @@ function AccountDetails() {
             .catch(err => console.log(err));
     };
     
+    const handleClickProfilePicture = () => {
+   
+    Swal.fire({
+        imageUrl: `http://localhost:3000/image/${userImage}`,
+        imageAlt: 'Profile Picture',
+        showCloseButton: true,
+        showConfirmButton: false,
+        width: '20%',
+        height: 'auto',
+    });
+};
     
     return (
         <div className="container-xl px-4 mt-4">
             <nav className="nav nav-borders">
                 <button className="nav-link active ms-0">Profile</button>
                 <button className="nav-link">Billing</button>
+                <button className="nav-link">Appoinment</button>
                 <button className="nav-link">
                     <Link to="/SecuritySettings">Security</Link>
                 </button>
@@ -102,12 +114,16 @@ function AccountDetails() {
                     <div className="card mb-4 mb-xl-0">
                         <div className="card-header">Profile Picture</div>
                         <div className="card-body text-center">
-                            {userImage ? (
-                                <img src={`http://localhost:3000/image/${userImage}`} alt="Profile" style={{ borderRadius: '50%' }} />
-
-                            ) : (
-                                <BsPersonFill size={100} color="#adb5bd" />
-                            )}
+    {userImage ? (
+        <img
+            src={`http://localhost:3000/image/${userImage}`}
+            alt="Profile"
+            style={{ borderRadius: '50%', cursor: 'pointer' }} 
+            onClick={handleClickProfilePicture} 
+        />
+    ) : (
+        <BsPersonFill size={100} color="#adb5bd"  />
+    )}
                             <div className="small font-italic text-muted mb-4">
                                 <input type="file" onChange={e => setFile(e.target.files[0])}/> 
                                 <button className="btn btn-primary mt-2" onClick={handleUpload}>Upload new image</button>

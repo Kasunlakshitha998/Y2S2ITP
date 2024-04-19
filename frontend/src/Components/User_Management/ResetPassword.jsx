@@ -85,10 +85,9 @@ function ResetPassword() {
             <div className="form">
                 {/* Contact Info Section */}
                 <div className="contact-info">
-                    <h3 className="title">Let's get in touch</h3>
+                    <h3 className="title"> Tech-Connect</h3>
                     <p className="text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-                    dolorum adipisci recusandae praesentium dicta!
+                    Tech-Connect: Top tech hub, latest smartphones, expert advice, innovation, convenience, reliability. Upgrade your mobile lifestyle!
                     </p>
                     {/* Information */}
                     <div className="info">

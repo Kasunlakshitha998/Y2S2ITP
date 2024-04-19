@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserNav from '../../Components/Nav/userNav';
 import './productPage.css';
+import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { addToCart } from './CartSlice';
+import { useNavigate } from 'react-router-dom';
 
 function ProductPage() {
   const { id } = useParams();
@@ -13,7 +17,11 @@ function ProductPage() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  
+  const userId = Cookies.get('userId');
+  const navigate = useNavigate();
+
+  console.log(userId);
+
   useEffect(() => {
     async function getProduct() {
       try {
@@ -31,7 +39,6 @@ function ProductPage() {
 
     getProduct();
   }, [id]);
-
 
   useEffect(() => {
     setLoading(true);
@@ -92,13 +99,22 @@ function ProductPage() {
     setSlideIndex(index);
   };
 
-const handleProductClick = (productId) => {
-  const clickedProduct = products.find((product) => product._id === productId);
-  setProduct(clickedProduct);
-  window.scrollTo(0, 0);
-};
+  const handleProductClick = (productId) => {
+    const clickedProduct = products.find(
+      (product) => product._id === productId
+    );
+    setProduct(clickedProduct);
+    window.scrollTo(0, 0);
+  };
 
+  const dispatch = useDispatch();
   
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    navigate('/cart');
+  };
+
   return (
     <>
       <header>
@@ -168,7 +184,11 @@ const handleProductClick = (productId) => {
                           +
                         </button>
                       </div>
-                      <button className="add-to-cart" disabled={quantity === 0}>
+                      <button
+                        className="add-to-cart"
+                        disabled={quantity === 0}
+                        onClick={() => handleAddToCart(product)}
+                      >
                         Add to Cart
                       </button>
                       <button
@@ -182,8 +202,8 @@ const handleProductClick = (productId) => {
                   )}
                 </div>
               </div>
-              </div>
-              
+            </div>
+
             <h3>Related products</h3>
             <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-8 mt-4 mb-4">
               {products
@@ -284,7 +304,10 @@ const handleProductClick = (productId) => {
                           </del>
 
                           <div class="ml-auto">
-                            <Link to="/cart">
+                            <Link
+                              to="/cart"
+                              onClick={() => handleAddToCart(product)}
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"

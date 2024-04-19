@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './adminNav.css';
+import Cookies from 'js-cookie';
 
 function AdminNav() {
   const location = useLocation();
@@ -15,11 +16,22 @@ function AdminNav() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const logout = () => {
+    // Clear frontend cookies
+    Cookies.remove('token');
+    Cookies.remove('userEmail');
+    Cookies.remove('userId');
+    Cookies.remove('role');
+    
+    // Redirect to login page
+    window.location.href = '/login';
+  };
+
   return (
     <>
       <header className="admin-header">
         <button className="burger-menu" onClick={toggleSidebar}>
-          ☰
+         
         </button>
         <div className="logo">
           <Link to="/admin">Admin Dashboard</Link>
@@ -32,7 +44,7 @@ function AdminNav() {
             <div className="dropdown-content">
               <Link to="/AccountDetails">Profile</Link>
               <Link to="#">Settings</Link>
-              <Link to="#">Logout</Link>
+              <Link onClick={logout}>Logout</Link> {/* Call logout function */}
             </div>
           </div>
         </div>
