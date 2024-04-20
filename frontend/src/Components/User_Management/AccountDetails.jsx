@@ -121,7 +121,7 @@ function AccountDetails() {
         <img
             src={`http://localhost:3000/image/${userImage}`}
             alt="Profile"
-            style={{ borderRadius: '50%', cursor: 'pointer' }} 
+           
             onClick={handleClickProfilePicture} 
         />
     ) : (
