@@ -75,22 +75,26 @@ function Users() {
                     <table className="table mt-3">
                         <thead className="thead-dark table-header">
                             <tr>
+                                
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Password</th>
                                 <th>Number</th>
                                 <th>Image</th>
                                 <th>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
                             {filteredUsers.map((user) => {
                                 return (
                                     <tr key={user._id}>
+                                        
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <td>{user.password}</td>
                                         <td>{user.number}</td>
+                                      
                                         <td>
                                             {user.image ? (
                                                 <img src={`http://localhost:3000/image/${user.image}`} alt="User" style={{ width: '100px', height: '90px' }} />

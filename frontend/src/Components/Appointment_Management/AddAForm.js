@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Link } from 'react-router-dom'; // Import Link from React Router
+//import { Link } from 'react-router-dom'; // Import Link from React Router
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 
 
 export default function AddAForm() {
@@ -29,7 +32,7 @@ export default function AddAForm() {
 
   const sendData = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post("http://localhost:8175/appointment/add", {
         name,
@@ -40,9 +43,22 @@ export default function AddAForm() {
         date,
         description
       });
-
+  
+      // Display success alert
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Your appointment has been successfully submitted.',
+      });
+  
       console.log(response.data);
     } catch (error) {
+      // Display error alert
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong! Please try again later.',
+      });
       console.error("Error submitting form:", error);
     }
   };
