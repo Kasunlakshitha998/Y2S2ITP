@@ -52,7 +52,7 @@ function AppointmentList() {
                     <img
                       src={appointment.image}
                       alt={appointment.name}
-                      style={{ width: '90px', height: '80px' }}
+                      style={{ width: '60px', height: '50px' }}
                     />
                   </td>
                   <td className="py-4 px-6">{appointment.description}</td>
