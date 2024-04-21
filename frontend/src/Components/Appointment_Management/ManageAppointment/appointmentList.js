@@ -17,7 +17,7 @@ function AppointmentList() {
     }, []);
 
     return (
-        <div className="mx-auto max-w-7xl p-6 bg-white rounded-lg  mt-8">
+        <div className="mx-auto max-w-7xl p-5  rounded-lg  mt-6">
             <header>
                 <AdminNav />
             </header>
