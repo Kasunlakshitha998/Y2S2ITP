@@ -30,9 +30,7 @@ function AdminNav() {
   return (
     <>
       <header className="admin-header">
-        <button className="burger-menu" onClick={toggleSidebar}>
-         
-        </button>
+        <button className="burger-menu" onClick={toggleSidebar}></button>
         <div className="logo">
           <Link to="/admin">Admin Dashboard</Link>
         </div>
@@ -64,8 +62,8 @@ function AdminNav() {
           <li className={activeLink === '/admin/productsList' ? 'active' : ''}>
             <Link to="/admin/productsList">Products</Link>
           </li>
-          <li className={activeLink === '/orders' ? 'active' : ''}>
-            <Link to="/orders">Orders</Link>
+          <li className={activeLink === '/OrderList' ? 'active' : ''}>
+            <Link to="/OrderList">Orders</Link>
           </li>
           <li className={activeLink === '/appoinment' ? 'active' : ''}>
             <Link to="/appoinment">Appoinment</Link>

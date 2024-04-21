@@ -56,6 +56,7 @@ const userRouter = require('./routes/User/Employees.js');
 const appointmentRouter = require("./routes/appointment/appointments.js");
 
 const feedbackRouter = require('./routes/feedback management/feedbacks.js');
+const orderRouter = require('./routes/Order_Mangment/orders.js');
 
 const expenseRoutes = require('./routes/Financial_Management/expense');
 const salaryRoutes = require('./routes/Financial_Management/salary');
@@ -73,7 +74,8 @@ app.use(express.json());
 app.use('/product', productRouter);//Product
 app.use('/user', userRouter);//User
 app.use('/appointment', appointmentRouter);//Appointment 
-//order 
+app.use('/order', orderRouter);//Appointment 
+
 app.use('/feedback',feedbackRouter);//feedback 
 //leave
 //promotion
