@@ -49,7 +49,8 @@ function Login() {
                     Cookies.set('userId', result.data.userId, { expires: 1 }); // Store user ID in cookies
                     Cookies.set('role', result.data.role, { expires: 1 });
                     const isAdmin = result.data.isAdmin;
-                    const isStaff = result.data.isStaff; // New
+                    const isStaff = result.data.isStaff; 
+                    
     
                     Swal.fire({
                         position: "center",
@@ -58,6 +59,7 @@ function Login() {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                  
     
                     if (isAdmin) {
                         navigate('/admin');

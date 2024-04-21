@@ -15,6 +15,12 @@ const employeeSchema = new mongoose.Schema({
     otp: String,
      // Add a field to store OTP
      image: String,
+
+     firstLogin: {
+        type: Boolean,
+        default: true
+    }
+    
    
 } 
 
