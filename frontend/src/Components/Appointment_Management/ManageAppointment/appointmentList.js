@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminNav from '../../Nav/adminNav'; // Corrected import statement
+import { Link } from 'react-router-dom';
+import AdminNav from '../../Nav/adminNav';
 
 function AppointmentList() {
     const [appointments, setAppointments] = useState([]);
@@ -15,6 +16,10 @@ function AppointmentList() {
                 alert(err.message);
             });
     }, []);
+
+    const handleDelete = (id) => {
+        // Implement delete functionality
+    };
 
     return (
       <div className="mx-auto max-w-7xl p-5  rounded-lg  mt-6">
@@ -34,6 +39,7 @@ function AppointmentList() {
                 <th className="py-4 px-6">Date</th>
                 <th className="py-4 px-6">Reciept</th>
                 <th className="py-4 px-6">Description</th>
+                <th className="py-4 px-6">Actions</th> {/* Added Actions column */}
               </tr>
             </thead>
             <tbody className="text-gray-700">
@@ -56,6 +62,18 @@ function AppointmentList() {
                     />
                   </td>
                   <td className="py-4 px-6">{appointment.description}</td>
+                  <td className="py-4 px-6">
+                    {/* Update Button */}
+                    <Link to={`/updateAppointment/${appointment._id}`} className="mr-2">
+                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Update
+                      </button>
+                    </Link>
+                    {/* Delete Button */}
+                    <button onClick={() => handleDelete(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
