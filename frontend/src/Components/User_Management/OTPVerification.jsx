@@ -110,7 +110,7 @@ function OTPVerification() {
         <div className="contact-info">
           <h3 className="title">Tech-Connect </h3>
           <p className="text">
-          Tech-Connect: Top tech hub, latest smartphones, expert advice, innovation, convenience, reliability. Upgrade your mobile lifestyle!
+          Welcome to our online mobile phone shop!
           </p>
           {/* Information */}
           <div className="info">

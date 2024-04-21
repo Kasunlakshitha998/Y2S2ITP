@@ -102,7 +102,7 @@ function SecuritySettings() {
                     <Link to="/AccountDetails">Profile</Link>
                 </button>
                 <button className="nav-link">Billing</button>
-                <button className="nav-link">Appoinment</button>
+                
                 
             </nav>
             <hr className="mt-0 mb-4" />

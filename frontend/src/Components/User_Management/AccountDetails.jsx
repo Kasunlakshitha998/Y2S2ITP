@@ -103,7 +103,10 @@ function AccountDetails() {
             <nav className="nav nav-borders">
                 <button className="nav-link active ms-0">Profile</button>
                 <button className="nav-link">Billing</button>
-                <button className="nav-link">Appoinment</button>
+               
+
+               
+                
                 <button className="nav-link">
                     <Link to="/SecuritySettings">Security</Link>
                 </button>
@@ -118,7 +121,7 @@ function AccountDetails() {
         <img
             src={`http://localhost:3000/image/${userImage}`}
             alt="Profile"
-            style={{ borderRadius: '50%', cursor: 'pointer' }} 
+           
             onClick={handleClickProfilePicture} 
         />
     ) : (
