@@ -75,15 +75,15 @@ router.put("/update/:id", async (req, res) => {
 
 // Delete operation (Delete an appointment)
 router.delete("/delete/:id", async (req, res) => {
-    const userId = req.params.id;
+    const appointmentId = req.params.id;
 
     // Delete the appointment by ID
     try {
-        await Appointment.findByIdAndDelete(userId);
-        res.status(200).json({ message: "Appointment deleted successfully" }); // Adjusted response message format
+        await Appointment.findByIdAndDelete(appointmentId);
+        res.status(200).json({ message: "Appointment deleted successfully" });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: err.message }); // Adjusted response status and error message
+        res.status(500).json({ error: err.message });
     }
 });
 
