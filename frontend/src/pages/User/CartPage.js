@@ -8,6 +8,7 @@ import {
   removeFromCart,
 } from './CartSlice';
 import { Link } from 'react-router-dom';
+import CheckoutComponent from '../../Components/Inventory_Management/CheckoutComponent';
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -29,6 +30,8 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+
 
   return (
     <div className="cart-container mx-auto p-4 lg:w-3/4 xl:w-2/3">
@@ -126,9 +129,9 @@ const Cart = () => {
               <p className="text-gray-500 text-sm">
                 Taxes and shipping calculated at checkout
               </p>
-              <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
-                Check out
-              </button>
+              
+                <CheckoutComponent/>
+
               <div className="continue-shopping mt-4">
                 <Link to="/" className="flex items-center text-blue-500">
                   <svg
