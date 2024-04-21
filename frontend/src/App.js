@@ -21,6 +21,8 @@ import ForgotPassword from './Components/User_Management/ForgotPassword';
 import UpdateUsers from './Components/User_Management/updateuser';
 import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
+import OTP from './Components/User_Management/otpregiter';
+
 import Users from './Components/User_Management/displayuserdetails';
 
 import CreateUsers from './Components/User_Management/createuser'; // Import once
@@ -107,6 +109,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-otp" element={<OTPVerification />} />
+        <Route path="/otp" element={<OTP />} />
         <Route
           path="/userdetails"
           element={<AdminRouteGuard element={<Users />} />}
