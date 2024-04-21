@@ -31,7 +31,7 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
-import appointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
+import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
 
 import CartPage from './pages/User/CartPage';
 
@@ -111,7 +111,7 @@ function App() {
 
       
         <Route path="/addForm" element={<AddAForm />}/>
-        <Route path="/appList" element={<appointmentList/>}/>
+        <Route path="/appointmentList" element={<AppointmentList/>}/>
 
         <Route path="/staffdetails" element={<Staff/>}/>
 
