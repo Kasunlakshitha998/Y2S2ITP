@@ -33,7 +33,12 @@ import UpdateStaff from'./Components/User_Management/staffupdate'
 import AddAForm from "./Components/Appointment_Management/AddAForm";
 import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
 
+import UserNav from './Components/Nav/userNav';
+
+
 import CartPage from './pages/User/CartPage';
+
+import GiveFeedback from './Components/Feedback Management/GiveFeedback';
 
 
 
@@ -114,6 +119,10 @@ function App() {
         <Route path="/appointmentList" element={<AppointmentList/>}/>
 
         <Route path="/staffdetails" element={<Staff/>}/>
+
+        <Route path="/givefeedback" element={<GiveFeedback/>}/>
+
+        <Route path="/userNav" element={<UserNav/>}/>
 
         
 

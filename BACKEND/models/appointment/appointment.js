@@ -30,6 +30,10 @@ const appointmentSchema = new Schema({
     description: {
         type: String,
         required: true
+    },
+    image: {
+        type: Image,
+        required: true
     }
 });
 
