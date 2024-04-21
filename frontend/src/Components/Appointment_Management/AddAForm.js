@@ -14,7 +14,7 @@ export default function AddAForm() {
   const [serviceType, setServiceType] = useState([]);
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState([]);
 
   useEffect(() => {
     const userId = Cookies.get('userId');
