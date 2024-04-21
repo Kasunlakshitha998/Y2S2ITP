@@ -31,10 +31,10 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
-import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
 import CartPage from './pages/User/CartPage';
 import OrderList from './Components/Order_Management/OrderList';
 import UserOderList from './Components/Order_Management/UserOderList';
+import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -135,12 +135,12 @@ function App() {
         <Route path="/staffupdate/:id" element={<UpdateStaff />} />
 
         <Route path="/addForm" element={<AddAForm />} />
-        <Route path="/updateD" element={<UpdateAppointment />} />
 
         <Route path="/staffdetails" element={<Staff />} />
 
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
+        <Route path="/AppointmentList" element={<AppointmentList />} />
       </Routes>
     </div>
   );

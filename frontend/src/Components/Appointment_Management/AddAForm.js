@@ -7,97 +7,122 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default function AddAForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [telephone, setTelephone] = useState('');
   const [phoneType, setPhoneType] = useState([]);
   const [serviceType, setServiceType] = useState([]);
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
+  const [date, setDate] = useState('');
+  const [description, setDescription] = useState('');
   const [image, setImage] = useState([]);
 
   useEffect(() => {
     const userId = Cookies.get('userId');
     if (userId) {
-        axios.get(`http://localhost:8175/user/getUsers/${userId}`)
-            .then(result => {
-                setName(result.data.name);
-                setEmail(result.data.email);
-                setTelephone(result.data.number);
-            })
-            .catch(err => console.log(err));
+      axios
+        .get(`http://localhost:8175/user/getUsers/${userId}`)
+        .then((result) => {
+          setName(result.data.name);
+          setEmail(result.data.email);
+          setTelephone(result.data.number);
+        })
+        .catch((err) => console.log(err));
     }
   }, []);
 
   const sendData = async (e) => {
     e.preventDefault();
-  
-    try {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('telephone', telephone);
-      formData.append('phoneType', JSON.stringify(phoneType));
-      formData.append('serviceType', JSON.stringify(serviceType));
-      formData.append('date', date);
-      formData.append('description', description);
-      if (image) {
-        formData.append('image', image);
-      }
-  
-      const response = await axios.post("http://localhost:8175/appointment/add", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+
+    const NewAppoinment = {
+      name,
+      email,
+      telephone,
+      phoneType,
+      serviceType,
+      date,
+      description,
+      image,
+    };
+    console.log(NewAppoinment);
+    axios
+      .post('http://localhost:8175/appointment/add', NewAppoinment)
+      .then(() => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Appoiment Submited Successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error with Product ADD',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        console.log(err);
       });
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Your appointment has been successfully submitted.',
-      });
-  
-      console.log(response.data);
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong! Please try again later.',
-      });
-      console.error("Error submitting form:", error);
-    }
   };
 
   const handlePhoneTypeChange = (e) => {
     const { checked, value } = e.target;
     if (checked) {
-      setPhoneType(prevPhoneType => [...prevPhoneType, value]); 
+      setPhoneType((prevPhoneType) => [...prevPhoneType, value]);
     } else {
-      setPhoneType(prevPhoneType => prevPhoneType.filter(type => type !== value)); 
+      setPhoneType((prevPhoneType) =>
+        prevPhoneType.filter((type) => type !== value)
+      );
     }
   };
 
   const handleServiceTypeChange = (e) => {
     const { checked, value } = e.target;
     if (checked) {
-      setServiceType(prevServiceType => [...prevServiceType, value]); 
+      setServiceType((prevServiceType) => [...prevServiceType, value]);
     } else {
-      setServiceType(prevServiceType => prevServiceType.filter(type => type !== value)); 
+      setServiceType((prevServiceType) =>
+        prevServiceType.filter((type) => type !== value)
+      );
     }
   };
 
-  const handleImageUpload = (files) => {
-    setImage(files[0]);
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result;
+        setImage(base64String);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
     <div className="bg-gray-100 min-h-screen">
       <UserNav />
       <div className="container mx-auto px-4 py-12">
-        <form onSubmit={sendData} className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg" encType="multipart/form-data">
-          <h2 className="text-2xl font-bold mb-6">Appointment For Repair Services</h2>
+        <form
+          onSubmit={sendData}
+          className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg"
+          encType="multipart/form-data"
+        >
+          <h2 className="text-2xl font-bold mb-6">
+            Appointment For Repair Services
+          </h2>
           <div className="mb-6">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name:
+            </label>
             <input
               type="text"
               id="name"
@@ -110,7 +135,12 @@ export default function AddAForm() {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email:
+            </label>
             <input
               type="email"
               id="email"
@@ -123,7 +153,12 @@ export default function AddAForm() {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="telephone" className="block text-sm font-medium text-gray-700">Telephone:</label>
+            <label
+              htmlFor="telephone"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Telephone:
+            </label>
             <input
               type="tel"
               id="telephone"
@@ -135,7 +170,9 @@ export default function AddAForm() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700">Phone Type:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Phone Type:
+            </label>
             <div className="mt-2 space-y-2">
               <div>
                 <input
@@ -146,7 +183,12 @@ export default function AddAForm() {
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
                 />
-                <label htmlFor="android" className="text-sm font-medium text-gray-700">Android</label>
+                <label
+                  htmlFor="android"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Android
+                </label>
               </div>
               <div>
                 <input
@@ -157,7 +199,12 @@ export default function AddAForm() {
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
                 />
-                <label htmlFor="apple" className="text-sm font-medium text-gray-700">Apple</label>
+                <label
+                  htmlFor="apple"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Apple
+                </label>
               </div>
               <div>
                 <input
@@ -168,12 +215,19 @@ export default function AddAForm() {
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
                 />
-                <label htmlFor="windows" className="text-sm font-medium text-gray-700">Windows</label>
+                <label
+                  htmlFor="windows"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Windows
+                </label>
               </div>
             </div>
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700">Service Type:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Service Type:
+            </label>
             <div className="mt-2 space-y-2">
               <div>
                 <input
@@ -184,7 +238,12 @@ export default function AddAForm() {
                   onChange={handleServiceTypeChange}
                   className="mr-2"
                 />
-                <label htmlFor="display" className="text-sm font-medium text-gray-700">Display Services</label>
+                <label
+                  htmlFor="display"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Display Services
+                </label>
               </div>
               <div>
                 <input
@@ -195,7 +254,12 @@ export default function AddAForm() {
                   onChange={handleServiceTypeChange}
                   className="mr-2"
                 />
-                <label htmlFor="motherboard" className="text-sm font-medium text-gray-700">Motherboard Services</label>
+                <label
+                  htmlFor="motherboard"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Motherboard Services
+                </label>
               </div>
               <div>
                 <input
@@ -206,12 +270,22 @@ export default function AddAForm() {
                   onChange={handleServiceTypeChange}
                   className="mr-2"
                 />
-                <label htmlFor="other" className="text-sm font-medium text-gray-700">Other Services</label>
+                <label
+                  htmlFor="other"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Other Services
+                </label>
               </div>
             </div>
           </div>
           <div className="mb-6">
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
+            <label
+              htmlFor="date"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Date:
+            </label>
             <input
               type="date"
               id="date"
@@ -223,7 +297,12 @@ export default function AddAForm() {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description:
+            </label>
             <textarea
               id="description"
               name="description"
@@ -233,17 +312,25 @@ export default function AddAForm() {
             ></textarea>
           </div>
           <div className="mb-6">
-            <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image:</label>
+            <label
+              htmlFor="image"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Image:
+            </label>
             <input
               type="file"
               id="image"
               name="image"
               accept="image/*"
-              onChange={(e) => handleImageUpload(e.target.files)}
+              onChange={handleImageUpload}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-          <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
             Submit
           </button>
         </form>
