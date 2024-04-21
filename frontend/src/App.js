@@ -145,7 +145,7 @@ function App() {
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
         <Route path="/AppointmentList" element={<AppointmentList />} />
-        <Route path="/UpdateAppointment" element={<UpdateAppointment />} />
+        <Route path="/updateAppointment" element={<UpdateAppointment />} />
       </Routes>
     </div>
   );
