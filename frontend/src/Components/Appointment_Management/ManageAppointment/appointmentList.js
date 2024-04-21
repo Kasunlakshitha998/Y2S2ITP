@@ -33,6 +33,7 @@ function AppointmentList() {
                             <th className="py-4 px-6">Service Type</th>
                             <th className="py-4 px-6">Date</th>
                             <th className="py-4 px-6">Description</th>
+                           
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
@@ -45,6 +46,7 @@ function AppointmentList() {
                                 <td className="py-4 px-6">{appointment.serviceType}</td>
                                 <td className="py-4 px-6">{appointment.date}</td>
                                 <td className="py-4 px-6">{appointment.description}</td>
+                            
                             </tr>
                         ))}
                     </tbody>
