@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import UserNav from '../Nav/userNav';
-import Footer from '../Nav/footer';
+import { useParams } from 'react-router-dom'; // Import useParams hook
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-export default function AddAForm() {
+export default function UpdateAppointment() {
+  const { id } = useParams(); // Get appointment ID from URL params
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
@@ -14,57 +13,14 @@ export default function AddAForm() {
   const [serviceType, setServiceType] = useState([]);
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState('');
 
-  useEffect(() => {
-    const userId = Cookies.get('userId');
-    if (userId) {
-      axios
-        .get(`http://localhost:8175/user/getUsers/${userId}`)
-        .then((result) => {
-          setName(result.data.name);
-          setEmail(result.data.email);
-          setTelephone(result.data.number);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, []);
+  const handleServiceTypeChange = (e) => {
+    // Your logic for handling service type change
+  };
 
-  const sendData = async (e) => {
-    e.preventDefault();
-
-    const NewAppoinment = {
-      name,
-      email,
-      telephone,
-      phoneType,
-      serviceType,
-      date,
-      description,
-      image,
-    };
-    console.log(NewAppoinment);
-    axios
-      .post('http://localhost:8175/appointment/add', NewAppoinment)
-      .then(() => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Appoiment Submited Successfully',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((err) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Error with Product ADD',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        console.log(err);
-      });
+  const handleImageUpload = (e) => {
+    // Your logic for handling image upload
   };
 
   const handlePhoneTypeChange = (e) => {
@@ -78,44 +34,76 @@ export default function AddAForm() {
     }
   };
 
-  const handleServiceTypeChange = (e) => {
-    const { checked, value } = e.target;
-    if (checked) {
-      setServiceType((prevServiceType) => [...prevServiceType, value]);
-    } else {
-      setServiceType((prevServiceType) =>
-        prevServiceType.filter((type) => type !== value)
-      );
+  useEffect(() => {
+    if (id) {
+      // Fetch existing appointment data if ID exists
+      axios
+        .get(`http://localhost:8175/appointment/get/${id}`)
+        .then((response) => {
+          const appointmentData = response.data.appointment;
+          setName(appointmentData.name);
+          setEmail(appointmentData.email);
+          setTelephone(appointmentData.telephone);
+          setPhoneType(appointmentData.phoneType);
+          setServiceType(appointmentData.serviceType);
+          setDate(appointmentData.date.substring(0, 10)); // Ensure date is in proper format
+          setDescription(appointmentData.description);
+          setImage(appointmentData.image);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  };
+  }, [id]);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
+  const sendData = (e) => {
+    e.preventDefault();
 
-    if (file) {
-      const reader = new FileReader();
+    const updatedAppointment = {
+      name,
+      email,
+      telephone,
+      phoneType,
+      serviceType,
+      date,
+      description,
+      image,
+    };
 
-      reader.onload = () => {
-        const base64String = reader.result;
-        setImage(base64String);
-      };
-
-      reader.readAsDataURL(file);
-    }
+    // Send PUT request to update appointment data
+    axios
+      .put(`http://localhost:8175/appointment/update/${id}`, updatedAppointment)
+      .then(() => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Appointment Updated Successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error updating appointment',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <UserNav />
+      
       <div className="container mx-auto px-4 py-12">
         <form
           onSubmit={sendData}
           className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg"
           encType="multipart/form-data"
         >
-          <h2 className="text-2xl font-bold mb-6">
-            Appointment For Repair Services
-          </h2>
+          <h2 className="text-2xl font-bold mb-6">Update Appointment</h2>
           <div className="mb-6">
             <label
               htmlFor="name"
@@ -331,11 +319,11 @@ export default function AddAForm() {
             type="submit"
             className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Submit
+            Update
           </button>
         </form>
       </div>
-      <Footer />
+      
     </div>
   );
 }

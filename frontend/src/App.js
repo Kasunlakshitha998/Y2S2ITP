@@ -31,10 +31,11 @@ import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
 import AddAForm from "./Components/Appointment_Management/AddAForm";
-import appointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
-
 import CartPage from './pages/User/CartPage';
-
+import OrderList from './Components/Order_Management/OrderList';
+import UserOderList from './Components/Order_Management/UserOderList';
+import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
+import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -75,48 +76,73 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/product/:id" element={<ProductPage />}  />
+        <Route path="/" element={<UserRouteGuard element={<HomePage />} />} />
+        <Route path="/product/:id" element={<ProductPage />} />
 
-        <Route path="/admin/*" element={<AdminRouteGuard element={<Dashboard />} />} />
-        <Route path="/admin/productsList" element={<AdminRouteGuard element={<ProductsList />} />} />
-        <Route path="/admin/productsList/addProduct" element={<AdminRouteGuard element={<AddProduct />} />} />
-        <Route path="/admin/productsList/editProduct/:id" element={<AdminRouteGuard element={<EditProduct />} />} />
-        <Route path="/admin/productsList/viewProduct/:id" element={<AdminRouteGuard element={<ViewProduct />} />} />
+        <Route
+          path="/admin/*"
+          element={<AdminRouteGuard element={<Dashboard />} />}
+        />
+        <Route
+          path="/admin/productsList"
+          element={<AdminRouteGuard element={<ProductsList />} />}
+        />
+        <Route
+          path="/admin/productsList/addProduct"
+          element={<AdminRouteGuard element={<AddProduct />} />}
+        />
+        <Route
+          path="/admin/productsList/editProduct/:id"
+          element={<AdminRouteGuard element={<EditProduct />} />}
+        />
+        <Route
+          path="/admin/productsList/viewProduct/:id"
+          element={<AdminRouteGuard element={<ViewProduct />} />}
+        />
 
         <Route path="/cart" element={<CartPage />} />
-
-        
 
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-otp" element={<OTPVerification />} />
-        <Route path="/userdetails" element={<AdminRouteGuard element={<Users />} />} /> 
-        <Route path="/usercreate" element={<AdminRouteGuard element={<CreateUsers />} />} />
+        <Route
+          path="/userdetails"
+          element={<AdminRouteGuard element={<Users />} />}
+        />
+        <Route
+          path="/usercreate"
+          element={<AdminRouteGuard element={<CreateUsers />} />}
+        />
 
-        <Route path="/userupdate/:id" element={<AdminRouteGuard element={<UpdateUsers />} />} />
+        <Route
+          path="/userupdate/:id"
+          element={<AdminRouteGuard element={<UpdateUsers />} />}
+        />
 
-        <Route path="/AccountDetails" element={<AllUsersRouteGuard element={<AccountDetails />} />} />
-        
-        
-        <Route path="/SecuritySettings" element={<AllUsersRouteGuard element={<SecuritySettings />} />} />
+        <Route
+          path="/AccountDetails"
+          element={<AllUsersRouteGuard element={<AccountDetails />} />}
+        />
+
+        <Route
+          path="/SecuritySettings"
+          element={<AllUsersRouteGuard element={<SecuritySettings />} />}
+        />
         <Route path="/createstaff" element={<CreateStaff />} />
 
+        <Route path="/staffdetails" element={<Staff />} />
+        <Route path="/staffupdate/:id" element={<UpdateStaff />} />
 
-        <Route path= "/staffdetails" element={<Staff/>}/>
-        <Route path= "/staffupdate/:id" element={<UpdateStaff/>}/>
-       
+        <Route path="/addForm" element={<AddAForm />} />
 
-      
-        <Route path="/addForm" element={<AddAForm />}/>
-        <Route path="/appList" element={<appointmentList/>}/>
+        <Route path="/staffdetails" element={<Staff />} />
 
-        <Route path="/staffdetails" element={<Staff/>}/>
-
-        
-
+        <Route path="/OrderList" element={<OrderList />} />
+        <Route path="/UserOrderList" element={<UserOderList />} />
+        <Route path="/AppointmentList" element={<AppointmentList />} />
+        <Route path="/UpdateAppointment" element={<UpdateAppointment />} />
       </Routes>
     </div>
   );
