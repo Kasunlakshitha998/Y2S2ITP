@@ -212,13 +212,14 @@ export default function AddAForm() {
         <div className="mb-6">
           <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
           <input
-            type="date"
-            id="date"
-            name="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+  type="date"
+  id="date"
+  name="date"
+  value={date}
+  min={new Date().toISOString().split('T')[0]} // Set minimum date to today
+  onChange={(e) => setDate(e.target.value)}
+  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+/>
         </div>
 
         <div className="mb-6">
