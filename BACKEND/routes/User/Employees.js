@@ -376,7 +376,7 @@ router.get('/getUsers/:userId', (req, res) => {
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'C:/Users/User/Documents/GitHub/Y2S2ITP/Frontend/public/image');
+    cb(null, path.join(__dirname, '../../../frontend/public/image'));
   },
   filename:  (req, file, cb)=> {
     //const uniqueSuffix = Date.now();
@@ -677,6 +677,23 @@ router.route('/otp').post(async (req, res) => {
     return res.status(500).send({ status: "Error processing request" });
   }
 });
+
+router.delete('/registerdelete', (req, res) => {
+  const { userEmail } = req.body;
+
+  EmployeeModel.findOneAndDelete({ email:userEmail })
+      .then(deletedEmployee => {
+          if (!deletedEmployee) {
+              return res.status(404).json({ message: 'User not found.' });
+          }
+          res.status(200).json({ message: 'User account deleted successfully.' });
+      })
+      .catch(error => {
+          console.error('Error deleting user account:', error);
+          res.status(500).json({ message: 'Failed to delete user account. Please try again.' });
+      });
+});
+
 
 
 

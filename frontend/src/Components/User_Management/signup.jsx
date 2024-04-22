@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./style1s.css"
 import React, { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 
 
 
@@ -55,14 +56,24 @@ function Signup() {
         // Validate name (should contain only letters)
         const nameRegex = /^[a-zA-Z\s]+$/;
         if (!name.match(nameRegex)) {
-            alert("Name should only contain letters");
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Name should only contain letters.",
+              });
+           
             return;
         }
      
 
         // Check if passwords match
         if (password !== reenterPassword) {
-            alert("Passwords do not match");
+            
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Passwords do not match.",
+              });
             return;
         }
 
@@ -70,12 +81,24 @@ function Signup() {
 
         const validNumberLength = 10;
         if (number.length !== validNumberLength) {
-            alert("Mobile number should be 10 digits");
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Mobile number should be 10 digits.",
+              });
+            
             return;
         }
         const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
         if (!email.match(gmailPattern)) {
-            alert("Please enter a valid Gmail address");
+               
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Please enter a valid Email address.",
+              });
+
+           
             return;
         }
 
@@ -95,16 +118,19 @@ function Signup() {
             // Navigate to login page
             navigate('/otp');
         })
-          .catch((err) => {
-            if (
-              err.response &&
-              err.response.data.error === 'Email is already in use'
-            ) {
-              alert('Email is already in use. Please use a different email.');
+        .catch((error) => {
+            if (error.response && error.response.data.error ) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error...",
+                    text: "Email is already in use. Please use a different email.",
+                  });
+                
             } else {
-              console.log(err);
+                console.error(error);
+               // alert('An error occurred. Please try again later.');
             }
-          });
+        });
 
       
     }
