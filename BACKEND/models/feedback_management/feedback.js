@@ -4,14 +4,7 @@ const Schema = mongoose.Schema;
 
 const feedbackSchema = new Schema({
 
-    productId:{
-        type : String,
-        required:true
-    },
-    userId:{
-        type : String,
-        required:true
-    },
+    
     date:{
         type : String,
         required:true
@@ -29,7 +22,7 @@ const feedbackSchema = new Schema({
         required:true
     },
     feedbackType:{
-        type : String,
+        type : [String],
         required:true
     },
     descript:{

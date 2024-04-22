@@ -39,6 +39,8 @@ import UserOderList from './Components/Order_Management/UserOderList';
 import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
 import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
 
+import GiveFeedback from './Components/Feedback Management/GiveFeedback';
+//import Feedback from '../../BACKEND/models/feedback_management/feedback';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -146,6 +148,8 @@ function App() {
         <Route path="/UserOrderList" element={<UserOderList />} />
         <Route path="/AppointmentList" element={<AppointmentList />} />
         <Route path="/updateAppointment" element={<UpdateAppointment />} />
+
+        <Route path="/giveFeedback" element={<GiveFeedback />} />
       </Routes>
     </div>
   );

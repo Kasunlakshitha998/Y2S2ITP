@@ -1,35 +1,33 @@
-const router = require("express").Router();
-let Feedback = require("../../models/feedback_management/feedback");
-
-
-
-http://Localhost:8070/feedback/add
+const express = require('express');
+const router = express.Router();
+const Feedback = require('../../models/feedback_management/feedback');
 
 router.route("/add").post((req,res)=>{
 
     const productId = req.body.productId;
-    const userId = req.body.userId;
     const date = req.body.date;
     const name = req.body.name;
     const email = req.body.email;
     const rating = Number (req.body.rating);
     const feedbackType = req.body.feedbackType;
     const descript = req.body.descript;
+    
 
-
+// give new feedback
     const newFeedback = new Feedback({
-      productId,
-      userId,
+      
       date,
       name,
       email,
       rating,
       feedbackType,
-      descript,
+      descript
+      
     });
 
+    // Save the new feedback to the database
     newFeedback.save().then(()=>{
-        res.json("Feedback Added")
+        res.json("Feedback Submitted successfully")
     }).catch((err)=>{
         console.log(err);
     })
@@ -38,7 +36,7 @@ router.route("/add").post((req,res)=>{
 
 })
 
-
+// Read operation (Get all feedbacks)
 router.route("/").get((req,res)=>{
 
     Feedback.find().then((feedbacks)=>{
@@ -49,34 +47,34 @@ router.route("/").get((req,res)=>{
 
 })
 
-//http//localhost:8175/feedback/update/
-
+// Update operation
 router.route("/update/:id").put(async (req, res)=>{
 
     let feedbackId = req.params.id;
-    const { productId, userId, date, name, email, rating, feedbackType,descript } = req.body;
+    const { productId, date, name, email, rating, feedbackType,descript} = req.body;
 
     const updateFeedback = {
-      productId,
-      userId,
+      
       date,
       name,
       email,
       rating,
       feedbackType,
       descript
+      
     };
 
-    const update = await Feedback.findByAndUpdate(feedbackId, updateFeedback)
-    .then(() => {
+    // Update the appointment by ID
+  try {
+    await Feedback.findByIdAndUpdate(userId, updateFeedback);
+    res.status(200).json({ message: 'Feedback updated successfully' }); // Adjusted response message format
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message }); // Adjusted response status and error message
+  }
+});
 
-    res.status(200).send({status: "Feedback Updated", feedback: update})
-    }).catch((err)=>{
-   console.log(err);
-   res.status(500).send({status: "Error with updating data",error:err.message}); 
-    })
-})
-
+// Delete operation
 router.route("/delete/:id").delete(async (req, res) => {
     let feedbackId = req.params.id;
 
