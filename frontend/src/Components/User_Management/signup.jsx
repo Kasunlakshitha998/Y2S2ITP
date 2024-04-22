@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import "./style1s.css"
 import React, { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 
 
 
@@ -84,11 +85,16 @@ function Signup() {
             email,
             password,
             number,
+           
           })
+          
           .then((result) => {
             console.log(result);
-            navigate('/login');
-          })
+            // Set userEmail cookie after successful registration
+            Cookies.set('userEmail', email, { expires: 1 });
+            // Navigate to login page
+            navigate('/otp');
+        })
           .catch((err) => {
             if (
               err.response &&
