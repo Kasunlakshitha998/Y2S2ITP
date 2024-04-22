@@ -16,25 +16,14 @@ function OTP() {
       setCountdown(prevCountdown => prevCountdown - 1);
     }, 1000);
 
-   
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
     if (countdown === 0) {
-      
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "try again time is over ",
-      });
-      navigate('/register');
+      handleAccountDeletion();
     }
-  }, [countdown, navigate]);
-
-
-
-
+  }, [countdown]);
 
   useEffect(() => {
     const inputs = document.querySelectorAll(".input");
@@ -54,7 +43,6 @@ function OTP() {
     inputs.forEach((input) => {
         input.addEventListener("focus", focusFunc);
         input.addEventListener("blur", blurFunc);
-
        
         return () => {
             input.removeEventListener("focus", focusFunc);
@@ -63,14 +51,35 @@ function OTP() {
     });
   }, []);
 
+  const handleAccountDeletion = async () => {
+    try {
+      const userEmail = Cookies.get('userEmail');
+      const response = await axios.delete('http://localhost:8175/user/registerdelete', { data: { userEmail } });
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: "sign up is faild. Please try again",
+        });
+
+        navigate('/register');
+      } else {
+        setVerificationStatus("Failed to delete account.");
+      }
+    } catch (error) {
+      setVerificationStatus('Error deleting account: ' + error.message);
+    }
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const userEmail = Cookies.get('userEmail'); // Retrieve userEmail from cookies
+      const userEmail = Cookies.get('userEmail');
       const response = await axios.post(
         'http://localhost:8175/user/otp',
-        { otp, userEmail } // Include userEmail in the request body
+        { otp, userEmail }
       );
   
       if (response.status === 200) {
@@ -78,10 +87,9 @@ function OTP() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "OTP verified successfully!",
+            title: "Sign up successfully!",
             showConfirmButton: false,
             timer: 1500
-            
           });
           navigate('/login');
         } else if (response.data.status === "Incorrect OTP") {
@@ -106,13 +114,9 @@ function OTP() {
       <span className="big-circle"></span>
       <img src="img/shape.png" className="square" alt="" />
       <div className="form">
-        {/* Contact Info Section */}
         <div className="contact-info">
           <h3 className="title">Tech-Connect </h3>
-          <p className="text">
-          Welcome to our online mobile phone shop!
-          </p>
-          {/* Information */}
+          <p className="text">Welcome to our online mobile phone shop!</p>
           <div className="info">
             <div className="information d-flex align-items-center">
               <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
@@ -127,7 +131,6 @@ function OTP() {
               <p className="mb-0">123-456-789</p>
             </div>
           </div>
-          {/* Social Media Links */}
           <div className="social-media">
             <p>Connect with us :</p>
             <div className="social-icons d-flex justify-content-center">
@@ -140,11 +143,9 @@ function OTP() {
             </div>
           </div>
         </div>
-        {/* Contact Form Section */}
         <div className="contact-form">
           <span className="circle one"></span>
           <span className="circle two"></span>
-          {/* Form */}
           <form onSubmit={handleSubmit} autoComplete="off">
             <h3 className="title">check your email </h3>
             <div className="input-container">
