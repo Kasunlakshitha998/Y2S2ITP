@@ -21,6 +21,8 @@ import ForgotPassword from './Components/User_Management/ForgotPassword';
 import UpdateUsers from './Components/User_Management/updateuser';
 import ResetPassword from './Components/User_Management/ResetPassword';
 import OTPVerification from './Components/User_Management/OTPVerification';
+import OTP from './Components/User_Management/otpregiter';
+
 import Users from './Components/User_Management/displayuserdetails';
 
 import CreateUsers from './Components/User_Management/createuser'; // Import once
@@ -35,8 +37,6 @@ import CartPage from './pages/User/CartPage';
 import OrderList from './Components/Order_Management/OrderList';
 import UserOderList from './Components/Order_Management/UserOderList';
 import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
-import EditOrder from './Components/Order_Management/EditOrder';
-import UserOrderEdit from './Components/Order_Management/userOderEdit';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -108,6 +108,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-otp" element={<OTPVerification />} />
+        <Route path="/otp" element={<OTP />} />
         <Route
           path="/userdetails"
           element={<AdminRouteGuard element={<Users />} />}
@@ -143,8 +144,7 @@ function App() {
 
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
-        <Route path="/admin/order/editOrder/:id" element={<EditOrder />} />
-        <Route path="/order/userOderEdit/:id" element={<UserOrderEdit />} />
+        <Route path="/AppointmentList" element={<AppointmentList />} />
       </Routes>
     </div>
   );

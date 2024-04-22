@@ -17,27 +17,70 @@ const path = require('path');
 
 //app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 router.route('/register').post((req, res) => {
-    const { name, email, password, number } = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
-        EmployeeModel.findOne({ email: email })
-            .then((existingUser) => {
-                if (existingUser) {
-                    // Email already exists, return an error
-                    res.status(400).json({ error: 'Email already registered' });
-                } else {
-                    // Email is unique, create a new user
-                    EmployeeModel.create({ name, email, password: hash, number })
-                        .then((newEmployee) => res.json(newEmployee))
-                        .catch((err) => res.status(500).json({ error: err.message }));
-                }
-            })
-            .catch((err) => {
-                res.status(500).json({ error: err.message });
-            });
-    });
+  const { name, email, password, number } = req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+      EmployeeModel.findOne({ email: email })
+          .then((existingUser) => {
+              if (existingUser) {
+                  // Email already exists, return an error
+                  res.status(400).json({ error: 'Email already registered' });
+              } else {
+                  // Email is unique, create a new user
+                  EmployeeModel.create({ name, email, password: hash, number })
+                      .then((newEmployee) => {
+                          // Set the userEmail cookie
+                          res.cookie('userEmail', email, { maxAge: 86400000 });
 
-    // Check if the email already exists
+                          // Generate OTP
+                          const otp = generateNumericOTP(6); // You need to define this function
+
+                          // Save OTP in the database
+                          newEmployee.otp = otp;
+                          newEmployee.save();
+
+                          // Send OTP via Email
+                          const transporter = nodemailer.createTransport({
+                              service: 'gmail',
+                              auth: {
+                                  user: 'navindadharmasiri@gmail.com',
+                                  pass: 'xbdd pchv ufvh spcs', // Please replace with your actual password or use environment variables for security
+                              },
+                          });
+
+                          // Define email content
+                          const mailOptions = {
+                              from: 'navindadharmasiri@gmail.com',
+                              to: email,
+                              subject: 'Account Verification OTP',
+                              text: `Your OTP for account verification is: ${otp}`,
+                          };
+
+                          // Send email
+                          transporter.sendMail(mailOptions, (error, info) => {
+                              if (error) {
+                                  console.log('Error sending email:', error);
+                                  return res.status(500).send({ status: 'Error sending email' });
+                              } else {
+                                  console.log('Email sent:', info.response);
+                                  return res.status(200).send({ status: 'OTP sent successfully' });
+                              }
+                          });
+
+                          // Send the response with the new employee data
+                          res.json(newEmployee);
+                      })
+                      .catch((err) => res.status(500).json({ error: err.message }));
+              }
+          })
+          .catch((err) => {
+              res.status(500).json({ error: err.message });
+          });
+  });
+
+  // Check if the email already exists
 });
+
+
 
 router.route('/login').post((req, res) => {
   const { email, password } = req.body;
@@ -607,6 +650,33 @@ router.put('/staffupdate/:id', async (req, res) => {
   }
 });
 
+router.route('/otp').post(async (req, res) => {
+  const { otp, userEmail } = req.body; // Retrieve userEmail from request body
+
+  try {
+    // Find user by email
+    const user = await EmployeeModel.findOne({ email: userEmail });
+
+    if (!user) {
+      return res.send({ status: "Incorrect OTP" });
+    }
+
+    // Check if OTP matches
+    if (user.otp !== otp) {
+      return res.send({ status: "Incorrect OTP" });
+    }
+
+    // Clear the OTP from the database after successful verification
+    user.otp = null;
+    await user.save();
+
+    return res.send({ status: "Success" });
+
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    return res.status(500).send({ status: "Error processing request" });
+  }
+});
 
 
 

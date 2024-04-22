@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import AdminNav from '../../Nav/adminNav';
+import UserNav from '../../Nav/userNav';
+import Cookies from 'js-cookie';
 
-function AppointmentList() {
+function UserAppointmentList() {
     const [appointments, setAppointments] = useState([]);
+    const userId = Cookies.get('userId');
+
+    const UserAppoint = appointments.filter((appointment) => appointment.userId === userId);
 
     useEffect(() => {
         fetchAppointments();
@@ -12,7 +16,7 @@ function AppointmentList() {
 
     const fetchAppointments = () => {
         axios
-            .get('http://localhost:8175/appointment/')
+            .get(`http://localhost:8175/appointment/`) 
             .then((res) => {
                 setAppointments(res.data);
             })
@@ -37,7 +41,7 @@ function AppointmentList() {
     return (
         <div className="mx-auto max-w-7xl p-5 rounded-lg mt-6">
             <header>
-                <AdminNav />
+                <UserNav />
             </header>
 
             <div>
@@ -52,11 +56,11 @@ function AppointmentList() {
                             <th className="py-4 px-6">Date</th>
                             <th className="py-4 px-6">Receipt</th>
                             <th className="py-4 px-6">Description</th>
-                            <th className="py-4 px-6">Actions</th> {/* Added Actions column */}
+                            <th className="py-4 px-6">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
-                        {appointments.map((appointment, index) => (
+                        {UserAppoint.map((appointment, index) => (
                             <tr
                                 key={index}
                                 className={index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}
@@ -76,13 +80,11 @@ function AppointmentList() {
                                 </td>
                                 <td className="py-4 px-6">{appointment.description}</td>
                                 <td className="py-4 px-6">
-                                    {/* Update Button */}
                                     <Link to={`/updateAppointment/${appointment._id}`} className="mr-2">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Update
                                         </button>
                                     </Link>
-                                    {/* Delete Button */}
                                     <button onClick={() => handleDelete(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                         Delete
                                     </button>
@@ -96,4 +98,4 @@ function AppointmentList() {
     );
 }
 
-export default AppointmentList;
+export default UserAppointmentList;

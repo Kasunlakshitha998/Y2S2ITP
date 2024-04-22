@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import UserNav from '../Nav/userNav';
-import Footer from '../Nav/footer';
+import { useParams } from 'react-router-dom'; // Import useParams hook
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import { useNavigate } from 'react-router-dom';
 
-export default function AddAForm() {
+export default function UpdateAppointment() {
+  const { id } = useParams(); // Get appointment ID from URL params
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
@@ -15,73 +13,9 @@ export default function AddAForm() {
   const [serviceType, setServiceType] = useState([]);
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState([]);
-  const navigator = useNavigate();
+  const [image, setImage] = useState('');
 
-  useEffect(() => {
-    const userId = Cookies.get('userId');
-    if (userId) {
-      axios
-        .get(`http://localhost:8175/user/getUsers/${userId}`)
-        .then((result) => {
-          setName(result.data.name);
-          setEmail(result.data.email);
-          setTelephone(result.data.number);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, []);
-
-  const sendData = async (e) => {
-    e.preventDefault();
-    const userId = Cookies.get('userId');
-    const NewAppoinment = {
-      name,
-      userId,
-      email,
-      telephone,
-      phoneType,
-      serviceType,
-      date,
-      description,
-      image,
-    };
-    console.log(NewAppoinment);
-    axios
-      .post('http://localhost:8175/appointment/add', NewAppoinment)
-      .then(() => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Appoiment Submited Successfully',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigator('/UserAppointmentList')
-      })
-      .catch((err) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Error with Product ADD',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        console.log(err);
-      });
-  };
-
-  const handlePhoneTypeChange = (e) => {
-    const { checked, value } = e.target;
-    if (checked) {
-      setPhoneType((prevPhoneType) => [...prevPhoneType, value]);
-    } else {
-      setPhoneType((prevPhoneType) =>
-        prevPhoneType.filter((type) => type !== value)
-      );
-    }
-  };
-
+ 
   const handleServiceTypeChange = (e) => {
     const { checked, value } = e.target;
     if (checked) {
@@ -97,29 +31,97 @@ export default function AddAForm() {
     const file = e.target.files[0];
 
     if (file) {
-        const reader = new FileReader();
+      const reader = new FileReader();
 
-        reader.onload = () => {
-            const base64String = reader.result;
-            setImage(base64String);
-        };
+      reader.onload = () => {
+        const base64String = reader.result;
+        setImage(base64String);
+      };
 
-        reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
     }
-};
+  };
+
+  const handlePhoneTypeChange = (e) => {
+    const { checked, value } = e.target;
+    if (checked) {
+      setPhoneType((prevPhoneType) => [...prevPhoneType, value]);
+    } else {
+      setPhoneType((prevPhoneType) =>
+        prevPhoneType.filter((type) => type !== value)
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      // Fetch existing appointment data if ID exists
+      axios
+        .get(`http://localhost:8175/appointment/get/${id}`)
+        .then((response) => {
+          const appointmentData = response.data.appointment;
+          setName(appointmentData.name);
+          setEmail(appointmentData.email);
+          setTelephone(appointmentData.telephone);
+          setPhoneType(appointmentData.phoneType);
+          setServiceType(appointmentData.serviceType);
+          setDate(appointmentData.date.substring(0, 10)); // Ensure date is in proper format
+          setDescription(appointmentData.description);
+          setImage(appointmentData.image);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [id]);
+
+  const sendData = (e) => {
+    e.preventDefault();
+
+    const updatedAppointment = {
+      name,
+      email,
+      telephone,
+      phoneType,
+      serviceType,
+      date,
+      description,
+      image
+    };
+
+    axios
+      .put(`http://localhost:8175/appointment/update/${id}`, updatedAppointment)
+      .then(() => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Appointment Updated Successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error updating appointment',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <UserNav />
+
       <div className="container mx-auto px-4 py-12">
         <form
           onSubmit={sendData}
           className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg"
           encType="multipart/form-data"
         >
-          <h2 className="text-2xl font-bold mb-6">
-            Appointment For Repair Services
-          </h2>
+          <h2 className="text-2xl font-bold mb-6">Update Appointment</h2>
           <div className="mb-6">
             <label
               htmlFor="name"
@@ -185,6 +187,7 @@ export default function AddAForm() {
                   name="phoneType"
                   value="Android"
                   onChange={handlePhoneTypeChange}
+                  checked={phoneType.includes("Android")}
                   className="mr-2"
                 />
                 <label
@@ -201,6 +204,7 @@ export default function AddAForm() {
                   name="phoneType"
                   value="Apple"
                   onChange={handlePhoneTypeChange}
+                  checked={phoneType.includes("Apple")}
                   className="mr-2"
                 />
                 <label
@@ -217,6 +221,7 @@ export default function AddAForm() {
                   name="phoneType"
                   value="Windows"
                   onChange={handlePhoneTypeChange}
+                  checked={phoneType.includes("Windows")}
                   className="mr-2"
                 />
                 <label
@@ -240,6 +245,7 @@ export default function AddAForm() {
                   name="serviceType"
                   value="Display Services"
                   onChange={handleServiceTypeChange}
+                  checked={serviceType.includes("Display Services")}
                   className="mr-2"
                 />
                 <label
@@ -256,6 +262,7 @@ export default function AddAForm() {
                   name="serviceType"
                   value="Motherboard Services"
                   onChange={handleServiceTypeChange}
+                  checked={serviceType.includes("Motherboard Services")}
                   className="mr-2"
                 />
                 <label
@@ -272,6 +279,7 @@ export default function AddAForm() {
                   name="serviceType"
                   value="Other Services"
                   onChange={handleServiceTypeChange}
+                  checked={serviceType.includes("Other Services")}
                   className="mr-2"
                 />
                 <label
@@ -316,30 +324,39 @@ export default function AddAForm() {
             ></textarea>
           </div>
           <div className="mb-6">
-    <label
-        htmlFor="image"
-        className="block text-sm font-medium text-gray-700"
-    >
-        Image:
-    </label>
-    <input
-        type="file"
-        id="image"
-        name="image"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-</div>
+            <label
+              htmlFor="image"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Image:
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+            <div>
+
+              <img
+                src={image}
+                alt={name}
+                style={{ width: '110px', height: '110px' }}
+              />
+
+            </div>
+          </div>
           <button
             type="submit"
             className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Submit
+            Update
           </button>
         </form>
       </div>
-      <Footer />
+
     </div>
   );
 }
