@@ -92,8 +92,8 @@ function UserOderList() {
                       style={{ width: '90px', height: '80px' }}
                     />
                   </td>
-                  <td className="border px-4 py-2">Pending</td>
-                  <td className="border px-4 py-2">Pending</td>
+                  <td className="border px-4 py-2">{order.paymentStatus}</td>
+                  <td className="border px-4 py-2">{order.deliveryStatus}</td>
                   <td className="border px-4 py-2">
                     <td className="border px-4 py-2">
                       <Link to={`/order/userOderEdit/${order._id}`}>

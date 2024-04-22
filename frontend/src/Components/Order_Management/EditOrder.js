@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import AdminNav from '../Nav/adminNav';
 
 function EditOrder() {
   const { id } = useParams();
-  const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [paymentOption, setPaymentOption] = useState('cash');
-  const [checkoutError, setCheckoutError] = useState(null);
+  const [deliveryStatus, setDeliveryStatus] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('');
+  const [paymentOption, setPaymentOption] = useState('');
+  const [image, setImage] = useState([]);
+  
 
   useEffect(() => {
     axios
       .get(`http://localhost:8175/order/getOrder/${id}`)
       .then((res) => {
         console.log(res.data);
-        setDeliveryAddress(res.data.deliveryAddress);
-        setPaymentOption(res.data.deliveryAddress);
+        setDeliveryStatus(res.data.deliveryStatus);
+        setPaymentStatus(res.data.paymentStatus);
+        setImage(res.data.image);
+        setPaymentOption(res.data.paymentOption);
       })
       .catch((err) => {
         alert(err.message);
@@ -26,15 +31,15 @@ function EditOrder() {
     e.preventDefault();
 
     const UpdateOrder = {
-      deliveryAddress,
-      paymentOption,
+      deliveryStatus,
+      paymentStatus,
     };
   
     axios
-      .put(`http://localhost:8175/order/edit/${id}`, UpdateOrder)
+      .put(`http://localhost:8175/order/editStatus/${id}`, UpdateOrder)
       .then((res) => {
         console.log('updated successfully:', res.data);
-
+        alert('Update successfully');
       })
       .catch((err) => {
         console.error('Error updating :', err);
@@ -42,50 +47,68 @@ function EditOrder() {
   }
 
 
-  const handleAddressChange = (e) => {
-    setDeliveryAddress(e.target.value);
+  const handleDeliveryStatusChange = (e) => {
+    setDeliveryStatus(e.target.value);
   };
 
-  const handlePaymentOptionChange = (e) => {
-    setPaymentOption(e.target.value);
+  const handlePaymentStatusChange = (e) => {
+    setPaymentStatus(e.target.value);
   };
 
+  
 
   return (
     <div>
-      <div className="checkout-form mt-8">
-        <form onSubmit={UpdateData}>
-          <div className="mb-4">
-            <label htmlFor="deliveryAddress" className="block font-medium">
-              Delivery Address
-            </label>
-            <input
-              type="text"
-              id="deliveryAddress"
-              value={deliveryAddress}
-              onChange={handleAddressChange}
-              className="w-full border rounded py-2 px-3 mt-1"
-              required
-            />
+      <header>
+        <AdminNav />
+      </header>
+      <div className="checkout-form mt-20 ml-60">
+        <form onSubmit={UpdateData} className="max-w-xl">
+          <div>
+            <div className="mb-4">
+              <label htmlFor="paymentOption" className="block font-medium">
+                Delivery Status
+              </label>
+              <select
+                id="paymentOption"
+                value={deliveryStatus}
+                onChange={handleDeliveryStatusChange}
+                className="w-full border rounded py-2 px-3 mt-1"
+                required
+              >
+                <option value="Pending">Pending</option>
+                <option value="Confirm">Ok</option>
+              </select>
+            </div>
           </div>
           <div>
             <div className="mb-4">
               <label htmlFor="paymentOption" className="block font-medium">
-                Payment Option
+                Payment Status
               </label>
               <select
                 id="paymentOption"
-                value={paymentOption}
-                onChange={handlePaymentOptionChange}
+                value={paymentStatus}
+                onChange={handlePaymentStatusChange}
                 className="w-full border rounded py-2 px-3 mt-1"
                 required
               >
-                <option value="cash">Cash on Delivery</option>
-                <option value="bank">Bank Deposit</option>
+                <option value="Pending">Pending</option>
+                <option value="Confirm">Ok</option>
               </select>
             </div>
+            <div>
+              <h3>Payment Method: {paymentOption}</h3>
+              {paymentOption === 'bank' && (
+                <img
+                  src={image}
+                  alt={paymentOption}
+                  style={{ width: '200px', height: '200px' }}
+                />
+              )}
+            </div>
           </div>
-          {checkoutError && <p className="text-red-500">{checkoutError}</p>}
+
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded mt-4"

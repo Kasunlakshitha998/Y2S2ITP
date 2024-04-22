@@ -56,6 +56,8 @@ const OrderList = () => {
                 <th className="px-4 py-2">Items</th>
                 <th className="px-4 py-2">Payment Option</th>
                 <th className="px-4 py-2">Deposit Slip</th>
+                <th className="px-4 py-2">Delivery Status</th>
+                <th className="px-4 py-2">Payment Status</th>
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
@@ -85,6 +87,8 @@ const OrderList = () => {
                       style={{ width: '90px', height: '80px' }}
                     />
                   </td>
+                  <td className="border px-4 py-2">{order.paymentStatus}</td>
+                  <td className="border px-4 py-2">{order.deliveryStatus}</td>
                   <td className="border px-4 py-2">
                     <Link to={`/admin/order/editOrder/${order._id}`}>
                       <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 m-2 rounded">

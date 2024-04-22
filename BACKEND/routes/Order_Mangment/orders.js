@@ -71,7 +71,7 @@ router.put('/edit/:id', async (req, res) => {
     // Update the order fields
    
     order.deliveryAddress = deliveryAddress;
-    order.paymentption = paymentOption;
+    order.paymentOption = paymentOption;
 
 
     // Save the updated order to the database
@@ -84,6 +84,32 @@ router.put('/edit/:id', async (req, res) => {
   }
 });
 
+router.put('/editStatus/:id', async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const { deliveryStatus, paymentStatus } = req.body;
+
+    // Find the order by its ID
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Update the order fields
+
+    order.deliveryStatus = deliveryStatus;
+    order.paymentStatus = paymentStatus;
+
+    // Save the updated order to the database
+    const updatedOrder = await order.save();
+
+    res.status(200).json(updatedOrder);
+  } catch (error) {
+    console.error('Error updating order:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 //get one order
 router.get('/getOrder/:id', async (req, res) => {

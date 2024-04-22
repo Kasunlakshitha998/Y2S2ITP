@@ -12,7 +12,6 @@ const orderSchema = new mongoose.Schema(
     },
     paymentOption: {
       type: String,
-      enum: ['cash', 'bank'],
       required: true,
     },
     items: [
@@ -39,7 +38,16 @@ const orderSchema = new mongoose.Schema(
     ],
     image: {
       type: Object,
-      
+    },
+    deliveryStatus: {
+      type: String,
+      required: true,
+      default: 'Pending', 
+    },
+    paymentStatus: {
+      type: String,
+      required: true,
+      default: 'Pending', 
     },
   },
   { timestamps: true }

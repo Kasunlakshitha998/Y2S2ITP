@@ -8,7 +8,7 @@ import {
   removeFromCart,
 } from './CartSlice';
 import { Link } from 'react-router-dom';
-import CheckoutComponent from '../../Components/Inventory_Management/CheckoutComponent';
+import CheckoutComponent from '../../Components/Order_Management/CheckoutComponent';
 import UserNav from '../../Components/Nav/userNav';
 
 const Cart = () => {

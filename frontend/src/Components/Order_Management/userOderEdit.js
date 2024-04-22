@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const UserOrderEdit = () => {
   const { id } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
-
+  const [image, setImage] = useState([]);
+  
   useEffect(() => {
     axios
-      .get(`http://localhost:8175/order/edit/${id}`)
+      .get(`http://localhost:8175/order/getOrder/${id}`)
       .then((res) => {
         console.log(res.data);
         setDeliveryAddress(res.data.deliveryAddress);
-        setPaymentOption(res.data.deliveryAddress);
+        setPaymentOption(res.data.paymentOption);
       })
       .catch((err) => {
         alert(err.message);
+        setCheckoutError("error");
       });
   }, [id]);
 
@@ -29,6 +30,7 @@ function UpdateData(e) {
   const UpdateOrder = {
     deliveryAddress,
     paymentOption,
+    image,
   };
 
   axios
@@ -38,6 +40,7 @@ function UpdateData(e) {
     })
     .catch((err) => {
       console.error('Error updating :', err);
+      setCheckoutError('error');
     });
 }
 
@@ -50,7 +53,20 @@ function UpdateData(e) {
     setPaymentOption(e.target.value);
   };
 
+ const handleImageUpload = (e) => {
+   const file = e.target.files[0];
 
+   if (file) {
+     const reader = new FileReader();
+
+     reader.onload = () => {
+       const base64String = reader.result;
+       setImage(base64String);
+     };
+
+     reader.readAsDataURL(file);
+   }
+ };
 
   return (
     <div>
@@ -85,6 +101,26 @@ function UpdateData(e) {
                 <option value="bank">Bank Deposit</option>
               </select>
             </div>
+            {paymentOption === 'bank' && (
+              <div className="mb-4">
+                <label htmlFor="bankImage" className="block font-medium">
+                  Bank Image
+                </label>
+                <input
+                  type="file"
+                  id="bankImage"
+                  accept="image/*"
+                  className="w-full border rounded py-2 px-3 mt-1"
+                  onChange={handleImageUpload}
+                />
+                <ul>
+                  <h4>Bank Details</h4>
+                  <li>Bank Name - BOC</li>
+                  <li>Account No - 008825786</li>
+                  <li>Bank Branch - Malabe</li>
+                </ul>
+              </div>
+            )}
           </div>
           {checkoutError && <p className="text-red-500">{checkoutError}</p>}
           <button
