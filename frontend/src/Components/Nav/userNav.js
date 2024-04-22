@@ -119,6 +119,11 @@ function UserNav() {
                   </li>
 
                   <li>
+                    <Link to="/UserOrderList" className="block py-2 px-4 hover:bg-gray-100">
+                      Order
+                    </Link> 
+                  </li>
+                  <li>
                     <Link onClick={logout} className="block py-2 px-4 hover:bg-gray-100">
                       Logout
                     </Link> 

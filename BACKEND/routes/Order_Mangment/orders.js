@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../../models/Order_Managment/order');
 
-
 // Create a new order
 router.post('/add', async (req, res) => {
   try {
@@ -27,7 +26,6 @@ router.post('/add', async (req, res) => {
   }
 });
 
-
 // Fetch all orders
 router.get('/', async (req, res) => {
   try {
@@ -37,7 +35,7 @@ router.get('/', async (req, res) => {
     console.error('Error fetching orders:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-})
+});
 
 //delete
 router.route('/delete/:id').delete(async (req, res) => {
@@ -59,7 +57,7 @@ router.route('/delete/:id').delete(async (req, res) => {
 router.put('/edit/:id', async (req, res) => {
   try {
     const orderId = req.params.id;
-    const { deliveryAddress, paymentOption } = req.body;
+    const { deliveryAddress, paymentOption, image, paymentStatus } = req.body;
 
     // Find the order by its ID
     const order = await Order.findById(orderId);
@@ -69,11 +67,11 @@ router.put('/edit/:id', async (req, res) => {
     }
 
     // Update the order fields
-   
+
     order.deliveryAddress = deliveryAddress;
     order.paymentOption = paymentOption;
-
-
+    order.image = image;
+    order.paymentStatus = paymentStatus;
     // Save the updated order to the database
     const updatedOrder = await order.save();
 
@@ -129,7 +127,5 @@ router.get('/getOrder/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-
 
 module.exports = router;

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import UserNav from './../Nav/userNav';
 
 const UserOrderEdit = () => {
   const { id } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
+  const [paymentStatus, setpaymentStatus] = useState('Pending');
   const [image, setImage] = useState([]);
   
   useEffect(() => {
@@ -16,6 +18,7 @@ const UserOrderEdit = () => {
         console.log(res.data);
         setDeliveryAddress(res.data.deliveryAddress);
         setPaymentOption(res.data.paymentOption);
+        setpaymentStatus('Pending');
       })
       .catch((err) => {
         alert(err.message);
@@ -31,12 +34,14 @@ function UpdateData(e) {
     deliveryAddress,
     paymentOption,
     image,
+    paymentStatus,
   };
 
   axios
     .put(`http://localhost:8175/order/edit/${id}`, UpdateOrder)
     .then((res) => {
       console.log('updated successfully:', res.data);
+      alert("Update successfully")
     })
     .catch((err) => {
       console.error('Error updating :', err);
@@ -70,7 +75,10 @@ function UpdateData(e) {
 
   return (
     <div>
-      <div className="checkout-form mt-8">
+      <header>
+        <UserNav />
+      </header>
+      <div className="checkout-form m-28 max-w-xl">
         <form onSubmit={UpdateData}>
           <div className="mb-4">
             <label htmlFor="deliveryAddress" className="block font-medium">

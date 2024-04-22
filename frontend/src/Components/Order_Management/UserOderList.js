@@ -54,8 +54,8 @@ function UserOderList() {
               <tr>
                 <th className="px-4 py-2">Order ID</th>
                 <th className="px-4 py-2">Delivery Address</th>
-                <th className="px-4 py-2">Payment Option</th>
                 <th className="px-4 py-2">Items</th>
+                <th className="px-4 py-2">Payment Option</th>
                 <th className="px-4 py-2">Slip</th>
                 <th className="px-4 py-2">Payment Status</th>
                 <th className="px-4 py-2">Delivery Status</th>
@@ -67,7 +67,7 @@ function UserOderList() {
                 <tr key={order._id}>
                   <td className="border px-4 py-2">{order._id}</td>
                   <td className="border px-4 py-2">{order.deliveryAddress}</td>
-                  <td className="border px-4 py-2">{order.paymentOption}</td>
+
                   <td className="border px-4 py-2">
                     <ul className="divide-y divide-gray-200">
                       {order.items.map((item) => (
@@ -85,30 +85,37 @@ function UserOderList() {
                       ))}
                     </ul>
                   </td>
+                  <td className="border px-4 py-2">{order.paymentOption}</td>
                   <td className="border px-4 py-2">
-                    <img
-                      src={order.image}
-                      alt={order.name}
-                      style={{ width: '90px', height: '80px' }}
-                    />
+                    {order.paymentOption === 'bank' ? (
+                      <img
+                        src={order.image}
+                        alt={order.paymentOption}
+                        style={{ width: '200px', height: '200px' }}
+                      />
+                    ) : (
+                      <p>Cash</p>
+                    )}
                   </td>
                   <td className="border px-4 py-2">{order.paymentStatus}</td>
                   <td className="border px-4 py-2">{order.deliveryStatus}</td>
                   <td className="border px-4 py-2">
-                    <td className="border px-4 py-2">
-                      <Link to={`/order/userOderEdit/${order._id}`}>
-                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 m-2 rounded">
-                          <FaEdit />
-                        </button>
-                      </Link>
+                    {order.deliveryStatus === 'Pending' && (
+                      <td className="border px-4 py-2">
+                        <Link to={`/order/userOderEdit/${order._id}`}>
+                          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 m-2 rounded">
+                            <FaEdit />
+                          </button>
+                        </Link>
 
-                      <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 m-2 rounded"
-                        onClick={() => handleDelete(order._id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </td>
+                        <button
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 m-2 rounded"
+                          onClick={() => handleDelete(order._id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
+                    )}
                   </td>
                 </tr>
               ))}
