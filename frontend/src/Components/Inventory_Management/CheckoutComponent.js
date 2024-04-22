@@ -12,6 +12,7 @@ const CheckoutComponent = () => {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
+  const [image, setImage] = useState([]);
   
 
   const handleAddressChange = (e) => {
@@ -45,6 +46,7 @@ const CheckoutComponent = () => {
         totalPrice: item.price * item.cartQuantity,
         // Add other details as needed
       })),
+      image,
     };
 
     console.log(checkoutData);
@@ -81,6 +83,21 @@ const CheckoutComponent = () => {
       console.log('Quantity updated successfully');
     } else {
       throw new Error('Insufficient stock');
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result;
+        setImage(base64String);
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -128,6 +145,7 @@ const CheckoutComponent = () => {
                   id="bankImage"
                   accept="image/*"
                   className="w-full border rounded py-2 px-3 mt-1"
+                  onChange={handleImageUpload}
                 />
                 <ul>
                   <h4>Bank Details</h4>

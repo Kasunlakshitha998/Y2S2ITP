@@ -37,6 +37,10 @@ const orderSchema = new mongoose.Schema(
         // Add other details as needed
       },
     ],
+    image: {
+      type: Object,
+      
+    },
   },
   { timestamps: true }
 );

@@ -3,6 +3,7 @@ import axios from 'axios';
 import UserNav from './../Nav/userNav';
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function UserOderList() {
   const [orders, setOrders] = useState([]);
@@ -26,6 +27,20 @@ function UserOderList() {
   // Filter orders based on the logged-in user's ID
   const userOrders = orders.filter((order) => order.UserID === userId);
 
+
+  const handleDelete = (orderId) => {
+    axios
+      .delete(`http://localhost:8175/order/delete/${orderId}`)
+      .then(() => {
+        alert('Order Delete successfully');
+        setOrders(orders.filter((order) => order._id !== orderId));
+      })
+      .catch((error) => {
+        console.error('Error deleting product:', error);
+        alert('Order Delete unSuccessfully');
+      });
+  };
+
   return (
     <>
       <header>
@@ -41,7 +56,10 @@ function UserOderList() {
                 <th className="px-4 py-2">Delivery Address</th>
                 <th className="px-4 py-2">Payment Option</th>
                 <th className="px-4 py-2">Items</th>
-                <th className="px-4 py-2">Status</th>
+                <th className="px-4 py-2">Slip</th>
+                <th className="px-4 py-2">Payment Status</th>
+                <th className="px-4 py-2">Delivery Status</th>
+                <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -67,7 +85,31 @@ function UserOderList() {
                       ))}
                     </ul>
                   </td>
+                  <td className="border px-4 py-2">
+                    <img
+                      src={order.image}
+                      alt={order.name}
+                      style={{ width: '90px', height: '80px' }}
+                    />
+                  </td>
                   <td className="border px-4 py-2">Pending</td>
+                  <td className="border px-4 py-2">Pending</td>
+                  <td className="border px-4 py-2">
+                    <td className="border px-4 py-2">
+                      <Link to={`/order/userOderEdit/${order._id}`}>
+                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 m-2 rounded">
+                          <FaEdit />
+                        </button>
+                      </Link>
+
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 m-2 rounded"
+                        onClick={() => handleDelete(order._id)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </td>
                 </tr>
               ))}
             </tbody>
