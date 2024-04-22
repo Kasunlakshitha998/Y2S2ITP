@@ -343,7 +343,7 @@ export default function UpdateAppointment() {
               <img
                 src={image}
                 alt={name}
-                style={{ width: '60px', height: '50px' }}
+                style={{ width: '110px', height: '110px' }}
               />
 
             </div>
