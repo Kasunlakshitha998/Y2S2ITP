@@ -6,12 +6,13 @@ const Appointment = require('../../models/appointment/appointment'); // Adjusted
 // Create operation (Create a new appointment)
 router.route('/add').post((req, res) => {
   // Extract data from request body
-  const { name, email, telephone, phoneType, serviceType, date, description, image } =
+  const { userId, name, email, telephone, phoneType, serviceType, date, description, image } =
     req.body;
 
   // Create a new appointment object
   const newAppointment = new Appointment({
     name,
+    userId,
     email,
     telephone,
     phoneType,
@@ -48,7 +49,7 @@ router.get('/', (req, res) => {
 // Update operation (Update an existing appointment)
 router.put('/update/:id', async (req, res) => {
   const userId = req.params.id;
-  const { name, email, telephone, phoneType, serviceType, date, description } =
+  const { name, email, telephone, phoneType, serviceType, date, description,image } =
     req.body;
 
   const updateAppointment = {
@@ -59,7 +60,7 @@ router.put('/update/:id', async (req, res) => {
     serviceType,
     date,
     description,
-    //image
+    image
   };
 
   // Update the appointment by ID

@@ -38,6 +38,7 @@ import OrderList from './Components/Order_Management/OrderList';
 import UserOderList from './Components/Order_Management/UserOderList';
 import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
 import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
+import UserAppoinmentList from './Components/Appointment_Management/ManageAppointment/userAppoinmentList';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -145,6 +146,7 @@ function App() {
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
         <Route path="/AppointmentList" element={<AppointmentList />} />
+        <Route path="/UserAppointmentList" element={<UserAppoinmentList />} />
         <Route path="/updateAppointment/:id" element={<UpdateAppointment />} />
       </Routes>
     </div>
