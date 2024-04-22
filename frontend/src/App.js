@@ -88,7 +88,7 @@ function App() {
         />
         <Route
           path="/admin/productsList"
-          element={<AdminRouteGuard element={<ProductsList />} />}
+          element={<ProductsList/>}
         />
         <Route
           path="/admin/productsList/addProduct"

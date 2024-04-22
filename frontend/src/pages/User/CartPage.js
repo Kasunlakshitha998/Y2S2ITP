@@ -10,10 +10,12 @@ import {
 import { Link } from 'react-router-dom';
 import CheckoutComponent from '../../Components/Order_Management/CheckoutComponent';
 import UserNav from '../../Components/Nav/userNav';
+import CountInStockCheak from '../../Components/Inventory_Management/CountInStockCheck';
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(getTotals());
@@ -34,8 +36,6 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
-
-  
 
   return (
     <>
@@ -65,8 +65,6 @@ const Cart = () => {
                       <th className="px-4 py-2">Price</th>
                       <th className="px-4 py-2">Quantity</th>
                       <th className="px-4 py-2">Total</th>
-
-                      {/* Add Actions column */}
                     </tr>
                   </thead>
                   <tbody>
@@ -88,29 +86,13 @@ const Cart = () => {
                         <td className="border px-4 py-2">
                           Rs.{cartItem.price}
                         </td>
-                        <td className="border px-4 py-2">
-                          <div className="cart-product-quantity flex items-center">
-                            <button
-                              onClick={() => handleDecreaseCart(cartItem)}
-                              className="px-2 py-1 bg-gray-200"
-                              disabled={cartItem.cartQuantity === 0}
-                            >
-                              -
-                            </button>
-                            <div className="count mx-2">
-                              {cartItem.cartQuantity}
-                            </div>
-                            <button
-                              onClick={() => handleAddToCart(cartItem)}
-                              className="px-2 py-1 bg-gray-200"
-                              disabled={
-                                cartItem.cartQuantity >= cartItem.countInStock
-                              }
-                            >
-                              +
-                            </button>
-                          </div>
-                        </td>
+
+                        <CountInStockCheak
+                          cartItem={cartItem}
+                          handleDecreaseCart={handleDecreaseCart}
+                          handleAddToCart={handleAddToCart}
+                        />
+
                         <td className="border px-4 py-2">
                           Rs.{cartItem.price * cartItem.cartQuantity}
                         </td>

@@ -63,7 +63,7 @@ const CheckoutComponent = () => {
       for (const item of cartItems) {
         await updateStock(item._id, item.cartQuantity, item.countInStock);
       }
-
+      
       // Clear the cart after updating stock
       dispatch(clearCart());
       navigate('/UserOrderList');
