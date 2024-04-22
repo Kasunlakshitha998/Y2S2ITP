@@ -376,7 +376,7 @@ router.get('/getUsers/:userId', (req, res) => {
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'C:/Users/User/Documents/GitHub/Y2S2ITP/Frontend/public/image');
+    cb(null, path.join(__dirname, '../../../frontend/public/image'));
   },
   filename:  (req, file, cb)=> {
     //const uniqueSuffix = Date.now();
