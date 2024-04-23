@@ -272,7 +272,7 @@ function Products() {
 
                           <div class="flex items-center">
                             <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
-                              Rs.149,000
+                              Rs.{product.price.toLocaleString()}
                             </p>
                             <del>
                               <p class="text-sm text-red-600 cursor-auto ml-2">
