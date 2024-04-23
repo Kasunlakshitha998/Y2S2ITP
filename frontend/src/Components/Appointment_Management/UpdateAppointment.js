@@ -15,12 +15,31 @@ export default function UpdateAppointment() {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
 
+ 
   const handleServiceTypeChange = (e) => {
-    // Your logic for handling service type change
+    const { checked, value } = e.target;
+    if (checked) {
+      setServiceType((prevServiceType) => [...prevServiceType, value]);
+    } else {
+      setServiceType((prevServiceType) =>
+        prevServiceType.filter((type) => type !== value)
+      );
+    }
   };
 
   const handleImageUpload = (e) => {
-    // Your logic for handling image upload
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result;
+        setImage(base64String);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
   const handlePhoneTypeChange = (e) => {
@@ -67,10 +86,9 @@ export default function UpdateAppointment() {
       serviceType,
       date,
       description,
-      image,
+      image
     };
 
-    // Send PUT request to update appointment data
     axios
       .put(`http://localhost:8175/appointment/update/${id}`, updatedAppointment)
       .then(() => {
@@ -96,7 +114,7 @@ export default function UpdateAppointment() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      
+
       <div className="container mx-auto px-4 py-12">
         <form
           onSubmit={sendData}
@@ -169,6 +187,7 @@ export default function UpdateAppointment() {
                   name="phoneType"
                   value="Android"
                   onChange={handlePhoneTypeChange}
+                  checked={phoneType.includes("Android")}
                   className="mr-2"
                 />
                 <label
@@ -185,6 +204,7 @@ export default function UpdateAppointment() {
                   name="phoneType"
                   value="Apple"
                   onChange={handlePhoneTypeChange}
+                  checked={phoneType.includes("Apple")}
                   className="mr-2"
                 />
                 <label
@@ -201,6 +221,7 @@ export default function UpdateAppointment() {
                   name="phoneType"
                   value="Windows"
                   onChange={handlePhoneTypeChange}
+                  checked={phoneType.includes("Windows")}
                   className="mr-2"
                 />
                 <label
@@ -224,6 +245,7 @@ export default function UpdateAppointment() {
                   name="serviceType"
                   value="Display Services"
                   onChange={handleServiceTypeChange}
+                  checked={serviceType.includes("Display Services")}
                   className="mr-2"
                 />
                 <label
@@ -240,6 +262,7 @@ export default function UpdateAppointment() {
                   name="serviceType"
                   value="Motherboard Services"
                   onChange={handleServiceTypeChange}
+                  checked={serviceType.includes("Motherboard Services")}
                   className="mr-2"
                 />
                 <label
@@ -256,6 +279,7 @@ export default function UpdateAppointment() {
                   name="serviceType"
                   value="Other Services"
                   onChange={handleServiceTypeChange}
+                  checked={serviceType.includes("Other Services")}
                   className="mr-2"
                 />
                 <label
@@ -314,6 +338,15 @@ export default function UpdateAppointment() {
               onChange={handleImageUpload}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
+            <div>
+
+              <img
+                src={image}
+                alt={name}
+                style={{ width: '110px', height: '110px' }}
+              />
+
+            </div>
           </div>
           <button
             type="submit"
@@ -323,7 +356,7 @@ export default function UpdateAppointment() {
           </button>
         </form>
       </div>
-      
+
     </div>
   );
 }

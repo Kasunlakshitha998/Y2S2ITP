@@ -32,15 +32,19 @@ import Staff from './Components/User_Management/staffdetails';
 import CreateStaff from'./Components/User_Management/createstaff'
 import UpdateStaff from'./Components/User_Management/staffupdate'
 
+import GiveFeedback from './Components/Feedback Management/GiveFeedback';
+
 import AddAForm from "./Components/Appointment_Management/AddAForm";
+import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
+import UserAppointmentList from './Components/Appointment_Management/ManageAppointment/userAppoinmentList';
 import CartPage from './pages/User/CartPage';
 import OrderList from './Components/Order_Management/OrderList';
 import UserOderList from './Components/Order_Management/UserOderList';
 import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
-import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
+import EditOrder from './Components/Order_Management/EditOrder';
+import UserOrderEdit from './Components/Order_Management/userOderEdit';
+import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 
-import GiveFeedback from './Components/Feedback Management/GiveFeedback';
-//import Feedback from '../../BACKEND/models/feedback_management/feedback';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
@@ -87,10 +91,7 @@ function App() {
           path="/admin/*"
           element={<AdminRouteGuard element={<Dashboard />} />}
         />
-        <Route
-          path="/admin/productsList"
-          element={<AdminRouteGuard element={<ProductsList />} />}
-        />
+        <Route path="/admin/productsList" element={<ProductsList />} />
         <Route
           path="/admin/productsList/addProduct"
           element={<AdminRouteGuard element={<AddProduct />} />}
@@ -140,16 +141,20 @@ function App() {
         <Route path="/staffdetails" element={<Staff />} />
         <Route path="/staffupdate/:id" element={<UpdateStaff />} />
 
-        <Route path="/addForm" element={<AddAForm />} />
-
         <Route path="/staffdetails" element={<Staff />} />
+
+        <Route path="/AppointmentList" element={<AppointmentList />} />
+        <Route path="/addForm" element={<AddAForm />} />
+        <Route path="/updateAppointment/:id" element={<UpdateAppointment />} />
+        <Route path="/userAppointmentList" element={<UserAppointmentList />} />
 
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
-        <Route path="/AppointmentList" element={<AppointmentList />} />
-        <Route path="/updateAppointment" element={<UpdateAppointment />} />
+        <Route path="/admin/order/editOrder/:id" element={<EditOrder />} />
+        <Route path="/order/userOderEdit/:id" element={<UserOrderEdit />} />
 
-        <Route path="/giveFeedback" element={<GiveFeedback />} />
+        <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
+        <Route path="/UpdateFeedback/:id" element={<UpdateFeedback />} />
       </Routes>
     </div>
   );

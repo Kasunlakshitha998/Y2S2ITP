@@ -1,18 +1,54 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from '../../pages/User/CartSlice';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import UserNav from './../Nav/userNav';
 
-const CheckoutComponent = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const navigate = useNavigate();
+const UserOrderEdit = () => {
+  const { id } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
+  const [paymentStatus, setpaymentStatus] = useState('Pending');
+  const [image, setImage] = useState([]);
   
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8175/order/getOrder/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        setDeliveryAddress(res.data.deliveryAddress);
+        setPaymentOption(res.data.paymentOption);
+        setpaymentStatus('Pending');
+      })
+      .catch((err) => {
+        alert(err.message);
+        setCheckoutError("error");
+      });
+  }, [id]);
+
+
+function UpdateData(e) {
+  e.preventDefault();
+
+  const UpdateOrder = {
+    deliveryAddress,
+    paymentOption,
+    image,
+    paymentStatus,
+  };
+
+  axios
+    .put(`http://localhost:8175/order/edit/${id}`, UpdateOrder)
+    .then((res) => {
+      console.log('updated successfully:', res.data);
+      alert("Update successfully")
+    })
+    .catch((err) => {
+      console.error('Error updating :', err);
+      setCheckoutError('error');
+    });
+}
+
 
   const handleAddressChange = (e) => {
     setDeliveryAddress(e.target.value);
@@ -22,72 +58,28 @@ const CheckoutComponent = () => {
     setPaymentOption(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await checkoutHandler();
-    } catch (error) {
-      setCheckoutError(error.message);
-    }
-  };
+ const handleImageUpload = (e) => {
+   const file = e.target.files[0];
 
-  const checkoutHandler = async () => {
-    const UserID = Cookies.get('userId');
-    // Prepare data to be sent
-    const checkoutData = {
-      UserID,
-      deliveryAddress,
-      paymentOption,
-      items: cartItems.map((item) => ({
-        productId: item._id,
-        productName: item.name,
-        quantity: item.cartQuantity,
-        totalPrice: item.price * item.cartQuantity,
-        // Add other details as needed
-      })),
-    };
+   if (file) {
+     const reader = new FileReader();
 
-    console.log(checkoutData);
-    
-    try {
-      // Send data using Axios
-      const response = await axios.post(
-        'http://localhost:8175/order/add',
-        checkoutData
-      );
-      console.log('Checkout successful:', response.data);
+     reader.onload = () => {
+       const base64String = reader.result;
+       setImage(base64String);
+     };
 
-      // Call updateStock for each item in the cart
-      for (const item of cartItems) {
-        await updateStock(item._id, item.cartQuantity, item.countInStock);
-      }
-
-      // Clear the cart after updating stock
-      dispatch(clearCart());
-      navigate('/UserOrderList');
-    } catch (error) {
-      console.error('Error during checkout:', error);
-      throw new Error('Failed to complete checkout');
-    }
-  };
-
-  const updateStock = async (id, quantity, countInStock) => {
-    const newCountInStock = countInStock - quantity;
-
-    if (newCountInStock >= 0) {
-      await axios.put(`http://localhost:8175/product/update/${id}`, {
-        countInStock: newCountInStock,
-      });
-      console.log('Quantity updated successfully');
-    } else {
-      throw new Error('Insufficient stock');
-    }
-  };
+     reader.readAsDataURL(file);
+   }
+ };
 
   return (
     <div>
-      <div className="checkout-form mt-8">
-        <form onSubmit={handleSubmit}>
+      <header>
+        <UserNav />
+      </header>
+      <div className="checkout-form m-28 max-w-xl">
+        <form onSubmit={UpdateData}>
           <div className="mb-4">
             <label htmlFor="deliveryAddress" className="block font-medium">
               Delivery Address
@@ -117,7 +109,6 @@ const CheckoutComponent = () => {
                 <option value="bank">Bank Deposit</option>
               </select>
             </div>
-
             {paymentOption === 'bank' && (
               <div className="mb-4">
                 <label htmlFor="bankImage" className="block font-medium">
@@ -128,6 +119,7 @@ const CheckoutComponent = () => {
                   id="bankImage"
                   accept="image/*"
                   className="w-full border rounded py-2 px-3 mt-1"
+                  onChange={handleImageUpload}
                 />
                 <ul>
                   <h4>Bank Details</h4>
@@ -143,7 +135,7 @@ const CheckoutComponent = () => {
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
           >
-            Checkout
+            Update Checkout
           </button>
         </form>
       </div>
@@ -151,4 +143,4 @@ const CheckoutComponent = () => {
   );
 };
 
-export default CheckoutComponent;
+export default UserOrderEdit;

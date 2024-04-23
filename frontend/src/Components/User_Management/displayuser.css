@@ -79,20 +79,39 @@
 }
 
 /* Style for the table */
+
 .table {
-  width: 100%; /* Make the table take up the entire width of its container */
-  border-collapse: collapse; /* Collapse the borders between table cells */
+  width: 50%; /* Set the width of the table */
+  float: right; /* Float the table to the right */
+  margin-left: 180px; /* Add margin to the left */
+  margin-top: 20px;
+   /* Add margin to the top */
+  /* Add other styles as needed */
 }
+
+.table {
+  width: 70%; /* Set the width of the table */
+ 
+  top: 0; /* Position from the top */
+  right: 50;
+  position:inherit;  /* Position from the right */
+  /* Add other styles as needed */
+}
+
 
 /* Style for table header */
 .table-header th {
   background-color: #343a40; /* Dark background color */
-  color: #fff; /* Text color */
+  color: #fff; 
+ 
+  /* Text color */
 }
 
 /* Style for table rows */
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2; /* Alternate row color */
+
+  
 }
 
 /* Style for table cell */
@@ -115,3 +134,110 @@
 .table td img {
   border-radius: 50%; /* Make the border-radius 50% to create a circle */
 }
+/* displayuser.css */
+
+/* General styles */
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left side */
+}
+
+.search-bar {
+  margin-bottom: 10px; /* Add margin at the bottom of the search bar */
+}
+
+.form-control {
+  width: 200px; /* Adjust the width of the input */
+}
+
+/* Add more styles as needed */
+/* displayuser.css */
+
+/* General styles */
+
+/* displayuser.css */
+
+/* General styles */
+.container-fluid {
+  position: relative; /* Ensure the container is positioned relatively */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar {
+  position: absolute;
+  top: 10px; /* Adjust the top position */
+  right: 10px; /* Adjust the right position */
+}
+
+.form-control {
+  width: 200px; /* Adjust the width of the input */
+}
+
+/* displayuser.css */
+
+/* General styles */
+.container-fluid {
+  position: relative; /* Ensure the container is positioned relatively */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items horizontally */
+}
+
+.search-bar {
+  margin-top: auto; /* Push the search bar to the bottom */
+  margin-bottom: 10px; /* Add margin at the bottom of the search bar */
+}
+
+.form-control {
+  width: 200px; /* Adjust the width of the input */
+}
+
+.btn-add {
+  margin-top: 10px; /* Add margin to the top of the "Add" button */
+}
+/* displayuser.css */
+
+/* General styles */
+/* displayuser.css */
+
+/* General styles */
+.container-fluid {
+  position: relative; /* Ensure the container is positioned relatively */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items horizontally */
+}
+
+.search-bar {
+  margin-top: 50px; /* Add more margin to the top of the search bar */
+  margin-bottom: 10px; /* Add margin at the bottom of the search bar */
+}
+
+.form-control {
+  width: 200px; /* Adjust the width of the input */
+}
+
+.btn-add {
+  margin-top: 10px; /* Add margin to the top of the "Add" button */
+}
+
+.searc-bar {
+  margin-top: 10px; /* Add margin at the bottom of the search bar */
+}
+.button-container {
+  margin-top: 60px; /* Adjust the margin-top as needed */
+}
+
+/* Add more styles as needed */
