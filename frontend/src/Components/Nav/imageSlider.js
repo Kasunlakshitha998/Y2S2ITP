@@ -4,8 +4,8 @@ function ImageSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [
     './image/o1.jpg',
-    './image/xiaomi-redmi-13c-2.jpg',
     './image/samsung-2.jpg',
+    './image/xiaomi-redmi-13c-2.jpg',
   ];
 
   const goToPrevSlide = () => {

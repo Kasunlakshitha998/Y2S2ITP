@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import AdminNav from './../../Nav/adminNav';
 import './product.css';
 
-
 function AddProduct() {
   const [name, setName] = useState('');
   const [image, setImages] = useState([]);
@@ -14,43 +13,59 @@ function AddProduct() {
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
+  const [nameExists, setNameExists] = useState(false);
 
-  
-const convertBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+const handleChange = (e) => {
+  const newName = e.target.value;
+  setName(newName);
 
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
+  // Check if name exists in the database
+  axios
+    .get('http://localhost:8175/product/')
+    .then((response) => {
+      // Assuming the response.data is an array of product objects
+      const products = response.data;
+      const nameExists = products.some((product) => product.name === newName);
+      setNameExists(nameExists);
+    })
+    .catch((error) => {
+      console.error('Error checking name:', error);
+    });
+};
 
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
-  
-const uploadImage = async (event) => {
-  const files = event.target.files;
-  console.log(files.length);
 
-  if (files.length === 1) {
-    const base64 = await convertBase64(files[0]);
-    setImages(base64);
-    return;
-  }
+  const uploadImage = async (event) => {
+    const files = event.target.files;
+    console.log(files.length);
 
-  const base64s = [];
+    if (files.length === 1) {
+      const base64 = await convertBase64(files[0]);
+      setImages(base64);
+      return;
+    }
+
+    const base64s = [];
     for (var i = 0; i < files.length; i++) {
       var base = await convertBase64(files[i]);
       base64s.push(base);
     }
     setImages(base64s);
-
-};
-
-
+  };
 
   function AddData(e) {
     e.preventDefault();
@@ -94,7 +109,6 @@ const uploadImage = async (event) => {
       });
   }
 
-  
   const clearForm = () => {
     setName('');
     setImages('');
@@ -125,10 +139,15 @@ const uploadImage = async (event) => {
                     id="name"
                     name="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={handleChange}
                     required
                     autoFocus
                   />
+                  {nameExists && (
+                    <p style={{ color: 'red' }}>
+                      This name already exists in the database!
+                    </p>
+                  )}
                 </div>
 
                 <div className="form-group">
@@ -243,7 +262,7 @@ const uploadImage = async (event) => {
                     required
                   />
                 </div>
-                <button disabled={loading} type="submit">
+                <button disabled={nameExists} type="submit">
                   Submit
                 </button>
               </div>

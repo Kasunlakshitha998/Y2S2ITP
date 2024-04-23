@@ -37,31 +37,35 @@ router.route("/").get((req,res)=>{
 
 //http//localhost:8175/feedback/update/
 
-router.route("/update/:id").put(async (req, res)=>{
-
-    let feedbackId = req.params.id;
-    const { productId, userId, date, name, email, rating, feedbackType,descript } = req.body;
+router.put('/update/:id', async (req, res) => {
+  try {
+    const feedbackId = req.params.id;
+    const { date, email, rating, feedbackType, descript } = req.body;
 
     const updateFeedback = {
-      productId,
-      userId,
       date,
-      name,
       email,
       rating,
       feedbackType,
-      descript
+      descript,
     };
 
-    const update = await Feedback.findByAndUpdate(feedbackId, updateFeedback)
-    .then(() => {
+    const updatedFeedback = await Feedback.findByIdAndUpdate(
+      feedbackId,
+      updateFeedback,
+      { new: true }
+    );
 
-    res.status(200).send({status: "Feedback Updated", feedback: update})
-    }).catch((err)=>{
-   console.log(err);
-   res.status(500).send({status: "Error with updating data",error:err.message}); 
-    })
-})
+    res
+      .status(200)
+      .json({ status: 'Feedback Updated', feedback: updatedFeedback });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ status: 'Error with updating data', error: error.message });
+  }
+});
 
 router.route("/delete/:id").delete(async (req, res) => {
     let feedbackId = req.params.id;

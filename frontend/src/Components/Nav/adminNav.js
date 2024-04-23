@@ -113,9 +113,6 @@ const handleClickProfilePicture = () => {
           <li className={activeLink === '/appointmentList' ? 'active' : ''}>
             <Link to="/appointmentList">Appoinment</Link>
           </li>
-          <li className={activeLink === '/home' ? 'active' : ''}>
-            <Link to="/home">Leave</Link>
-          </li>
         </ul>
       </aside>
     </>

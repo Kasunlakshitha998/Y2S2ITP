@@ -13,7 +13,7 @@ const CheckoutComponent = () => {
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
   const [image, setImage] = useState([]);
-  
+  const [loading, setLoading] = useState(false);
 
   const handleAddressChange = (e) => {
     setDeliveryAddress(e.target.value);
@@ -33,6 +33,7 @@ const CheckoutComponent = () => {
   };
 
   const checkoutHandler = async () => {
+    setLoading(true);
     const UserID = Cookies.get('userId');
     // Prepare data to be sent
     const checkoutData = {
@@ -66,6 +67,7 @@ const CheckoutComponent = () => {
       
       // Clear the cart after updating stock
       dispatch(clearCart());
+      setLoading(false);
       navigate('/UserOrderList');
     } catch (error) {
       console.error('Error during checkout:', error);
@@ -103,68 +105,72 @@ const CheckoutComponent = () => {
 
   return (
     <div>
-      <div className="checkout-form mt-8">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="deliveryAddress" className="block font-medium">
-              Delivery Address
-            </label>
-            <input
-              type="text"
-              id="deliveryAddress"
-              value={deliveryAddress}
-              onChange={handleAddressChange}
-              className="w-full border rounded py-2 px-3 mt-1"
-              required
-            />
-          </div>
-          <div>
+      {loading ? (
+        <div className="loader"></div>
+      ) : (
+        <div className="checkout-form mt-8">
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="paymentOption" className="block font-medium">
-                Payment Option
+              <label htmlFor="deliveryAddress" className="block font-medium">
+                Delivery Address
               </label>
-              <select
-                id="paymentOption"
-                value={paymentOption}
-                onChange={handlePaymentOptionChange}
+              <input
+                type="text"
+                id="deliveryAddress"
+                value={deliveryAddress}
+                onChange={handleAddressChange}
                 className="w-full border rounded py-2 px-3 mt-1"
                 required
-              >
-                <option value="cash">Cash on Delivery</option>
-                <option value="bank">Bank Deposit</option>
-              </select>
+              />
             </div>
-
-            {paymentOption === 'bank' && (
+            <div>
               <div className="mb-4">
-                <label htmlFor="bankImage" className="block font-medium">
-                  Bank Image
+                <label htmlFor="paymentOption" className="block font-medium">
+                  Payment Option
                 </label>
-                <input
-                  type="file"
-                  id="bankImage"
-                  accept="image/*"
+                <select
+                  id="paymentOption"
+                  value={paymentOption}
+                  onChange={handlePaymentOptionChange}
                   className="w-full border rounded py-2 px-3 mt-1"
-                  onChange={handleImageUpload}
-                />
-                <ul>
-                  <h4>Bank Details</h4>
-                  <li>Bank Name - BOC</li>
-                  <li>Account No - 008825786</li>
-                  <li>Bank Branch - Malabe</li>
-                </ul>
+                  required
+                >
+                  <option value="cash">Cash on Delivery</option>
+                  <option value="bank">Bank Deposit</option>
+                </select>
               </div>
-            )}
-          </div>
-          {checkoutError && <p className="text-red-500">{checkoutError}</p>}
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
-          >
-            Checkout
-          </button>
-        </form>
-      </div>
+
+              {paymentOption === 'bank' && (
+                <div className="mb-4">
+                  <label htmlFor="bankImage" className="block font-medium">
+                    Bank Image
+                  </label>
+                  <input
+                    type="file"
+                    id="bankImage"
+                    accept="image/*"
+                    className="w-full border rounded py-2 px-3 mt-1"
+                    onChange={handleImageUpload}
+                  />
+                  <ul>
+                    <h4>Bank Details</h4>
+                    <li>Bank Name - BOC</li>
+                    <li>Account No - 008825786</li>
+                    <li>Bank Branch - Malabe</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+            {checkoutError && <p className="text-red-500">{checkoutError}</p>}
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
+            >
+              Checkout
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

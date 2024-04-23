@@ -58,7 +58,7 @@ function Products() {
                 className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-lg hover:bg-gray-200"
                 type="button"
               >
-                All categories{' '}
+                All categories
                 <svg
                   className="w-2.5 h-2.5 ms-2.5"
                   aria-hidden="true"
@@ -90,15 +90,15 @@ function Products() {
                       <li>
                         <button
                           className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={() => filterRes('iphone')}
+                          onClick={() => filterRes('Iphone')}
                         >
-                          iPhone
+                          I Phone
                         </button>
                       </li>
                       <li>
                         <button
                           className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={() => filterRes('android')}
+                          onClick={() => filterRes('Android')}
                         >
                           Android
                         </button>
@@ -198,7 +198,7 @@ function Products() {
 
                           <div class="flex items-center">
                             <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
-                              Rs.149,000
+                              Rs.{product.price.toLocaleString()}
                             </p>
 
                             <del>

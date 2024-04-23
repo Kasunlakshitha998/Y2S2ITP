@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function ViewProduct() {
@@ -25,9 +25,7 @@ function ViewProduct() {
   }, [id]);
 
   return (
-      <>
-          
-          
+    <>
       {loading ? (
         <div>Loading...</div>
       ) : (
@@ -81,6 +79,9 @@ function ViewProduct() {
               </div>
             </div>
           </div>
+          <h4>
+            <Link to="/admin/productsList">/Back</Link>
+          </h4>
         </div>
       )}
     </>
