@@ -1,93 +1,67 @@
-const mongoose =require('mongoose');
-const Schema =mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const L_RequestSchema = new Schema({
+  EmpID: {
+    type: String,
+    required: true,
+  },
 
-    requestId: {
-        type: String,
-        unique: true, 
-        required: true
-      },
-      
-    EmpID:{
-        type:String,
-        required: true
-    },
-   
-    name: {
-        type:String,
-        required: true
+  name: {
+    type: String,
+    required: true,
+  },
 
-    },
+  Email: {
+    type: String,
+  },
 
-    Email:{
-        type:String,
-        required : true
-    },
-    
-    Contact:{
-        type:Number,
-        required : true
-    },
+  Contact: {
+    type: Number,
+  },
 
+  Destination: {
+    type: String,
+  },
 
-    Destination:{
-             type:String, 
-             required : true
+  LDateF: {
+    type: Date,
+  },
 
-    },
+  LdateT: {
+    type: Date,
+  },
 
+  LType: {
+    type: String,
+  },
 
-    LDateF:{
-        type:Date,
-        required : true
+  Lduration: {
+    type: String,
+  },
 
-    },
+  attachments: {
+    type: Object,
+  },
 
-    LdateT:{
-        type:Date,
-        required : true
-    },
+  remarks: {
+    type: String,
+  },
 
-    LType:{
-        type:String,
-        required : true
-    },
+  //supervisor
+  Sup_name: {
+    type: String,
+  },
 
-    Lduration:{
-        type:String,
-        required : true
-    },
+  Sup_des: {
+    type: String,
+  },
 
-    attachments:{
-        type:Object,
+  //employee who cover his part
+  Backup: {
+    type: String,
+  },
+});
 
-    },
-
-    remarks:{
-        type:String,
-
-    },
-
-    //supervisor 
-    Sup_name:{
-        type:String,
-
-    },
-
-    Sup_des:{
-        type:String,
-
-    },
-
-    //employee who cover his part
-    Backup:{
-        type:String,
-
-    },
-
-
-})
-
-const L_Request = mongoose.model("L_Request",L_RequestSchema);
+const L_Request = mongoose.model("L_Request", L_RequestSchema);
 module.exports = L_Request;

@@ -3,6 +3,7 @@ import Sidebar from '../../../Components/Leave_Management/Admin/Sidebar';
 import Greeting from '../../../Components/Leave_Management/Admin/Greeting';
 import "./Box.scss"
 import { Link } from 'react-router-dom';
+import Calendar from '../../../Components/Leave_Management/Admin/calender';
 
 export const LDashboard = () => {
   return (
@@ -35,7 +36,7 @@ export const LDashboard = () => {
   </div>
 </div>
 
-
+    <Calendar/>
     </div>
 
   
