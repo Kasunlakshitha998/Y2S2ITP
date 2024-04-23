@@ -16,7 +16,7 @@ const appointmentSchema = new Schema({
         required: true
     },
     telephone: {
-        type: Number,
+        type: String,
         required: true
     },
     phoneType: {
