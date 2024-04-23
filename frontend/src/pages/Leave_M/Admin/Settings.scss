@@ -1,0 +1,133 @@
+h1 {
+    padding-left:95px;
+  }
+
+  h3{
+    padding-left:95px;
+  }
+
+  ul {
+    padding-top: 20px;
+    padding-left: 95px;
+    padding-bottom: 20px;
+    list-style: none; 
+  }
+  
+  ul li {
+    display: block;
+    margin-bottom: 10px; 
+  }
+
+
+
+  input{
+    width: 100px;
+  }
+
+ 
+
+  button{
+    width: 100px;
+    height: 35px;
+  }
+
+
+table {
+    padding-top: 100px;
+    padding-left: 100px;
+    width: 500px; /* Make the table fill the container width */
+    border-collapse: collapse;
+    border: 1px solid #ddd; /* Collapse borders between cells */
+  }
+  
+  /* Apply styles to table header cells */
+  th {
+    padding-left: 100px;
+    background-color: #f2f2f2; /* Light gray background color */
+    padding: 10px; /* Add padding to header cells */
+    text-align: left; /* Align text to the left */
+    border-bottom: 2px solid #ddd;
+    border: 1px solid #ddd; /* Add bottom border */
+  }
+  
+  /* Apply styles to table body cells */
+  td {
+    padding: 10px; /* Add padding to cells */
+    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd; /* Add bottom border */
+  }
+  
+  /* Apply alternate background color to table rows */
+  tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray background color for even rows */
+  }
+  
+  /* Apply styles to buttons inside table cells */
+  button {
+    margin-right: 5px; /* Add margin to separate buttons */
+    padding: 5px 10px; /* Add padding to buttons */
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer */
+  }
+  
+  /* Apply hover effect to buttons */
+  button:hover {
+    background-color: #0056b3; /* Darker blue background color on hover */
+  }
+
+  .table-container {
+    display: flex;
+    justify-content: center; /* Center the container horizontally */
+  }
+
+  .formL {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 40px; /* Add margin bottom to create space */
+  }
+  
+  .formL h3 {
+    margin-bottom: 20px; /* Add bottom margin to heading */
+  }
+  
+  .formL label {
+    display: block; /* Display labels as block elements */
+    margin-bottom: 10px; /* Add bottom margin to labels */
+  }
+  
+  .formL select, .formL input[type="text"] {
+    width: 100%; /* Make inputs fill the width of the form */
+    padding: 10px; /* Add padding to inputs */
+    margin-bottom: 15px; /* Add bottom margin to inputs */
+    border: 1px solid #ddd; /* Add border to inputs */
+    border-radius: 3px; /* Add border radius for rounded corners */
+  }
+  
+  .formL button {
+    padding: 10px 20px; /* Add padding to buttons */
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 3px; /* Add border radius for rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    margin-right: 10px; /* Add right margin to separate buttons */
+  }
+  
+  .formL button:last-child {
+    margin-right: 0; /* Remove right margin from last button */
+  }
+  
+  .formL button:hover {
+    background-color: #0056b3; /* Darker blue background color on hover */
+  }
+  .form-group {
+    display: inline-block; /* Make form group elements display inline */
+    margin-right: 10px; /* Add margin between form group elements */
+  }
+  
+  
