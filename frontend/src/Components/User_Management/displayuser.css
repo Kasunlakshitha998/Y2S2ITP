@@ -83,8 +83,10 @@
 .table {
   width: 50%; /* Set the width of the table */
   float: right; /* Float the table to the right */
-  margin-left: 180px; /* Add margin to the left */
+  margin-left: 300px; 
+  margin-right: 50px;/* Add margin to the left */
   margin-top: 20px;
+  margin-bottom: 20px;
    /* Add margin to the top */
   /* Add other styles as needed */
 }

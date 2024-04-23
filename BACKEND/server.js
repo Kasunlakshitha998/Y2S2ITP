@@ -61,6 +61,10 @@ const orderRouter = require('./routes/Order_Mangment/orders.js');
 const expenseRoutes = require('./routes/Financial_Management/expense');
 const salaryRoutes = require('./routes/Financial_Management/salary');
 
+const LeaveRoutes = require('./routes/Leave_managemet/LeaveB.js');
+
+
+
 //Models
 //const Expense = require('./models/expense');//Finance
 //const Salary = require('./models/salary');//Finance
@@ -77,10 +81,14 @@ app.use('/appointment', appointmentRouter);//Appointment
 app.use('/order', orderRouter);//Appointment 
 
 app.use('/feedback',feedbackRouter);//feedback 
+
+
 //leave
+app.use("/Leave",LeaveRoutes);
 //promotion
 app.use('/expenses', expenseRoutes);//Finance
 app.use('/salaries', salaryRoutes);//Finance
+
 //payment
 
 // Start server

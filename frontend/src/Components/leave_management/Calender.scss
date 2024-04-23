@@ -1,0 +1,19 @@
+.calendar-container {
+    width: 800px; /* Set the desired width for the calendar */
+    height: 600px; /* Set the desired height for the calendar */
+    margin: 0 auto; /* Center the calendar horizontally */
+}
+  
+.full-calendar {
+    width: 100%; /* Ensure the FullCalendar fills its parent container */
+    height: 100%; /* Ensure the FullCalendar fills its parent container */
+}
+
+.fc-day-header {
+    background-color: #f0f0f0; /* Change the background color of day headers */
+    font-size: 14px; /* Adjust the font size of day headers */
+}
+  
+.fc-day-grid-event {
+    font-size: 12px; /* Adjust the font size of event titles */
+}
