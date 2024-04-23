@@ -163,6 +163,42 @@ function ProductsList() {
     setIsPopupOpen(!isPopupOpen);
   };
 
+const handleReport = () => {
+  // Format the product data into CSV format
+  const tableHeader = 'Name,Category,Stock Count,Price';
+  const productsCSV = [tableHeader]
+    .concat(
+      products.map((product) => {
+        // Handle 0 stock count differently
+        const stockCount = product.countInStock === 0 ? 'Out of Stock' : product.countInStock;
+        return `${product.name},${product.category},${stockCount},${product.price}`;
+      })
+    )
+    .join('\n');
+
+  // Create a Blob object containing the CSV data
+  const blob = new Blob([productsCSV], { type: 'text/csv' });
+
+  // Create a temporary URL for the Blob
+  const url = window.URL.createObjectURL(blob);
+
+  // Create a temporary link element
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'products_report.csv');
+
+  // Simulate a click on the link to trigger the download
+  document.body.appendChild(link);
+  link.click();
+
+  // Clean up by removing the temporary link and URL
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+};
+
+
+
+
   return (
     <div>
       <header>
@@ -184,7 +220,6 @@ function ProductsList() {
           </div>
 
           {isPopupOpen && <PopupComponent onClose={togglePopup} />}
-          
 
           {/* Out of Stock Products Card */}
           <div className="rounded-lg bg-red-200 shadow-md p-4 mb-4 mr-4 duration-500 hover:scale-105 hover:shadow-xl w-50">
@@ -208,11 +243,14 @@ function ProductsList() {
               </Link>
             </div>
             <div className="addProductBtn">
-              <Link to="/admin/productsList/report">
-                <button className="bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5">
+              
+                <button
+                  onClick={handleReport}
+                  className="bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5"
+                >
                   Get Report
                 </button>
-              </Link>
+              
             </div>
             <div className="relative">
               <div className="absolute inset-y-0 right-0 flex items-center justify-center px-2 pointer-events-none">
