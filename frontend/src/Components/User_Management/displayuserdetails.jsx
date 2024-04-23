@@ -63,10 +63,7 @@ function Users() {
         <div className="container-fluid">
             <AdminNav /> {/* Include AdminNav component here */}
             <div className="card-body">
-            
-              
                 <div className="search-bar">
-              
                     <input
                         type="text"
                         placeholder="Search by name"
@@ -75,42 +72,30 @@ function Users() {
                         className="form-control"
                     />
                 </div>
-              
                 <div className="button-container">
-            <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link>
-            <p className='btn total-users'>Total Users: {users.length}</p>
-        </div>
-            
-        
-              
-               
-
-                <div style={{ overflowX: 'auto' }}>
-              
+                    <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link>
+                    <p className='btn total-users'>Total Users: {users.length}</p>
+                </div>
+                <div className="table-container">
                     <table className="table mt-3">
-              
                         <thead className="thead-dark table-header">
                             <tr>
-                                
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Password</th>
                                 <th>Number</th>
                                 <th>Image</th>
                                 <th>Action</th>
-                               
                             </tr>
                         </thead>
                         <tbody>
                             {filteredUsers.map((user) => {
                                 return (
                                     <tr key={user._id}>
-                                        
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
-                                        <td>{user.password}</td>
+                                        <td className="password-cell">{user.password}</td>
                                         <td>{user.number}</td>
-                                      
                                         <td>
                                             {user.image ? (
                                                 <img src={`http://localhost:3000/image/${user.image}`} alt="User" style={{ width: '100px', height: '90px' }} />

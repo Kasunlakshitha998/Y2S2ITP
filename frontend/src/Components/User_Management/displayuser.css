@@ -80,25 +80,17 @@
 
 /* Style for the table */
 
-.table {
-  width: 50%; /* Set the width of the table */
-  float: right; /* Float the table to the right */
-  margin-left: 300px; 
-  margin-right: 50px;/* Add margin to the left */
-  margin-top: 20px;
-  margin-bottom: 20px;
-   /* Add margin to the top */
-  /* Add other styles as needed */
-}
+
 
 .table {
-  width: 70%; /* Set the width of the table */
- 
-  top: 0; /* Position from the top */
-  right: 50;
-  position:inherit;  /* Position from the right */
-  /* Add other styles as needed */
+  width: 72%; 
+  height: 400px; 
+   margin-left: 300px;
+   margin-right: 200px;
+margin-top: 82px;
+  overflow-y: auto; /* Add vertical scrollbar when content exceeds height */
 }
+
 
 
 /* Style for table header */
@@ -236,10 +228,35 @@
 }
 
 .searc-bar {
-  margin-top: 10px; /* Add margin at the bottom of the search bar */
+  margin-top: 1000px; /* Add margin at the bottom of the search bar */
 }
 .button-container {
   margin-top: 60px; /* Adjust the margin-top as needed */
 }
+
+.password-cell {
+  line-height: 1.5em; /* Set the line height to 1.5 times the font size */
+  height: 3em; /* Set the height of the cell to 3 times the line height */
+  overflow: hidden; /* Hide any content that overflows */
+  white-space: pre-wrap; /* Preserve line breaks and wrap text */
+  word-wrap: break-word; /* Break long words and wrap */
+  word-break: break-all; /* Break words when they overflow the container */
+  text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+  width: 100%; /* Ensure the cell takes up the full width */
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.white-btn {
+  color: white;
+}
+
+
+
+
+
 
 /* Add more styles as needed */
