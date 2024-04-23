@@ -71,6 +71,8 @@ function AppointmentList() {
                     Generate Report
                 </button>
 
+                <span className="ml-3 text-blue-500">Total Appointments: {filteredAppointments.length}</span>
+
                 <table id="appointment-table" className="w-full bg-gray-100 shadow-md rounded-lg overflow-hidden mt-4">
                     <thead className="text-white bg-gray-800">
                         <tr>
