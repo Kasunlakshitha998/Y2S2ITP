@@ -33,7 +33,25 @@ function EditProduct() {
   const [price, setPrice] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
+  const [nameExists, setNameExists] = useState(false);
 
+  const handleChange = (e) => {
+    const newName = e.target.value;
+    setName(newName);
+
+    // Check if name exists in the database
+    axios
+      .get('http://localhost:8175/product/')
+      .then((response) => {
+        // Assuming the response.data is an array of product objects
+        const products = response.data;
+        const nameExists = products.some((product) => product.name === newName);
+        setNameExists(nameExists);
+      })
+      .catch((error) => {
+        console.error('Error checking name:', error);
+      });
+  };
   // Initialize state after product data is fetched
   useEffect(() => {
     if (!loading && Object.keys(product).length !== 0) {
@@ -145,10 +163,14 @@ function EditProduct() {
                       id="name"
                       name="name"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={handleChange}
                       required
-                      autoFocus
                     />
+                    {nameExists && (
+                      <p style={{ color: 'red' }}>
+                        This name already exists in the database!
+                      </p>
+                    )}
                   </div>
 
                   <div className="form-group">
@@ -259,7 +281,7 @@ function EditProduct() {
                       multiple
                     />
                   </div>
-                  <button disabled={loading} type="submit">
+                  <button disabled={nameExists} type="submit">
                     Submit
                   </button>
                 </div>

@@ -68,6 +68,7 @@ function UpdateFeedback() {
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={feedbackType}
             onChange={(e) => setFeedbackType(e.target.value)}
+            required
           >
             <option value="">Select Feedback Type</option>
             <option value="Product">Product</option>
@@ -90,6 +91,7 @@ function UpdateFeedback() {
             onChange={(e) => setFeedbackEmail(e.target.value)}
             placeholder="Your Email"
             className="mt-1 block w-full border border-gray-900 p-2"
+            required
           />
         </div>
         <select
@@ -97,6 +99,7 @@ function UpdateFeedback() {
           value={rating}
           onChange={(e) => setFeedbackRating(e.target.value)}
           className="input-field"
+          required
         >
           <option value="">Select Rating</option>
           <option value="1">1 Star</option>
@@ -113,6 +116,7 @@ function UpdateFeedback() {
             Review:
           </label>
           <textarea
+            required
             id="description"
             name="description"
             value={descript}

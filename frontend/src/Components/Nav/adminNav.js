@@ -68,6 +68,9 @@ function AdminNav() {
           <li className={activeLink === '/appointmentList' ? 'active' : ''}>
             <Link to="/appointmentList">Appoinment</Link>
           </li>
+          <li className={activeLink === '/FeedbackList' ? 'active' : ''}>
+            <Link to="/FeedbackList">FeedBack</Link>
+          </li>
         </ul>
       </aside>
     </>

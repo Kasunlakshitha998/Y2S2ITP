@@ -44,13 +44,12 @@ const OrderList = () => {
         <AdminNav />
       </header>
       <main className="plist ml-48">
-        <h2>Order Details</h2>
         <div className="relative overflow-x-auto sm:rounded-lg flex flex-row justify-center">
-          <table className="w-full text-sm text-left text-gray-900">
+          <table className="max-w-3xl text-sm text-left text-gray-900">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
               <tr>
                 <th className="px-4 py-2">Order ID</th>
-                <th className="px-4 py-2">User ID</th>
+
                 <th className="px-4 py-2">Delivery Address</th>
 
                 <th className="px-4 py-2">Items</th>
@@ -65,7 +64,7 @@ const OrderList = () => {
               {orders.map((order) => (
                 <tr key={order._id}>
                   <td className="border px-4 py-2">{order._id}</td>
-                  <td className="border px-4 py-2">{order.UserID}</td>
+
                   <td className="border px-4 py-2">{order.deliveryAddress}</td>
 
                   <td className="border px-4 py-2">
@@ -81,11 +80,15 @@ const OrderList = () => {
                   </td>
                   <td className="border px-4 py-2">{order.paymentOption}</td>
                   <td className="border px-4 py-2">
-                    <img
-                      src={order.image}
-                      alt={order.name}
-                      style={{ width: '90px', height: '80px' }}
-                    />
+                    {order.image ? (
+                      <img
+                        src={order.image}
+                        alt={order.name}
+                        style={{ width: '90px', height: '80px' }}
+                      />
+                    ) : (
+                      <span>Cash</span>
+                    )}
                   </td>
                   <td className="border px-4 py-2">{order.paymentStatus}</td>
                   <td className="border px-4 py-2">{order.deliveryStatus}</td>

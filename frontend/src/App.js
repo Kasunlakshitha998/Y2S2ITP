@@ -44,6 +44,7 @@ import AppointmentList from './Components/Appointment_Management/ManageAppointme
 import EditOrder from './Components/Order_Management/EditOrder';
 import UserOrderEdit from './Components/Order_Management/userOderEdit';
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
+import FeedbackList from './Components/Feedback Management/FeedbackList';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -155,6 +156,7 @@ function App() {
 
         <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
         <Route path="/UpdateFeedback/:id" element={<UpdateFeedback />} />
+        <Route path="/FeedbackList" element={<FeedbackList />} />
       </Routes>
     </div>
   );

@@ -10,17 +10,17 @@ const productSchema = new Schema({
 
     image :{
         type : [Object],
-        
+        required : true
     },
 
     category :{
         type : String,
-        
+        required : true
     },
 
     brand :{
         type : String,
-        
+        required : true
     },
     price :{
         type : Number,
@@ -34,7 +34,8 @@ const productSchema = new Schema({
 
 
     description :{
-        type : String
+        type: String,
+        required : true
     }
 
 })

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function GiveFeedback() {
   const { id } = useParams();
@@ -11,6 +11,8 @@ export default function GiveFeedback() {
   const [descript, setDescription] = useState('');
   const [rating, setFeedbackRating] = useState(0);
   const userId = Cookies.get('userId');
+
+const navigate = useNavigate();
 
   const sendData = (e) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ export default function GiveFeedback() {
         alert('Feedback Successfully Submitted');
         setDescription('');
         setFeedbackType('');
+        navigate('/UserOrderList');
       })
       .catch((err) => {
         alert('Error submitting feedback');
@@ -55,6 +58,7 @@ export default function GiveFeedback() {
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={feedbackType}
             onChange={(e) => setFeedbackType(e.target.value)}
+            required
           >
             <option value="">Select Feedback Type</option>
             <option value="Product">Product</option>
@@ -76,12 +80,14 @@ export default function GiveFeedback() {
             onChange={(e) => setFeedbackEmail(e.target.value)}
             placeholder="Your Email"
             className="mt-1 block w-full border border-gray-900 p-2"
+            required
           />
         </div>
         <select
           name="rating"
           onChange={(e) => setFeedbackRating(e.target.value)}
           className="input-field"
+          required
         >
           <option value="">Select Rating</option>
           <option value="1">1 Star</option>
@@ -103,6 +109,7 @@ export default function GiveFeedback() {
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={descript}
             onChange={(e) => setDescription(e.target.value)}
+            required
           ></textarea>
         </div>
 
