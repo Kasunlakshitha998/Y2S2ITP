@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function UpdateFeedback() {
   const { id } = useParams();
   const [feedbackType, setFeedbackType] = useState('');
   const [email, setFeedbackEmail] = useState('');
+  const [pid, setpid] = useState('');
   const [descript, setDescription] = useState('');
   const [rating, setFeedbackRating] = useState(0);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     axios
       .get(`http://localhost:8175/feedback/get/${id}`)
@@ -18,6 +21,7 @@ function UpdateFeedback() {
         setFeedbackEmail(feedback.email);
         setDescription(feedback.descript);
         setFeedbackRating(feedback.rating);
+        setpid(feedback.productId);
       })
       .catch((error) => {
         console.error('Error fetching feedback:', error);
@@ -38,6 +42,7 @@ function UpdateFeedback() {
       .put(`http://localhost:8175/feedback/update/${id}`, updatedFeedback)
       .then(() => {
         alert('Feedback Successfully Updated');
+        navigate('/');
       })
       .catch((err) => {
         alert('Error updating feedback');
