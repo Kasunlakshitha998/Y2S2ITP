@@ -4,6 +4,7 @@ import axios from 'axios';
 import "./displayuser.css"; // Import your CSS file
 import Swal from 'sweetalert2';
 import { BsPersonFill } from 'react-icons/bs'; 
+import AdminNav from '../Nav/adminNav';
 
 function Staff() {
     const [users, setUsers] = useState([]);
@@ -61,7 +62,7 @@ function Staff() {
 
     return (
         <div className="container-fluid">
-        {/* Add card-container class */}
+     <AdminNav />
         <div className="card-body">
             <Link to="/createstaff" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
             <input

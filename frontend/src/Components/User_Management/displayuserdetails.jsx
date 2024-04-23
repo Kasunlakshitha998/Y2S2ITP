@@ -4,6 +4,7 @@ import axios from 'axios';
 import "./displayuser.css"; // Import your CSS file
 import Swal from 'sweetalert2';
 import { BsPersonFill } from 'react-icons/bs'; // Import Bootstrap icon
+import AdminNav from '../Nav/adminNav'; // Import AdminNav component
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -60,19 +61,34 @@ function Users() {
 
     return (
         <div className="container-fluid">
+            <AdminNav /> {/* Include AdminNav component here */}
             <div className="card-body">
-                <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link>
-                <input
-                    type="text"
-                    placeholder="Search by name"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    className="form-control mt-3"
-                />
-                <p className='btn total-users'>Total Users: {users.length}</p>
+            
+              
+                <div className="search-bar">
+              
+                    <input
+                        type="text"
+                        placeholder="Search by name"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        className="form-control"
+                    />
+                </div>
+              
+                <div className="button-container">
+            <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link>
+            <p className='btn total-users'>Total Users: {users.length}</p>
+        </div>
+            
+        
+              
+               
 
                 <div style={{ overflowX: 'auto' }}>
+              
                     <table className="table mt-3">
+              
                         <thead className="thead-dark table-header">
                             <tr>
                                 
