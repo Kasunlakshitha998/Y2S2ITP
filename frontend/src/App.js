@@ -90,10 +90,7 @@ function App() {
           path="/admin/*"
           element={<AdminRouteGuard element={<Dashboard />} />}
         />
-        <Route
-          path="/admin/productsList"
-          element={<ProductsList/>}
-        />
+        <Route path="/admin/productsList" element={<ProductsList />} />
         <Route
           path="/admin/productsList/addProduct"
           element={<AdminRouteGuard element={<AddProduct />} />}
@@ -143,22 +140,19 @@ function App() {
         <Route path="/staffdetails" element={<Staff />} />
         <Route path="/staffupdate/:id" element={<UpdateStaff />} />
 
-        
-
         <Route path="/staffdetails" element={<Staff />} />
 
         <Route path="/AppointmentList" element={<AppointmentList />} />
         <Route path="/addForm" element={<AddAForm />} />
-        <Route path="/updateAppointment/:id" element={<UpdateAppointment />}/>
-        <Route path="/userAppointmentList" element={<UserAppointmentList/>}/>
+        <Route path="/updateAppointment/:id" element={<UpdateAppointment />} />
+        <Route path="/userAppointmentList" element={<UserAppointmentList />} />
 
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
         <Route path="/admin/order/editOrder/:id" element={<EditOrder />} />
         <Route path="/order/userOderEdit/:id" element={<UserOrderEdit />} />
 
-        <Route path="/giveFeedback" element={<GiveFeedback/>}/>
-
+        <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
       </Routes>
     </div>
   );
