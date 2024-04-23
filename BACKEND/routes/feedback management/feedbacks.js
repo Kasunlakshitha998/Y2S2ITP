@@ -1,42 +1,28 @@
-const router = require("express").Router();
-let Feedback = require("../../models/feedback_management/feedback");
+const express = require('express');
+const router = express.Router();
+const Feedback = require("../../models/feedback_management/feedback");
 
-
-
-http://Localhost:8070/feedback/add
-
-router.route("/add").post((req,res)=>{
-
-    const productId = req.body.productId;
-    const userId = req.body.userId;
-    const date = req.body.date;
-    const name = req.body.name;
-    const email = req.body.email;
-    const rating = Number (req.body.rating);
-    const feedbackType = req.body.feedbackType;
-    const descript = req.body.descript;
-
+// Add feedback
+router.post("/add", (req, res) => {
+    const { productId, userId, name, email, rating, feedbackType, descript } = req.body;
 
     const newFeedback = new Feedback({
-      productId,
-      userId,
-      date,
-      name,
-      email,
-      rating,
-      feedbackType,
-      descript,
+        productId,
+        userId,
+        name,
+        email,
+        rating,
+        feedbackType,
+        descript
     });
 
-    newFeedback.save().then(()=>{
-        res.json("Feedback Added")
-    }).catch((err)=>{
-        console.log(err);
-    })
-
-
-
+    newFeedback.save()
+        .then(() => res.json("Feedback Added"))
+        .catch((err) => res.status(400).json("Error: " + err));
 })
+
+
+
 
 
 router.route("/").get((req,res)=>{
