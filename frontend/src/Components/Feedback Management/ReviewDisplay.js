@@ -26,7 +26,7 @@ const ReviewDisplay = ({ id }) => {
     //delete feedback
   const handleDelete = (reviewId) => {
     axios
-      .delete(`http://localhost:8175/order/delete/${reviewId}`)
+      .delete(`http://localhost:8175/feedback/delete/${reviewId}`)
       .then(() => {
         alert('Delete successfully');
         setReviews(reviews.filter((review) => review._id !== reviewId));
@@ -70,7 +70,7 @@ const ReviewDisplay = ({ id }) => {
               <div className="">
                 {review.userId === userId && (
                   <>
-                    <Link to={`/order/userOderEdit/${review._id}`}>
+                    <Link to={`/UpdateFeedback/${review._id}`}>
                       <button className="bg-gray-400 hover:bg-green-700 text-white font-bold py-1 px-2 m-2 rounded">
                         <FaEdit />
                       </button>
