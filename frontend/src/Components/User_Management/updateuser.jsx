@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import './CreateUsers.css';
 import { BsPersonFill } from 'react-icons/bs'; 
 import Swal from 'sweetalert2';
+import AdminNav from '../Nav/adminNav';
 
 function UpdateUsers() {
     const { id } = useParams();
@@ -116,6 +117,7 @@ function UpdateUsers() {
     return (
         
         <div className="container">
+             <AdminNav /> 
         
         <div className="image-container">
     {image ? (

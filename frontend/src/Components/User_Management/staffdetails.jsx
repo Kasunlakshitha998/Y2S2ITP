@@ -64,15 +64,28 @@ function Staff() {
         <div className="container-fluid">
      <AdminNav />
         <div className="card-body">
-            <Link to="/createstaff" className='btn btn-success btn-add'>Add +</Link> {/* Add btn-add class */}
+        <Link to="/createstaff"className='btn btn-success btn-add white-btn' ></Link>
+        <Link to="/createstaff"className='btn btn-success btn-add white-btn' ></Link>
+        <Link to="/createstaff" className='btn btn-success btn-add' ></Link>
+       
+           {/* Add total-users class */}
             <input
-                type="text"
-                placeholder="Search by name"
-                value={searchQuery}
-                onChange={handleSearch}
-                className="form-control mt-3"
-            />
-            <p className='btn total-users'>Total Users: {users.length}</p> {/* Add total-users class */}
+    type="text"
+    placeholder="Search by name"
+    value={searchQuery}
+    onChange={handleSearch}
+    style={{
+      
+        bottom: '10px', // Adjust the bottom position
+        left: '10px', // Adjust the left position
+        width: '150px', // Set a smaller width
+        height: '30px', // Set a smaller height
+        // Add any other styles as needed
+    }}
+    
+/>
+<Link to="/createstaff" className='btn btn-success btn-add'>Add +</Link>
+<p className='btn total-users'>Total Users: {users.length}</p> 
 
             <div style={{ overflowX: 'auto' }}> {/* Add style for horizontal scrolling */}
                 <table className="table mt-3">
@@ -94,8 +107,7 @@ function Staff() {
                                 <tr key={user._id}>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
-                                    <td>{user.password}</td>
-
+                                    <td className="password-cell">{user.password}</td>
                                     <td>{user.number}</td>
                                     <td> {user.image ? (
                                                 <img src={`http://localhost:3000/image/${user.image}`} alt="User" style={{ width: '100px', height: '90px' }} />

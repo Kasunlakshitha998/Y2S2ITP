@@ -4,6 +4,7 @@
     align-items: center;
     background-color: #f8f9fa; /* Light gray background color */
     height: 100vh;
+   
 }
 
 .create-users-form {
@@ -12,10 +13,12 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for the form */
     width: 400px;
+   
 }
 
 .form-group {
     margin-bottom: 20px;
+    margin-left: 1000px;
 }
 
 .form-control {
@@ -48,11 +51,14 @@
   
   .image-container {
     flex: 1;
-    margin-right: 20px; /* Add margin between the image and the form */
+    margin-right: 20px;
+    margin-left: 200px; /* Add margin between the image and the form */
   }
   
   .form-container {
     flex: 2;
+   margin-left: 100px;
+    
   }
   
   /* Style for the image */
@@ -274,3 +280,4 @@
 .create-users-form:hover {
   transform: translateY(-2px); /* Move the form slightly up on hover */
 }
+
