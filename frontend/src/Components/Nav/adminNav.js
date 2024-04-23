@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './adminNav.css';
 import Cookies from 'js-cookie';
+import axios from 'axios';
+import { BsPersonFill } from 'react-icons/bs'; 
+import Swal from 'sweetalert2';
+
+
 
 function AdminNav() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [userImage, setUserImage] = useState(null); //
 
   useEffect(() => {
     setActiveLink(location.pathname);
@@ -15,6 +21,30 @@ function AdminNav() {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+  useEffect(() => {
+    const userId = Cookies.get('userId');
+    if (userId) {
+        axios.get(`http://localhost:8175/user/getUsers/${userId}`)
+            .then(result => {
+             
+                setUserImage(result.data.image);
+            })
+            .catch(err => console.log(err));
+    }
+}, []);
+
+const handleClickProfilePicture = () => {
+   
+  Swal.fire({
+      imageUrl: `http://localhost:3000/image/${userImage}`,
+      imageAlt: 'Profile Picture',
+      showCloseButton: true,
+      showConfirmButton: false,
+      width: '20%',
+      height: 'auto',
+  });
+};
+
 
   const logout = () => {
     // Clear frontend cookies
@@ -35,7 +65,22 @@ function AdminNav() {
           <Link to="/admin">Admin Dashboard</Link>
         </div>
         <div className="profile">
-          <img src="profile.jpg" alt="Profile" />
+
+
+          {userImage ? (
+        <img
+            src={`http://localhost:3000/image/${userImage}`}
+            alt="Profile"
+
+            onClick={handleClickProfilePicture}
+           
+          
+        />
+    ) : (
+        <BsPersonFill size={100} color="#adb5bd"  />
+    )}
+
+
           <span>Admin User</span>
           <div className="dropdown">
             <button className="dropbtn">▼</button>
@@ -67,6 +112,9 @@ function AdminNav() {
           </li>
           <li className={activeLink === '/appointmentList' ? 'active' : ''}>
             <Link to="/appointmentList">Appoinment</Link>
+          </li>
+          <li className={activeLink === '/home' ? 'active' : ''}>
+            <Link to="/home">Leave</Link>
           </li>
         </ul>
       </aside>
