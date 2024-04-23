@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import AdminNav from '../../Nav/adminNav';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 function AppointmentList() {
     const [appointments, setAppointments] = useState([]);
@@ -35,6 +37,17 @@ function AppointmentList() {
             });
     };
 
+    const handleGenerateReport = () => {
+        // Generate PDF report logic
+        html2canvas(document.querySelector("#appointment-table")).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            const imgHeight = canvas.height * 208 / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+            pdf.save("appointments_report.pdf");
+        });
+    };
+
     const filteredAppointments = appointments.filter((appointment) =>
         appointment.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -54,7 +67,11 @@ function AppointmentList() {
                     className="my-4 p-2 border border-gray-300 rounded-lg"
                 />
 
-                <table className="w-full bg-gray-100 shadow-md rounded-lg overflow-hidden">
+                <button onClick={handleGenerateReport} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Generate Report
+                </button>
+
+                <table id="appointment-table" className="w-full bg-gray-100 shadow-md rounded-lg overflow-hidden mt-4">
                     <thead className="text-white bg-gray-800">
                         <tr>
                             <th className="py-4 px-6">Name</th>
