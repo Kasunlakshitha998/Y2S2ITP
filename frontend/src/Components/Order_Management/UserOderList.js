@@ -9,7 +9,7 @@ function UserOderList() {
   const [orders, setOrders] = useState([]);
   const userId = Cookies.get('userId');
 
-  console.log(userId);
+  console.log(orders.item);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -36,7 +36,7 @@ function UserOderList() {
         setOrders(orders.filter((order) => order._id !== orderId));
       })
       .catch((error) => {
-        console.error('Error deleting product:', error);
+        console.error('Error deleting order:', error);
         alert('Order Delete unSuccessfully');
       });
   };
@@ -100,7 +100,7 @@ function UserOderList() {
                   <td className="border px-4 py-2">{order.paymentStatus}</td>
                   <td className="border px-4 py-2">{order.deliveryStatus}</td>
                   <td className="border px-4 py-2">
-                    {order.deliveryStatus === 'Pending' && (
+                    {order.deliveryStatus === 'Pending' ? (
                       <td className="border px-4 py-2">
                         <Link to={`/order/userOderEdit/${order._id}`}>
                           <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 m-2 rounded">
@@ -115,6 +115,14 @@ function UserOderList() {
                           <FaTrash />
                         </button>
                       </td>
+                    ) : (
+                      <>
+                        {order.items.map((item) => (
+                          <Link to={`/AddFeddback/${item.productId}`}>
+                            add Review
+                          </Link>
+                        ))}
+                      </>
                     )}
                   </td>
                 </tr>
@@ -134,3 +142,4 @@ function UserOderList() {
 }
 
 export default UserOderList;
+
