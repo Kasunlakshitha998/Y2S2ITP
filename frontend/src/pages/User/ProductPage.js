@@ -78,22 +78,22 @@ function ProductPage() {
     }
   };
 
-  const updateStock = () => {
-    const countInStock = product.countInStock - quantity;
+  // const updateStock = () => {
+  //   const countInStock = product.countInStock - quantity;
 
-    if (countInStock >= 0) {
-      axios
-        .put(`http://localhost:8175/product/update/${id}`, { countInStock })
-        .then((res) => {
-          console.log('Quantity updated successfully:', res.data);
-        })
-        .catch((err) => {
-          console.error('Error updating quantity:', err);
-        });
-    } else {
-      console.log('error');
-    }
-  };
+  //   if (countInStock >= 0) {
+  //     axios
+  //       .put(`http://localhost:8175/product/update/${id}`, { countInStock })
+  //       .then((res) => {
+  //         console.log('Quantity updated successfully:', res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.error('Error updating quantity:', err);
+  //       });
+  //   } else {
+  //     console.log('error');
+  //   }
+  // };
 
   const showSlides = (index) => {
     setSlideIndex(index);
@@ -191,13 +191,13 @@ function ProductPage() {
                       >
                         Add to Cart
                       </button>
-                      <button
+                      {/* <button
                         className="order-button"
                         onClick={updateStock}
                         disabled={quantity === 0}
                       >
                         Order Now
-                      </button>
+                      </button> */}
                     </>
                   )}
                 </div>
