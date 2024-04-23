@@ -57,7 +57,7 @@ export default function AddAForm() {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigator('/UserAppointmentList')
+        navigator('/userAppointmentList')
       })
       .catch((err) => {
         Swal.fire({
