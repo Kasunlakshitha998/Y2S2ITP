@@ -53,7 +53,7 @@ export default function AddAForm() {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Appoiment Submited Successfully',
+          title: 'Appointment Submitted Successfully',
           showConfirmButton: false,
           timer: 1500,
         });
@@ -114,13 +114,13 @@ export default function AddAForm() {
       <div className="container mx-auto px-4 py-12">
         <form
           onSubmit={sendData}
-          className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg"
+          className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg"
           encType="multipart/form-data"
         >
           <h2 className="text-2xl font-bold mb-6">
             Appointment For Repair Services
           </h2>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
@@ -131,14 +131,14 @@ export default function AddAForm() {
               type="text"
               id="name"
               name="name"
-              required
+        
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               disabled
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
@@ -149,14 +149,14 @@ export default function AddAForm() {
               type="email"
               id="email"
               name="email"
-              required
+              
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               disabled
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="telephone"
               className="block text-sm font-medium text-gray-700"
@@ -168,17 +168,21 @@ export default function AddAForm() {
               id="telephone"
               name="telephone"
               value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
+              
+              onChange={(e) => {
+                const onlyNumbers = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+                setTelephone(onlyNumbers);
+              }}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               disabled
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Phone Type:
             </label>
             <div className="mt-2 space-y-2">
-              <div>
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="android"
@@ -186,6 +190,7 @@ export default function AddAForm() {
                   value="Android"
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
+                  required
                 />
                 <label
                   htmlFor="android"
@@ -194,7 +199,7 @@ export default function AddAForm() {
                   Android
                 </label>
               </div>
-              <div>
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="apple"
@@ -202,6 +207,7 @@ export default function AddAForm() {
                   value="Apple"
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
+                  
                 />
                 <label
                   htmlFor="apple"
@@ -210,7 +216,7 @@ export default function AddAForm() {
                   Apple
                 </label>
               </div>
-              <div>
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="windows"
@@ -218,6 +224,7 @@ export default function AddAForm() {
                   value="Windows"
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
+                  
                 />
                 <label
                   htmlFor="windows"
@@ -228,12 +235,12 @@ export default function AddAForm() {
               </div>
             </div>
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Service Type:
             </label>
             <div className="mt-2 space-y-2">
-              <div>
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="display"
@@ -241,6 +248,7 @@ export default function AddAForm() {
                   value="Display Services"
                   onChange={handleServiceTypeChange}
                   className="mr-2"
+                  
                 />
                 <label
                   htmlFor="display"
@@ -249,7 +257,7 @@ export default function AddAForm() {
                   Display Services
                 </label>
               </div>
-              <div>
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="motherboard"
@@ -257,6 +265,7 @@ export default function AddAForm() {
                   value="Motherboard Services"
                   onChange={handleServiceTypeChange}
                   className="mr-2"
+                  
                 />
                 <label
                   htmlFor="motherboard"
@@ -265,7 +274,7 @@ export default function AddAForm() {
                   Motherboard Services
                 </label>
               </div>
-              <div>
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="other"
@@ -273,6 +282,7 @@ export default function AddAForm() {
                   value="Other Services"
                   onChange={handleServiceTypeChange}
                   className="mr-2"
+                  
                 />
                 <label
                   htmlFor="other"
@@ -283,7 +293,7 @@ export default function AddAForm() {
               </div>
             </div>
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="date"
               className="block text-sm font-medium text-gray-700"
@@ -298,9 +308,10 @@ export default function AddAForm() {
               min={new Date().toISOString().split('T')[0]}
               onChange={(e) => setDate(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
@@ -313,24 +324,26 @@ export default function AddAForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              
             ></textarea>
           </div>
-          <div className="mb-6">
-    <label
-        htmlFor="image"
-        className="block text-sm font-medium text-gray-700"
-    >
-        Image:
-    </label>
-    <input
-        type="file"
-        id="image"
-        name="image"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-</div>
+          <div className="mb-4">
+            <label
+              htmlFor="image"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Receipt:
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+          </div>
           <button
             type="submit"
             className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

@@ -5,6 +5,7 @@ import AdminNav from '../../Nav/adminNav';
 
 function AppointmentList() {
     const [appointments, setAppointments] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchAppointments();
@@ -34,6 +35,10 @@ function AppointmentList() {
             });
     };
 
+    const filteredAppointments = appointments.filter((appointment) =>
+        appointment.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="mx-auto max-w-7xl p-5 rounded-lg mt-6">
             <header>
@@ -41,6 +46,14 @@ function AppointmentList() {
             </header>
 
             <div>
+                <input
+                    type="text"
+                    placeholder="Search by name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="my-4 p-2 border border-gray-300 rounded-lg"
+                />
+
                 <table className="w-full bg-gray-100 shadow-md rounded-lg overflow-hidden">
                     <thead className="text-white bg-gray-800">
                         <tr>
@@ -56,7 +69,7 @@ function AppointmentList() {
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
-                        {appointments.map((appointment, index) => (
+                        {filteredAppointments.map((appointment, index) => (
                             <tr
                                 key={index}
                                 className={index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}

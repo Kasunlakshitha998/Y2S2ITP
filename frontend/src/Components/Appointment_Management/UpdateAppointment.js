@@ -65,7 +65,7 @@ export default function UpdateAppointment() {
           setTelephone(appointmentData.telephone);
           setPhoneType(appointmentData.phoneType);
           setServiceType(appointmentData.serviceType);
-          setDate(appointmentData.date.substring(0, 10)); // Ensure date is in proper format
+          setDate(appointmentData.date.substring(0, 10)); 
           setDescription(appointmentData.description);
           setImage(appointmentData.image);
         })
@@ -170,7 +170,10 @@ export default function UpdateAppointment() {
               id="telephone"
               name="telephone"
               value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
+              onChange={(e) => {
+                const onlyNumbers = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+                setTelephone(onlyNumbers);
+              }}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               disabled
             />
