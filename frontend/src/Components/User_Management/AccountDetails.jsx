@@ -102,7 +102,9 @@ function AccountDetails() {
         <div className="container-xl px-4 mt-4">
             <nav className="nav nav-borders">
                 <button className="nav-link active ms-0">Profile</button>
-                <button className="nav-link">Billing</button>
+                
+                
+              
                
 
                
