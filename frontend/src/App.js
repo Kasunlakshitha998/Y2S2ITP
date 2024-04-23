@@ -47,10 +47,10 @@ import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 import FeedbackList from './Components/Feedback Management/FeedbackList';
 
 import StaffDashboard from './Components/User_Management/staff'
-import Home from'./pages/leavemanagement/Admin/homepage';
-import SidebarA from './Components/leave_management/SidebarA';
+// import Home from'./pages/leavemanagement/Admin/homepage';
+// import SidebarA from './Components/leave_management/SidebarA';
 
-import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -162,32 +162,16 @@ function App() {
 
         <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
         <Route path="/UpdateFeedback/:id" element={<UpdateFeedback />} />
-<<<<<<< HEAD
-        <Route path="/staff" element={< StaffDashboard />} />
-        <Route path="/Home" element={< Home />} />
 
-           
-        <Route
-          path="/SidebarA"
-          element={
-            <SidebarA>
-              {" "}
-              {/* Sidebar content /} {/ Add Sidebar route */}
-              <Route path="/Dashboard" element={<Dashboard />} />
-              <Route path="/MyLeaves/:id" element={<MyLeaves />} />
-             
-            
-              ,.
-            </SidebarA>
-          }
-        />
+        <Route path="/staff" element={< StaffDashboard />} />
+        
 
 
 
        
-=======
+
         <Route path="/FeedbackList" element={<FeedbackList />} />
->>>>>>> c3944ef7970ddef7389a57eb4e8a8010f2ca5c03
+
       </Routes>
     </div>
   );
