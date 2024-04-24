@@ -1,19 +1,43 @@
- .calendar-container {
-    width: 800px; /* Set the desired width for the calendar */
-    height: 600px; /* Set the desired height for the calendar */
-    margin: 0 auto; /* Center the calendar horizontally */
-  }
-  
-  .full-calendar {
-    width: 100%; /* Ensure the FullCalendar fills its parent container */
-    height: 100%; /* Ensure the FullCalendar fills its parent container */
-  }
+// Calender.scss
 
-   .fc-day-header {
-      background-color: #f0f0f0; /* Change the background color of day headers */
-      font-size: 14px; /* Adjust the font size of day headers */
-    }
-    
-    .fc-day-grid-event {
-      font-size: 12px; /* Adjust the font size of event titles */
-    }
+.custom-calendar-container {
+  width: 75%;
+  margin: auto;
+}
+
+.fc-dayGridMonth-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.fc-dayGridMonth-button:hover {
+  background-color: #0056b3;
+}
+
+.fc-dayGridMonth-view {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.fc-dayGridMonth-view .fc-day-number {
+  font-size: 14px;
+}
+
+.fc-event {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+}
+
+.fc-event:hover {
+  background-color: #218838;
+}

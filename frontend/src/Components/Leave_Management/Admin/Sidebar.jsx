@@ -37,8 +37,8 @@ export const Sidebar = ({children}) => {
 
    
    {
-    path:"/MEmployees/:id",
-    name:"Manage Employees",
+    path:"/MLeaves/:id",
+    name:"Manage Leaves",
     icon: <FaUsers />
    },
 

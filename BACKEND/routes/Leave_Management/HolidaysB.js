@@ -1,5 +1,6 @@
+// HolidaysB.JS
 const router = require("express").Router();
-const Holidays = require("../../models/Leave_Management/Holidays");
+const Holidays = require("../../models/Leave_Management/Holidays.js");
 
 router.post("/create", async (req, res) => {
   try {
