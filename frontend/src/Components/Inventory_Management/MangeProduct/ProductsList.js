@@ -11,6 +11,9 @@ import {
   FaEdit,
   FaTrash,
 } from 'react-icons/fa';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 function ProductsList() {
   const [products, setProducts] = useState([]);
@@ -196,7 +199,16 @@ const handleReport = () => {
   window.URL.revokeObjectURL(url);
 };
 
-
+  // const handleReport = () => {
+  //   // Generate PDF report logic
+  //   html2canvas(document.querySelector('#product-table')).then((canvas) => {
+  //     const imgData = canvas.toDataURL('image/png');
+  //     const pdf = new jsPDF();
+  //     const imgHeight = (canvas.height * 208) / canvas.width;
+  //     pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+  //     pdf.save('products_report.pdf');
+  //   });
+  // };
 
 
   return (
@@ -243,14 +255,12 @@ const handleReport = () => {
               </Link>
             </div>
             <div className="addProductBtn">
-              
-                <button
-                  onClick={handleReport}
-                  className="bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5"
-                >
-                  Get Report
-                </button>
-              
+              <button
+                onClick={handleReport}
+                className="bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5"
+              >
+                Get Report
+              </button>
             </div>
             <div className="relative">
               <div className="absolute inset-y-0 right-0 flex items-center justify-center px-2 pointer-events-none">
@@ -281,7 +291,10 @@ const handleReport = () => {
           </div>
 
           <div>
-            <table className="w-full text-sm text-left text-gray-500">
+            <table
+              id="product-table"
+              className="w-full text-sm text-left text-gray-500"
+            >
               {/* Table header */}
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                 <tr>
@@ -468,3 +481,7 @@ const handleReport = () => {
 }
 
 export default ProductsList;
+
+
+
+

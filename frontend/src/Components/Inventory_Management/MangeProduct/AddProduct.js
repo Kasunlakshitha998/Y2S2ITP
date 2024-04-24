@@ -132,7 +132,7 @@ const handleChange = (e) => {
             <h2>Add Product</h2>
             <form onSubmit={AddData} id="productForm" className="formContainer">
               <div className="formLeft">
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="name">Name:</label>
                   <input
                     type="text"
@@ -150,7 +150,7 @@ const handleChange = (e) => {
                   )}
                 </div>
 
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="category">Category:</label>
                   <select
                     id="category"
@@ -169,7 +169,7 @@ const handleChange = (e) => {
                   </select>
                 </div>
 
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="brand">Brand:</label>
                   <input
                     type="text"
@@ -181,7 +181,7 @@ const handleChange = (e) => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="price">Price:</label>
                   <input
                     type="number"
@@ -195,7 +195,7 @@ const handleChange = (e) => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="countInStock">Count In Stock:</label>
                   <input
                     type="number"
@@ -208,7 +208,7 @@ const handleChange = (e) => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="description">Description:</label>
                   <textarea
                     id="description"
@@ -222,14 +222,14 @@ const handleChange = (e) => {
               </div>
 
               <div className="formRight">
-                <div className="form-group">
+                <div className="form-groupk">
                   <label htmlFor="image">Image:</label>
                   <div className="w-full mx-auto grid grid-cols-2 justify-items-center justify-center gap-y-5 gap-x-8 mt-4 mb-4">
                     {Array.isArray(image) ? (
                       image.map((img, index) => (
-                        <div key={index} className="image-container">
+                        <div key={index} className="">
                           <img
-                            className="image hover:scale-110"
+                            className="hover:scale-110"
                             width={200}
                             height={200}
                             src={img}
@@ -238,9 +238,9 @@ const handleChange = (e) => {
                         </div>
                       ))
                     ) : image ? (
-                      <div className="image-container">
+                      <div className="">
                         <img
-                          className="image hover:scale-110"
+                          className="hover:scale-110"
                           width={200}
                           height={200}
                           src={image}
