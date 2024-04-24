@@ -11,6 +11,8 @@ function EditOrder() {
   const [image, setImage] = useState([]);
   
 
+const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(`http://localhost:8175/order/getOrder/${id}`)
@@ -40,6 +42,7 @@ function EditOrder() {
       .then((res) => {
         console.log('updated successfully:', res.data);
         alert('Update successfully');
+        navigate('/OrderList');
       })
       .catch((err) => {
         console.error('Error updating :', err);

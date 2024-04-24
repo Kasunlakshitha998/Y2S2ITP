@@ -11,6 +11,8 @@ const UserOrderEdit = () => {
   const [paymentStatus, setpaymentStatus] = useState('Pending');
   const [image, setImage] = useState([]);
   
+  const navigate = useNavigate();
+  
   useEffect(() => {
     axios
       .get(`http://localhost:8175/order/getOrder/${id}`)
@@ -18,6 +20,7 @@ const UserOrderEdit = () => {
         console.log(res.data);
         setDeliveryAddress(res.data.deliveryAddress);
         setPaymentOption(res.data.paymentOption);
+        setImage(res.data.image);
         setpaymentStatus('Pending');
       })
       .catch((err) => {
@@ -42,6 +45,7 @@ function UpdateData(e) {
     .then((res) => {
       console.log('updated successfully:', res.data);
       alert("Update successfully")
+      navigate('/UserOrderList');
     })
     .catch((err) => {
       console.error('Error updating :', err);
@@ -111,6 +115,12 @@ function UpdateData(e) {
             </div>
             {paymentOption === 'bank' && (
               <div className="mb-4">
+                <img
+                  src={image}
+                  alt={paymentOption}
+                  style={{ width: '100%' }}
+                />
+
                 <label htmlFor="bankImage" className="block font-medium">
                   Bank Image
                 </label>
