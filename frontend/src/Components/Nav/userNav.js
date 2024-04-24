@@ -65,7 +65,7 @@ function UserNav() {
         <div className={`md:flex items-center ${isMenuOpen ? '' : 'hidden'}`}>
           <div className="flex flex-col items-center md:flex-row md:mx-6">
             <Link
-              to="#"
+              to="/"
               className={`my-1 text-lg text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0 ${
                 activeLink === '/' ? 'text-indigo-500' : ''
               }`}

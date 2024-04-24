@@ -73,7 +73,7 @@ const Cart = () => {
                         <td className="border px-4 py-2">
                           <div className="cart-product flex items-center">
                             <img
-                              src={cartItem.image}
+                              src={cartItem.image[0]}
                               alt={cartItem.name}
                               className="w-16 h-16 mr-4"
                             />
