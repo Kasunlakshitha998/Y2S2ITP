@@ -1,7 +1,7 @@
-const express = require('express');
-const Expense = require('../../models/Financial_Management/expense'); // Import Expense model
+ const express = require('express');
+const Expense = require('../models/expense'); // Import Expense model
 const bodyParser = require('body-parser');
-
+const pdfkit = require('pdfkit');
 //const mongoose = require('mongoose');
 
 const router = express.Router();
@@ -122,6 +122,149 @@ router.route("/delete/:expense_id").delete(async (req, res) => {
          res.status(500).send({ status: "Error with fetching data", error: err.message });
        });
    });
-   
+
+
+   async function fetchDataFromDatabase(startDate, endDate) {
+    try {
+      const expenses = await Expense.find({
+        date: { $gte: startDate, $lte: endDate }
+      }).sort({ date: 1 }); // Sort expenses based on date in ascending order
+  
+      return expenses;
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      throw err;
+    }
+  }
+
+
+   //report generation endpoit 
+   router.get('/generate-report', async (req, res) => {
+    try {
+      const { startDate, endDate } = req.query;
+  
+      // Fetch data from the database based on the date range
+      const data = await fetchDataFromDatabase(startDate, endDate);
+
+      // Calculate total number of expenses and net amount
+    const totalExpenses = data.length;
+    const netAmount = data.reduce((acc, item) => acc + item.amount, 0).toFixed(2);
+  
+      // Initialize PDF document
+      const pdf = new pdfkit();
+  
+      // Set PDF title and metadata
+      pdf.info.Title = 'Expense Report';
+      pdf.info.Author = 'Finance Manager';
+      pdf.info.Subject = `Date Range: ${startDate} to ${endDate}`;
+  
+      // Set PDF font and size
+      pdf.font('Helvetica-Bold').fontSize(20).text('Expense Report', { align: 'center' });
+      pdf.moveDown();
+      pdf.font('Helvetica-Bold').fontSize(20).text(`Date Range: ${startDate} to ${endDate}`, { align: 'center' });
+      pdf.moveDown();
+      pdf.font('Helvetica-Bold').fontSize(12).text(`Total Number of Expenses: ${totalExpenses}`, { align: 'left' });
+      pdf.font('Helvetica-Bold').fontSize(12).text(`Net Amount: ${netAmount}`, { align: 'left' });
+      pdf.moveDown();
+      
+      // Define table headers and columns (you can add more columns here)
+      const headers = ['Date', 'Category', 'Amount'];
+      const columnWidths = [100, 200, 100]; // Widths of columns
+  
+      // Set initial position for table
+      let yPos = pdf.y; // Initial y position
+  
+      // Draw table headers with visible lines
+      let xPos = pdf.x+35;
+      headers.forEach((header, index) => {
+        pdf.rect(xPos, yPos, columnWidths[index], 30).stroke(); // Draw cell boundary
+        pdf.font('Helvetica-Bold').fontSize(12).text(header, xPos + 5, yPos + 10, { align: 'center', width: columnWidths[index] - 10 }); // Add header text
+        xPos += columnWidths[index];
+      });
+  
+      // Move to next row
+      yPos += 30;
+  
+      // Draw table content with visible lines
+      data.forEach((item) => {
+        xPos = pdf.x-305; // Reset x position for each row
+  
+        // Formatting date (example)
+        const formattedDate = new Date(item.date).toLocaleDateString(); // Adjust formatting as needed
+  
+        pdf.rect(xPos, yPos, columnWidths[0], 20).stroke(); // Draw cell boundary
+        pdf.font('Helvetica').fontSize(12).text(formattedDate, xPos + 5, yPos + 7, { align: 'center', width: columnWidths[0] - 10  }); // Add date text
+        xPos += columnWidths[0];
+  
+        pdf.rect(xPos, yPos, columnWidths[1], 20).stroke(); // Draw cell boundary
+        pdf.text(item.category, xPos + 5, yPos + 7, { align: 'center', width: columnWidths[1] - 10  }); // Add category text
+        xPos += columnWidths[1];
+  
+        // Formatting amount (example)
+        const formattedAmount = item.amount.toFixed(2); // Format to two decimal places, adjust as needed
+  
+        pdf.rect(xPos, yPos, columnWidths[2], 20).stroke(); // Draw cell boundary
+        pdf.text(formattedAmount, xPos + 5, yPos + 7, { align: 'left', width: columnWidths[2] - 10  }); // Add amount text (right-aligned)
+  
+        // Move to next row
+        yPos += 20;
+      });
+  
+      // Set content type and send PDF as response
+      res.setHeader('Content-Type', 'application/pdf');
+      pdf.pipe(res);
+      pdf.end();
+  
+    } catch (error) {
+      console.error('Error generating report:', error);
+      res.status(500).send({ error: 'Error generating report' });
+    }
+  });
+  
+
+//route for search function
+router.get('/search', async (req, res) => {
+  try {
+    const { query, minAmount, maxAmount } = req.query;
+
+    let amountQuery = {};
+
+    // Check if minAmount and/or maxAmount are provided and convert them to numbers
+    if (minAmount) {
+      const min = parseFloat(minAmount);
+      if (!isNaN(min)) {
+        amountQuery.$gte = min;
+      }
+    }
+
+    if (maxAmount) {
+      const max = parseFloat(maxAmount);
+      if (!isNaN(max)) {
+        amountQuery.$lte = max;
+      }
+    }
+
+    // Perform search
+    const expenses = await Expense.find({
+      $or: [
+        { 'expense_id': { $regex: query, $options: 'i' } },
+        { 'category': { $regex: query, $options: 'i' } },
+        { 'payment_method': {$regex: query, $options: 'i'}},
+        { 'description': { $regex: query, $options: 'i' } },
+        { 'receipt_no': {$regex: query, $options: 'i'}},
+        { 'name': { $regex: query, $options: 'i' } },
+        { 'location': { $regex: query, $options: 'i' } }
+      ],
+      ...amountQuery // Add amount query if applicable
+    });
+
+    res.status(200).json(expenses);
+  } catch (error) {
+    console.error("Error searching expenses:", error);
+    res.status(500).json({ message: "Error searching expenses" });
+  }
+});
+
+
 
 module.exports = router;
