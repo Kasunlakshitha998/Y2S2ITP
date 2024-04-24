@@ -124,6 +124,11 @@ function UserNav() {
                     </Link> 
                   </li>
                   <li>
+                    <Link to="/userAppointmentList" className="block py-2 px-4 hover:bg-gray-100">
+                      My Appointment
+                    </Link> 
+                  </li>
+                  <li>
                     <Link onClick={logout} className="block py-2 px-4 hover:bg-gray-100">
                       Logout
                     </Link> 
