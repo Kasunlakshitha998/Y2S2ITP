@@ -53,7 +53,7 @@ function AppointmentList() {
     );
 
     return (
-        <div className="mx-auto max-w-7xl p-5 rounded-lg mt-6">
+        <div className="mx-auto max-w-6xl p-5 rounded-lg mt-6">
             <header>
                 <AdminNav />
             </header>
