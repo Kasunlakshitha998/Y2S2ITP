@@ -9,6 +9,7 @@ import {
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   //get all order list
   useEffect(() => {
@@ -37,13 +38,22 @@ const OrderList = () => {
            alert('Order Delete unSuccessfully');
      });
    }
-
+const filteredorders = orders.filter((order) =>
+  order._id.toLowerCase().includes(searchTerm.toLowerCase())
+);
   return (
     <>
       <header>
         <AdminNav />
       </header>
       <main className="plist ml-48">
+        <input
+          type="text"
+          placeholder="Search by Order ID..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="max-w-2xl my-4 p-2 border ml-20 border-gray-300 rounded-lg"
+        />
         <div className="relative overflow-x-auto sm:rounded-lg flex flex-row justify-center">
           <table className="max-w-3xl text-sm text-left text-gray-900">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -61,7 +71,7 @@ const OrderList = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {filteredorders.map((order) => (
                 <tr key={order._id}>
                   <td className="border px-4 py-2">{order._id}</td>
 

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReviewStar from './ReviewStar';
-import Cookies from 'js-cookie';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import {  FaTrash } from 'react-icons/fa';
+
 import AdminNav from '../Nav/adminNav';
 
 const FeedbackList = () => {
   const [reviews, setReviews] = useState([]);
-  const userId = Cookies.get('userId');
+  const [searchTerm, setSearchTerm] = useState('');
 
   //get all feedback
   useEffect(() => {
@@ -36,6 +35,11 @@ const FeedbackList = () => {
       });
   };
 
+
+  const filteredFeedback = reviews.filter((review) =>
+    review.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="max-w-3xl mx-10 overflow-y-auto">
       <header>
@@ -44,10 +48,18 @@ const FeedbackList = () => {
       <h2 className="text-3xl font-bold mb-6">Product Reviews</h2>
       <div className="border-t border-gray-200 pt-4"></div>
       <div className="grid grid-cols-2 md:grid-cols-1 gap-4 ml-60">
-        {reviews.length === 0 ? (
+        <input
+          type="text"
+          placeholder="Search by email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="max-w-2xl my-4 p-2 border ml-20 border-gray-300 rounded-lg"
+        />
+
+        {filteredFeedback.length === 0 ? (
           <p className="text-gray-600">No reviews available</p>
         ) : (
-          reviews.map((review, index) => (
+          filteredFeedback.map((review, index) => (
             <div key={index} className="bg-white shadow-md rounded-lg">
               <div className="p-4">
                 <p className="text-lg font-semibold mb-2">
