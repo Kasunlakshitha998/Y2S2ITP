@@ -65,21 +65,15 @@ const handleClickProfilePicture = () => {
           <Link to="/admin">Admin Dashboard</Link>
         </div>
         <div className="profile">
-
-
           {userImage ? (
-        <img
-            src={`http://localhost:3000/image/${userImage}`}
-            alt="Profile"
-
-            onClick={handleClickProfilePicture}
-           
-          
-        />
-    ) : (
-        <BsPersonFill size={100} color="#adb5bd"  />
-    )}
-
+            <img
+              src={`http://localhost:3000/image/${userImage}`}
+              alt="Profile"
+              onClick={handleClickProfilePicture}
+            />
+          ) : (
+            <BsPersonFill size={100} color="#adb5bd" />
+          )}
 
           <span>Admin User</span>
           <div className="dropdown">
@@ -112,6 +106,9 @@ const handleClickProfilePicture = () => {
           </li>
           <li className={activeLink === '/appointmentList' ? 'active' : ''}>
             <Link to="/appointmentList">Appoinment</Link>
+          </li>
+          <li className={activeLink === '/admin/FeedbackList' ? 'active' : ''}>
+            <Link to="/admin/FeedbackList">FeedBack</Link>
           </li>
         </ul>
       </aside>

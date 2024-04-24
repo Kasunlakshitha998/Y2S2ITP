@@ -156,7 +156,7 @@ function EditProduct() {
                 className="formContainer"
               >
                 <div className="formLeft">
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="name">Name:</label>
                     <input
                       type="text"
@@ -173,7 +173,7 @@ function EditProduct() {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="category">Category:</label>
                     <select
                       id="category"
@@ -192,7 +192,7 @@ function EditProduct() {
                     </select>
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="brand">Brand:</label>
                     <input
                       type="text"
@@ -204,7 +204,7 @@ function EditProduct() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="price">Price:</label>
                     <input
                       type="number"
@@ -218,7 +218,7 @@ function EditProduct() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="countInStock">Count In Stock:</label>
                     <input
                       type="number"
@@ -231,7 +231,7 @@ function EditProduct() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="description">Description:</label>
                     <textarea
                       id="description"
@@ -245,7 +245,7 @@ function EditProduct() {
                 </div>
 
                 <div className="formRight">
-                  <div className="form-group">
+                  <div className="form-groupk">
                     <label htmlFor="image">Image:</label>
                     <div className="w-full mx-auto grid grid-cols-2 justify-items-center justify-center gap-y-5 gap-x-8 mt-4 mb-4">
                       {Array.isArray(image) ? (
@@ -256,7 +256,7 @@ function EditProduct() {
                             height={200}
                             src={img}
                             alt={`productImage${index}`}
-                            className="image hover:scale-110"
+                            className="hover:scale-110"
                           />
                         ))
                       ) : image ? (

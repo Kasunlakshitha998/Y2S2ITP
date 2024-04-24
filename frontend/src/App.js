@@ -154,7 +154,7 @@ function App() {
 
 
 
-        <Route path="/FeedbackList" element={<FeedbackList />} />
+        <Route path="/admin/FeedbackList" element={<FeedbackList />} />
 
         
 {/* <Route path="/staff" element={<StaffDashboard />} />

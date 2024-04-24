@@ -8,7 +8,7 @@
   margin: 80px auto;
   margin-left: 80px;
   padding: 15px;
-  background-color: #fff;
+  background-color: #f1f1f1;
   border-radius: 20px;
   box-shadow: 2px 5px 40px rgba(137, 130, 130, 0.233);
 }
@@ -33,12 +33,12 @@
   padding: 50px;
 }
 
-.form-group {
+.form-groupk {
   margin-bottom: 15px;
 }
 
 
-.form-group {
+.form-groupk {
   margin-bottom: 20px;
 }
 
@@ -86,7 +86,7 @@ form button:focus {
   outline: none;
 }
 
-.form-group {
+.form-groupk {
   margin-bottom: 20px;
 }
 
