@@ -58,6 +58,7 @@ const CheckoutComponent = () => {
         'http://localhost:8175/order/add',
         checkoutData
       );
+      dispatch(clearCart());
       console.log('Checkout successful:', response.data);
 
       // Call updateStock for each item in the cart

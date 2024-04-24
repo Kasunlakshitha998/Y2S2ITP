@@ -41,6 +41,7 @@ import EditOrder from './Components/Order_Management/EditOrder';
 import UserOrderEdit from './Components/Order_Management/userOderEdit';
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 import FeedbackList from './Components/Feedback Management/FeedbackList';
+import StaffDashboard from'./Components/User_Management/staff';
 
 
 // import StaffDashboard from './Components/User_Management/staff'
@@ -77,7 +78,7 @@ const UserRouteGuard = ({ element }) => {
 const AllUsersRouteGuard = ({ element }) => {
   const userRole = Cookies.get('role');
 
-  if (userRole === 'admin' || userRole === 'user') {
+  if (userRole === 'admin' || userRole === 'user' || userRole === 'staff' ) {
     return element;
   } else {
     return <Navigate to="/login" />;
@@ -151,8 +152,10 @@ function App() {
         <Route path="/order/userOderEdit/:id" element={<UserOrderEdit />} />
         <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
         <Route path="/UpdateFeedback/:id" element={<UpdateFeedback />} />
+        <Route path="/staff" element={< StaffDashboard />} />
 
-
+       
+        StaffDashboard
 
         <Route path="/admin/FeedbackList" element={<FeedbackList />} />
 
