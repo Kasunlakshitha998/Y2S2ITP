@@ -48,6 +48,42 @@ function AppointmentList() {
         });
     };
 
+    const handleApprove = (id) => {
+        axios
+            .put(`http://localhost:8175/appointment/approve/${id}`)
+            .then(() => {
+                // Update the appointment list to mark the appointment as approved
+                setAppointments(prevAppointments => prevAppointments.map(appointment => {
+                    if (appointment._id === id) {
+                        return { ...appointment, approved: true };
+                    }
+                    return appointment;
+                }));
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Error approving appointment');
+            });
+    };
+
+    const handleCancelApproval = (id) => {
+        axios
+            .put(`http://localhost:8175/appointment/cancelApproval/${id}`)
+            .then(() => {
+                // Update the appointment list to mark the appointment as not approved
+                setAppointments(prevAppointments => prevAppointments.map(appointment => {
+                    if (appointment._id === id) {
+                        return { ...appointment, approved: false };
+                    }
+                    return appointment;
+                }));
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Error cancelling approval');
+            });
+    };
+
     const filteredAppointments = appointments.filter((appointment) =>
         appointment.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -85,6 +121,8 @@ function AppointmentList() {
                             <th className="py-4 px-6">Receipt</th>
                             <th className="py-4 px-6">Description</th>
                             <th className="py-4 px-6">Actions</th> {/* Added Actions column */}
+                            <th className="py-4 px-6">Approve</th> {/* Added Approve column */}
+                            <th className="py-4 px-6">Cancel Approval</th> {/* Added Cancel Approval column */}
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
@@ -118,6 +156,22 @@ function AppointmentList() {
                                     <button onClick={() => handleDelete(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                         Delete
                                     </button>
+                                </td>
+                                <td className="py-4 px-6">
+                                    {appointment.approved ? (
+                                        <span className="bg-green-500 text-white font-bold py-2 px-4 rounded">Approved</span>
+                                    ) : (
+                                        <button onClick={() => handleApprove(appointment._id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                            Approve
+                                        </button>
+                                    )}
+                                </td>
+                                <td className="py-4 px-6">
+                                    {appointment.approved && (
+                                        <button onClick={() => handleCancelApproval(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                            Cancel Approval
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))}

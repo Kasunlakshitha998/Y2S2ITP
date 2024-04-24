@@ -34,8 +34,29 @@ export default function AddAForm() {
 
   const sendData = async (e) => {
     e.preventDefault();
+
+    // Check if at least one phone type is selected
+    if (phoneType.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select at least one phone type!',
+      });
+      return;
+    }
+
+    // Check if at least one service type is selected
+    if (serviceType.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select at least one service type!',
+      });
+      return;
+    }
+
     const userId = Cookies.get('userId');
-    const NewAppoinment = {
+    const NewAppointment = {
       name,
       userId,
       email,
@@ -46,9 +67,9 @@ export default function AddAForm() {
       description,
       image,
     };
-    console.log(NewAppoinment);
+
     axios
-      .post('http://localhost:8175/appointment/add', NewAppoinment)
+      .post('http://localhost:8175/appointment/add', NewAppointment)
       .then(() => {
         Swal.fire({
           position: 'top-end',
@@ -57,7 +78,7 @@ export default function AddAForm() {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigator('/userAppointmentList')
+        navigator('/userAppointmentList');
       })
       .catch((err) => {
         Swal.fire({
@@ -97,16 +118,16 @@ export default function AddAForm() {
     const file = e.target.files[0];
 
     if (file) {
-        const reader = new FileReader();
+      const reader = new FileReader();
 
-        reader.onload = () => {
-            const base64String = reader.result;
-            setImage(base64String);
-        };
+      reader.onload = () => {
+        const base64String = reader.result;
+        setImage(base64String);
+      };
 
-        reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
     }
-};
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -131,7 +152,6 @@ export default function AddAForm() {
               type="text"
               id="name"
               name="name"
-        
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -149,7 +169,6 @@ export default function AddAForm() {
               type="email"
               id="email"
               name="email"
-              
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -168,7 +187,6 @@ export default function AddAForm() {
               id="telephone"
               name="telephone"
               value={telephone}
-              
               onChange={(e) => {
                 const onlyNumbers = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
                 setTelephone(onlyNumbers);
@@ -190,7 +208,6 @@ export default function AddAForm() {
                   value="Android"
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
-                  required
                 />
                 <label
                   htmlFor="android"
@@ -207,7 +224,6 @@ export default function AddAForm() {
                   value="Apple"
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
-                  
                 />
                 <label
                   htmlFor="apple"
@@ -224,7 +240,6 @@ export default function AddAForm() {
                   value="Windows"
                   onChange={handlePhoneTypeChange}
                   className="mr-2"
-                  
                 />
                 <label
                   htmlFor="windows"
@@ -248,7 +263,6 @@ export default function AddAForm() {
                   value="Display Services"
                   onChange={handleServiceTypeChange}
                   className="mr-2"
-                  
                 />
                 <label
                   htmlFor="display"
@@ -265,7 +279,6 @@ export default function AddAForm() {
                   value="Motherboard Services"
                   onChange={handleServiceTypeChange}
                   className="mr-2"
-                  
                 />
                 <label
                   htmlFor="motherboard"
@@ -282,7 +295,6 @@ export default function AddAForm() {
                   value="Other Services"
                   onChange={handleServiceTypeChange}
                   className="mr-2"
-                  
                 />
                 <label
                   htmlFor="other"
@@ -324,7 +336,6 @@ export default function AddAForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              
             ></textarea>
           </div>
           <div className="mb-4">

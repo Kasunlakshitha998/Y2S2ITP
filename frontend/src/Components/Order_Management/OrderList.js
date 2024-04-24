@@ -2,20 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminNav from './../Nav/adminNav';
 import { Link } from 'react-router-dom';
-import {
-  FaEdit,
-  FaTrash,
-} from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  //get all order list
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8175/order/'); // Fetch orders from the backend
+        const response = await axios.get('http://localhost:8175/order/');
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -25,43 +23,61 @@ const OrderList = () => {
     fetchOrders();
   }, []);
 
- const handleDelete = (orderId) => { 
+  const handleDelete = (orderId) => {
     axios
-    .delete(`http://localhost:8175/order/delete/${orderId}`)
+      .delete(`http://localhost:8175/order/delete/${orderId}`)
       .then(() => {
         alert("Order Delete successfully");
         setOrders(orders.filter((order) => order._id !== orderId));
-        
-         })
-         .catch((error) => {          
-           console.error('Error deleting product:', error);
-           alert('Order Delete unSuccessfully');
-     });
-   }
-const filteredorders = orders.filter((order) =>
-  order._id.toLowerCase().includes(searchTerm.toLowerCase())
-);
+      })
+      .catch((error) => {
+        console.error('Error deleting product:', error);
+        alert('Order Delete unSuccessfully');
+      });
+  };
+
+  const handleGenerateReport = () => {
+    html2canvas(document.querySelector("#order-table")).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgHeight = canvas.height * 208 / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+      pdf.save("orders_report.pdf");
+    });
+  };
+
+  const filteredOrders = orders.filter((order) =>
+    order._id.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <header>
         <AdminNav />
       </header>
       <main className="plist ml-48">
-        <input
-          type="text"
-          placeholder="Search by Order ID..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="max-w-2xl my-4 p-2 border ml-20 border-gray-300 rounded-lg"
-        />
+        <div className="flex justify-between items-center">
+          <div>
+            <input
+              type="text"
+              placeholder="Search by Order ID..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="max-w-2xl my-4 p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div>
+            <button onClick={handleGenerateReport} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Generate Report
+            </button>
+          </div>
+        </div>
         <div className="relative overflow-x-auto sm:rounded-lg flex flex-row justify-center">
-          <table className="max-w-3xl text-sm text-left text-gray-900">
+          <table id="order-table" className="max-w-3xl text-sm text-left text-gray-900">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
               <tr>
                 <th className="px-4 py-2">Order ID</th>
-
                 <th className="px-4 py-2">Delivery Address</th>
-
                 <th className="px-4 py-2">Items</th>
                 <th className="px-4 py-2">Payment Option</th>
                 <th className="px-4 py-2">Deposit Slip</th>
@@ -71,12 +87,10 @@ const filteredorders = orders.filter((order) =>
               </tr>
             </thead>
             <tbody>
-              {filteredorders.map((order) => (
+              {filteredOrders.map((order) => (
                 <tr key={order._id}>
                   <td className="border px-4 py-2">{order._id}</td>
-
                   <td className="border px-4 py-2">{order.deliveryAddress}</td>
-
                   <td className="border px-4 py-2">
                     <ul>
                       {order.items.map((item) => (
@@ -108,7 +122,6 @@ const filteredorders = orders.filter((order) =>
                         <FaEdit />
                       </button>
                     </Link>
-
                     <button
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 m-2 rounded"
                       onClick={() => handleDelete(order._id)}
