@@ -1,7 +1,10 @@
 const express = require('express');
-const Salary = require('../../models/Financial_Management/salary'); // Import Salary model
-
+const Salary = require('../models/salary'); // Import Salary model
+const bodyParser = require('body-parser');
 const router = express.Router();
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
 //function to generate employee id
 async function generateCustomId() {
@@ -17,9 +20,15 @@ async function generateCustomId() {
 
 //function to calculate net salary
 
-function calculateNetSalary(baseSalary, otPayment, bonus, deduction) {
-  const grossSalary = baseSalary + otPayment + bonus;
-  const netSalary = grossSalary - deduction;
+function calculateNetSalary(base_salary, ot_payment, bonus, deduction) {
+  
+  const baseSalaryNum = parseFloat(base_salary);
+  const otPaymentNum = parseFloat(ot_payment);
+  const bonusNum = parseFloat(bonus);
+  const deductionNum = parseFloat(deduction);
+  
+  const grossSalary = baseSalaryNum + otPaymentNum + bonusNum;
+  const netSalary = grossSalary - deductionNum;
   return netSalary;
 }
 
@@ -74,14 +83,17 @@ router.route("/update/:employee_id").put(async (req, res) => {
     pay_period
   }
 
-  const update = await Salary.updateOne({employee_id:employeeId},updateSalary)
-  .then(()=>{
-      res.status(200).send({status: "Record Updated"})
-      .catch((err)=>{
-          console.log(err);
-          res.status(500).send({status: "Error Occured while Updating"});
-      })
-  })
+  try {
+    const update = await Salary.updateOne({ employee_id: employeeId }, updateSalary);
+    if (update.nModified > 0) {
+      res.status(200).send({ status: "Record Updated" });
+    } else {
+      res.status(404).json({ message: "Salary record not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ status: "Error Occurred while Updating" });
+  }
 })
 
 
@@ -110,6 +122,75 @@ router.route("/delete/:employee_id").delete(async (req, res) => {
     res.status(500).send({ status: "Error Occurred while Deleting" });
   }
 });
+
+ //route display only one record
+ router.route("/get/:employee_id").get(async (req, res) => {
+  let employeeId = req.params.employee_id;
+  const salary = await Salary.findOne({ employee_id: employeeId })
+     .then(salary => {
+       res.status(200).send({ status: "Expense fetched", salary });
+     })
+     .catch(err => {
+       console.log(err.message);
+       res.status(500).send({ status: "Error with fetching data", error: err.message });
+     });
+ });
+ 
+
+ // Route to filter salaries by position and pay period - not implemented in frontend
+router.get('/filter', async (req, res) => {
+  try {
+    const { position, pay_period } = req.query;
+
+    let filter = {};
+
+    if (position) {
+      filter.position = position;
+    }
+
+    if (pay_period) {
+      filter.pay_period = pay_period;
+    }
+
+    const salaries = await Salary.find(filter);
+
+    if (salaries.length > 0) {
+      res.status(200).json(salaries);
+    } else {
+      res.status(404).json({ message: 'No salaries found matching the criteria' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching filtered salaries' });
+  }
+});
+
+
+//search function route
+router.get('/search', async (req, res) => {
+  try {
+    const { query} = req.query;
+
+    let amountQuery = {};
+
+    // Perform search
+    const salaries = await Salary.find({
+      $or: [
+        { 'employee_id': { $regex: query, $options: 'i' } },
+        { 'name': { $regex: query, $options: 'i' } },
+        { 'position': {$regex: query, $options: 'i'}},
+        { 'pay_period': { $regex: query, $options: 'i' } },
+      ],
+      ...amountQuery // Add amount query if applicable
+    });
+
+    res.status(200).json(salaries);
+  } catch (error) {
+    console.error("Error searching salaries:", error);
+    res.status(500).json({ message: "Error searching salaries" });
+  }
+});
+
 
 
 module.exports = router;
