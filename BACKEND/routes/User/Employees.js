@@ -695,6 +695,32 @@ router.delete('/registerdelete', (req, res) => {
 });
 
 
+router.post('/Adduser', (req, res) =>  {
+  const { name, email, password, number } = req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+      EmployeeModel.findOne({ email: email })
+          .then((existingUser) => {
+              if (existingUser) {
+                  // Email already exists, return an error
+                  res.status(400).json({ error: 'Email already registered' });
+              } else {
+                  // Email is unique, create a new user
+                  EmployeeModel.create({ name, email, password: hash, number })
+                      .then((newEmployee) => {
+                          
+                          res.json(newEmployee);
+                      })
+                      .catch((err) => res.status(500).json({ error: err.message }));
+              }
+          })
+          .catch((err) => {
+              res.status(500).json({ error: err.message });
+          });
+  });
+
+  // Check if the email already exists
+});
+
 
 
 
