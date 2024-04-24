@@ -36,7 +36,7 @@ function CreateUsers() {
             return;
         }
 
-        axios.post('http://localhost:8175/user/register', { name, email, password, number })
+        axios.post('http://localhost:8175/user/Adduser', { name, email, password, number })
             .then(result => {
                 console.log(result);
                 navigate('/userdetails');
@@ -54,7 +54,7 @@ function CreateUsers() {
         <div className="container h-screen d-flex justify-content-center align-items-center">
              <AdminNav /> 
              <div className="form-container">
-                <h2>Register</h2>
+                <h2>Add users</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>

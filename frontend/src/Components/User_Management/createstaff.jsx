@@ -16,15 +16,7 @@ function CreateStaff() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!name || !email || !password || !reenterPassword || !number || !role) {
-          
-            Swal.fire({
-                icon: 'error',
-                title: 'error...',
-                text: 'All fields must be filled.',
-            });
-            return;
-        }
+        
 
         const nameRegex = /^[a-zA-Z\s]+$/;
         if (!name.match(nameRegex)) {
