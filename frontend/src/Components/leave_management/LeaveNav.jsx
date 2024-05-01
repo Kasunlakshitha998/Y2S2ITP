@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./adminNav.css";
+import "./LeaveNav.scss";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { BsPersonFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 
-function AdminNav() {
+function LeaveNav() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -85,29 +85,26 @@ function AdminNav() {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul>
-          <li className={activeLink === "/admin" ? "active" : ""}>
-            <Link to="/admin">Dashboard</Link>
+          <li className={activeLink === "/MyLeaves/:id" ? "active" : ""}>
+            <Link to="/MyLeaves/:id">MyLeaves</Link>
           </li>
-          <li className={activeLink === "/userdetails" ? "active" : ""}>
-            <Link to="/userdetails">Users</Link>
+          <li className={activeLink === "/MyLeaves/:id" ? "active" : ""}>
+            <Link to="/MyLeaves/:id">MyLeaves</Link>
           </li>
-          <li className={activeLink === "/staffdetails" ? "active" : ""}>
-            <Link to="/staffdetails">staff</Link>
+          <li className={activeLink === "/Mleaves" ? "active" : ""}>
+            <Link to="/Mleaves">Manage Leaves</Link>
           </li>
-          <li className={activeLink === "/admin/productsList" ? "active" : ""}>
-            <Link to="/admin/productsList">Products</Link>
+          <li className={activeLink === "/Myprofile" ? "active" : ""}>
+            <Link to="/Myprofile">Myprofile</Link>
           </li>
-          <li className={activeLink === "/OrderList" ? "active" : ""}>
-            <Link to="/OrderList">Orders</Link>
+          <li className={activeLink === "/Reports" ? "active" : ""}>
+            <Link to="/Reports">Reports</Link>
           </li>
-          <li className={activeLink === "/appointmentList" ? "active" : ""}>
-            <Link to="/appointmentList">Appoinment</Link>
+          <li className={activeLink === "/Settings" ? "active" : ""}>
+            <Link to="/Settings">Settings</Link>
           </li>
-          <li className={activeLink === "/admin/FeedbackList" ? "active" : ""}>
-            <Link to="/admin/FeedbackList">FeedBack</Link>
-          </li>
-          <li className={activeLink === "/admin/leave" ? "active" : ""}>
-            <Link to="/admin/leave">Leave</Link>
+          <li className={activeLink === "/" ? "active" : ""}>
+            <Link to="/">Log Out</Link>
           </li>
         </ul>
       </aside>
@@ -115,4 +112,4 @@ function AdminNav() {
   );
 }
 
-export default AdminNav;
+export default LeaveNav;

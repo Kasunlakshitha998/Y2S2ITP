@@ -1,6 +1,8 @@
 import React, { useState,useEffect} from 'react';
 import axios from 'axios';
-import Sidebar from '../../../Components/leave_management/SidebarA';
+import AdminS from '../../../Components/Leave_Management/AdminS';
+
+
 
 
 
@@ -148,7 +150,7 @@ const MyLeaves = () => {
   
     return (
       <div>
-        <Sidebar/>
+        <AdminS/>
         <form name='Leave' className='leave-form' onSubmit={submitLeaveRequest}>
           <h1>Leave Requests</h1>
           {/* Form to create a new leave request */}
@@ -247,5 +249,5 @@ const MyLeaves = () => {
     );
   };
   
-  export default MyLeaves;
+  export default  MyLeaves;
   
