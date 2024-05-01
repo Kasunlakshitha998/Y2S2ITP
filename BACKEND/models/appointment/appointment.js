@@ -38,6 +38,10 @@ const appointmentSchema = new Schema({
     image: {
         type: Object, 
         required: true,
+    },
+    approved: {
+        type: Boolean,
+        default: false
     }
     
 });

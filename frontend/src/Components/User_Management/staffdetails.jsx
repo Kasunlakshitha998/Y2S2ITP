@@ -58,64 +58,92 @@ function Staff() {
             }
         });
     };
-    
+    const handleReport = () => {
+        // Generate report data
+        const reportData = filteredUsers.map(user => ({
+            Name: user.name,
+            Email: user.email,
+            Number: user.number
+        }));
 
+        // Convert data to CSV format
+        const csvData = [
+            Object.keys(reportData[0]).join(','),
+            ...reportData.map(item => Object.values(item).join(','))
+        ].join('\n');
+
+        // Create a Blob from the CSV data
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a link element and trigger download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'user_report.csv');
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    };
+    
     return (
         <div className="container-fluid">
-     <AdminNav />
-        <div className="card-body">
-        <Link to="/createstaff"className='btn btn-success btn-add white-btn' ></Link>
-        <Link to="/createstaff"className='btn btn-success btn-add white-btn' ></Link>
-        <Link to="/createstaff" className='btn btn-success btn-add' ></Link>
-       
-           {/* Add total-users class */}
-            <input
-    type="text"
-    placeholder="Search by name"
-    value={searchQuery}
-    onChange={handleSearch}
-    style={{
-      
-        bottom: '10px', // Adjust the bottom position
-        left: '10px', // Adjust the left position
-        width: '150px', // Set a smaller width
-        height: '30px', // Set a smaller height
-        // Add any other styles as needed
-    }}
-    
-/>
-<Link to="/createstaff" className='btn btn-success btn-add'>Add +</Link>
-<p className='btn total-users'>Total Users: {users.length}</p> 
+            <AdminNav />
+            <div className="card-body">
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Search by name"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        className="form-control"
+                    />
+                </div>
+        
+                <div className="button-container">
+                    <Link to="/createstaff" className='bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5'>Add +</Link>
+                    <button
+                        className="bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5"
+                        onClick={handleReport}
+                    >
+                        Get Report
+                    </button>
+                </div>
 
-            <div style={{ overflowX: 'auto' }}> {/* Add style for horizontal scrolling */}
-                <table className="table mt-3">
-                    <thead className="thead-dark table-header"> {/* Add table-header class */}
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>Number</th>
-                            <th>Image</th>
-                            <th>role</th>
-                             {/* Correct typo: 'image' to 'Image' */}
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredUsers.map((user) => {
-                            return (
-                                <tr key={user._id}>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td className="password-cell">{user.password}</td>
-                                    <td>{user.number}</td>
-                                    <td> {user.image ? (
+                <p className='btn total-users'>Total Users: {users.length}</p>
+
+                <div style={{ overflowX: 'auto' }}>
+                    <table className="table mt-3">
+                        <thead className="thead-dark table-header">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Number</th>
+                                <th>Image</th>
+                                <th>role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredUsers.map((user) => {
+                                return (
+                                    <tr key={user._id}>
+                                        <td>{user.name}</td>
+                                        <td>{user.email}</td>
+                                        <td className="password-cell">{user.password}</td>
+                                        <td>{user.number}</td>
+                                        <td>
+                                            {user.image ? (
                                                 <img src={`http://localhost:3000/image/${user.image}`} alt="User" style={{ width: '100px', height: '90px' }} />
                                             ) : (
                                                 <BsPersonFill size={60} color="#adb5bd" />
-                                            )}</td>
-                                    <td>{user.role}</td>
-                                    <td>
+                                            )}
+                                        </td>
+                                        <td>{user.role}</td>
+                                        <td>
                                             <Link to={`/staffupdate/${user._id}`} className='btn btn-success'>
                                                 <i className="bi bi-pencil-fill"></i> Update
                                             </Link>
@@ -123,14 +151,14 @@ function Staff() {
                                                 <i className="bi bi-trash-fill"></i> Delete
                                             </button>
                                         </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
     );
 }
 

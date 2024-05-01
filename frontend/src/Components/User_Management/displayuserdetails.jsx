@@ -58,6 +58,37 @@ function Users() {
             }
         });
     };
+    const handleReport = () => {
+        // Generate report data
+        const reportData = filteredUsers.map(user => ({
+            Name: user.name,
+            Email: user.email,
+            Number: user.number
+            
+        }));
+
+        // Convert data to CSV format
+        const csvData = [
+            Object.keys(reportData[0]).join(','),
+            ...reportData.map(item => Object.values(item).join(','))
+        ].join('\n');
+
+        // Create a Blob from the CSV data
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a link element and trigger download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'user_report.csv');
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    };
+    
 
     return (
         <div className="container-fluid">
@@ -72,10 +103,18 @@ function Users() {
                         className="form-control"
                     />
                 </div>
+        
                 <div className="button-container">
-                    <Link to="/usercreate" className='btn btn-success btn-add'>Add +</Link>
-                    <p className='btn total-users'>Total Users: {users.length}</p>
+                    <Link to="/usercreate" className='bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5'>Add +</Link>
+                    <button
+                        className="bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5"
+                        onClick={handleReport}
+                    >
+                        Get Report
+                    </button>
                 </div>
+
+                <p className='btn total-users'>Total Users: {users.length}</p>
                 <div className="table-container">
                     <table className="table mt-3">
                         <thead className="thead-dark table-header">

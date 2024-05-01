@@ -31,6 +31,7 @@ import UpdateStaff from "./Components/User_Management/staffupdate";
 
 import GiveFeedback from "./Components/Feedback Management/GiveFeedback";
 import AddAForm from "./Components/Appointment_Management/AddAForm";
+<<<<<<< HEAD
 import UpdateAppointment from "./Components/Appointment_Management/UpdateAppointment";
 import UserAppointmentList from "./Components/Appointment_Management/ManageAppointment/userAppoinmentList";
 import CartPage from "./pages/User/CartPage";
@@ -41,6 +42,20 @@ import EditOrder from "./Components/Order_Management/EditOrder";
 import UserOrderEdit from "./Components/Order_Management/userOderEdit";
 import UpdateFeedback from "./Components/Feedback Management/UpdateFeedback";
 import FeedbackList from "./Components/Feedback Management/FeedbackList";
+=======
+import UpdateAppointment from './Components/Appointment_Management/UpdateAppointment';
+import UserAppointmentList from './Components/Appointment_Management/ManageAppointment/userAppoinmentList';
+import CartPage from './pages/User/CartPage';
+import OrderList from './Components/Order_Management/OrderList';
+import UserOderList from './Components/Order_Management/UserOderList';
+import AppointmentList from './Components/Appointment_Management/ManageAppointment/appointmentList';
+import EditOrder from './Components/Order_Management/EditOrder';
+import UserOrderEdit from './Components/Order_Management/userOderEdit';
+import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
+import FeedbackList from './Components/Feedback Management/FeedbackList';
+import StaffDashboard from'./Components/User_Management/staff';
+
+>>>>>>> df73c869ba2f7927960496cfcf909025c1aa6913
 
 // import StaffDashboard from './Components/User_Management/staff'
 // import Home from'./pages/leavemanagement/Admin/homepage';
@@ -81,7 +96,11 @@ const UserRouteGuard = ({ element }) => {
 const AllUsersRouteGuard = ({ element }) => {
   const userRole = Cookies.get("role");
 
+<<<<<<< HEAD
   if (userRole === "admin" || userRole === "user") {
+=======
+  if (userRole === 'admin' || userRole === 'user' || userRole === 'staff' ) {
+>>>>>>> df73c869ba2f7927960496cfcf909025c1aa6913
     return element;
   } else {
     return <Navigate to="/login" />;
@@ -152,7 +171,15 @@ function App() {
         <Route path="/order/userOderEdit/:id" element={<UserOrderEdit />} />
         <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
         <Route path="/UpdateFeedback/:id" element={<UpdateFeedback />} />
+<<<<<<< HEAD
         <Route path="/admin/leave" element={<HomeLeave />} />
+=======
+        <Route path="/staff" element={< StaffDashboard />} />
+
+       
+        StaffDashboard
+
+>>>>>>> df73c869ba2f7927960496cfcf909025c1aa6913
         <Route path="/admin/FeedbackList" element={<FeedbackList />} />
 
         <Route path="/MyLeaves/:id" element={<MyLeaves />} />
