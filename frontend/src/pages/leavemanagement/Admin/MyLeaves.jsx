@@ -1,10 +1,6 @@
 import React, { useState,useEffect} from 'react';
 import axios from 'axios';
-import AdminS from '../../../Components/Leave_Management/AdminS';
-
-
-
-
+import AdminNav from './../../../Components/Nav/adminNav';
 
 
 const MyLeaves = () => {
@@ -149,8 +145,11 @@ const MyLeaves = () => {
     };
   
     return (
-      <div>
-        <AdminS/>
+      <>
+        <header>
+          <AdminNav/>
+        </header>
+        
         <form name='Leave' className='leave-form' onSubmit={submitLeaveRequest}>
           <h1>Leave Requests</h1>
           {/* Form to create a new leave request */}
@@ -245,7 +244,7 @@ const MyLeaves = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </>
     );
   };
   

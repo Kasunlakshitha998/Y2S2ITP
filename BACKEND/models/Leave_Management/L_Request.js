@@ -2,92 +2,84 @@ const mongoose =require('mongoose');
 const Schema =mongoose.Schema;
 
 const L_RequestSchema = new Schema({
+  requestId: {
+    type: String,
+    unique: true,
+    required: true,
+  },
 
-    requestId: {
-        type: String,
-        unique: true, 
-        required: true
-      },
-      
-    EmpID:{
-        type:String,
-        required: true
-    },
-   
-    name: {
-        type:String,
-        required: true
+  EmpID: {
+    type: String,
+    required: true,
+  },
 
-    },
+  name: {
+    type: String,
+    required: true,
+  },
 
-    Email:{
-        type:String,
-        required : true
-    },
-    
-    Contact:{
-        type:Number,
-        required : true
-    },
+  Email: {
+    type: String,
+    required: true,
+  },
 
+  Contact: {
+    type: Number,
+    required: true,
+  },
 
-    Destination:{
-             type:String, 
-             required : true
+  Destination: {
+    type: String,
+    required: true,
+  },
 
-    },
+  LDateF: {
+    type: Date,
+    required: true,
+  },
 
+  LdateT: {
+    type: Date,
+    required: true,
+  },
 
-    LDateF:{
-        type:Date,
-        required : true
+  LType: {
+    type: String,
+    required: true,
+  },
 
-    },
+  Lduration: {
+    type: String,
+    required: true,
+  },
 
-    LdateT:{
-        type:Date,
-        required : true
-    },
+  attachments: {
+    type: Object,
+  },
 
-    LType:{
-        type:String,
-        required : true
-    },
+  remarks: {
+    type: String,
+  },
 
-    Lduration:{
-        type:String,
-        required : true
-    },
+  //supervisor
+  Sup_name: {
+    type: String,
+  },
 
-    attachments:{
-        type:Object,
+  Sup_des: {
+    type: String,
+  },
 
-    },
-
-    remarks:{
-        type:String,
-
-    },
-
-    //supervisor 
-    Sup_name:{
-        type:String,
-
-    },
-
-    Sup_des:{
-        type:String,
-
-    },
-
-    //employee who cover his part
-    Backup:{
-        type:String,
-
-    },
-
-
-})
+  //employee who cover his part
+  Backup: {
+    type: String,
+  },
+  Status: {
+    type: String,
+    required: true,
+    default: 'Pending',
+  },
+});
 
 const L_Request = mongoose.model("L_Request",L_RequestSchema);
 module.exports = L_Request;

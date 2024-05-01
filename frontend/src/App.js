@@ -50,15 +50,14 @@ import StaffDashboard from'./Components/User_Management/staff';
 // import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
 
 // import StaffDashboard from './Components/User_Management/staff';
-import HomeLeave from "./pages/leavemanagement/Admin/homepage";
-
-import MyLeaves from "./pages/leavemanagement/Admin/MyLeaves";
-
+//import HomeLeave from "./pages/leavemanagement/Admin/homepage";
 import Myprofile from "./pages/leavemanagement/Admin/Myprofile";
 import Reports from "./pages/leavemanagement/Reports";
 import Settings from "./pages/leavemanagement/Settings";
-import AdminS from "./Components/Leave_Management/AdminS";
-// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+import LeaveList from "./Components/leave_management/LeaveList";
+
+
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get("role");
@@ -161,6 +160,8 @@ function App() {
 
         <Route path="/admin/FeedbackList" element={<FeedbackList />} />
 
+        
+        <Route path="/admin/leave" element={<LeaveList />} />
         <Route path="/MyLeaves/:id" element={<MyLeaves />} />
         {/* Corrected path */}
         <Route path="/Mleaves/id" element={<MyLeaves />} />
