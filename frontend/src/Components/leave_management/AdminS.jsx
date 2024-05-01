@@ -19,8 +19,7 @@ import{
   MdLogout
 }from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-
-export const Sidebar = ({children}) => {
+export const AdminS= () => {
   const[isOpen ,setIsOpen] = useState(false);
   const toggle = () => setIsOpen (!isOpen);
   const menuItems=[
@@ -39,7 +38,7 @@ export const Sidebar = ({children}) => {
    
    {
     path:"/MEmployees/:id",
-    name:"Manage Leaves",
+    name:"Manage Employees",
     icon: <FaUsers />
    },
 
@@ -83,7 +82,7 @@ export const Sidebar = ({children}) => {
    </div>
    {
                    menuItems.map((item, index)=>(
-                       <NavLink to={item.path} key={index} className="link" activeClassName="active">
+                       <NavLink to={item.path} key={index} className="link" activeclassName="active">
                            <div className="icon">{item.icon}</div>
                            <div style={{display: isOpen ? "block" : "none"}} className="link_text">{item.name}</div>
                        </NavLink>
@@ -91,8 +90,8 @@ export const Sidebar = ({children}) => {
                }
 
     </div>
-    <main>{children}</main>
+    {/* <main>{children}</main> */}
     </div>
   );
 };
-export default Sidebar;
+export default AdminS;
