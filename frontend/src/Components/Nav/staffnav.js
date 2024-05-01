@@ -72,7 +72,7 @@ const handleClickProfilePicture = () => {
               onClick={handleClickProfilePicture}
             />
           ) : (
-            <BsPersonFill size={100} color="#adb5bd" />
+            <BsPersonFill size={50} color="#adb5bd" />
           )}
 
           <span>Admin User</span>
@@ -92,14 +92,9 @@ const handleClickProfilePicture = () => {
           <li className={activeLink === '' ? 'active' : ''}>
             <Link to="">Dashboard</Link>
           </li>
-          
-          
+
           <li className={activeLink === '' ? 'active' : ''}>
-            <Link to="">Leave</Link>
-          </li>
-          
-          <li className={activeLink === '' ? 'active' : ''}>
-            <Link to="">FeedBack</Link>
+            <Link to="/MyLeaves/:id">Leave</Link>
           </li>
         </ul>
       </aside>

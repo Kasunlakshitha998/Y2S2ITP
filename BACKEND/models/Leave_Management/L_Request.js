@@ -50,7 +50,7 @@ const L_RequestSchema = new Schema({
 
   Lduration: {
     type: String,
-    required: true,
+    
   },
 
   attachments: {

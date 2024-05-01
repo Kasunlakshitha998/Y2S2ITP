@@ -1,5 +1,5 @@
 
-import  StaffNav  from '../Nav/staffnav';
+import  StaffNav  from '../../Components/Nav/staffnav';
 
 
 function StaffDashboard() {

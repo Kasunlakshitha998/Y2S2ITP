@@ -41,7 +41,7 @@ import EditOrder from './Components/Order_Management/EditOrder';
 import UserOrderEdit from './Components/Order_Management/userOderEdit';
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 import FeedbackList from './Components/Feedback Management/FeedbackList';
-import StaffDashboard from'./Components/User_Management/staff';
+import StaffDashboard from'./pages/Staff/staff';
 
 
 // import StaffDashboard from './Components/User_Management/staff'
@@ -54,7 +54,7 @@ import StaffDashboard from'./Components/User_Management/staff';
 import Myprofile from "./pages/leavemanagement/Admin/Myprofile";
 import Reports from "./pages/leavemanagement/Reports";
 import Settings from "./pages/leavemanagement/Settings";
-import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+import MyLeaves from './pages/Staff/MyLeaves';
 import LeaveList from "./Components/leave_management/LeaveList";
 
 
@@ -160,7 +160,7 @@ function App() {
 
         <Route path="/admin/FeedbackList" element={<FeedbackList />} />
 
-        
+        <Route path="/Staff/Dashboard" element={<Dashboard />} />
         <Route path="/admin/leave" element={<LeaveList />} />
         <Route path="/MyLeaves/:id" element={<MyLeaves />} />
         {/* Corrected path */}
