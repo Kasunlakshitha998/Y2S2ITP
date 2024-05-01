@@ -1,11 +1,11 @@
 
-import AdminNav from '../Nav/adminNav';
-import "../../pages/Admin/dash.css"
+import  StaffNav  from '../Nav/staffnav';
+
 
 function StaffDashboard() {
     return (
       <div class="flex h-screen overflow-hidden">
-        <AdminNav />
+    < StaffNav  />
   
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           

@@ -45,6 +45,31 @@ function AccountDetails() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!name || !email || !number) {
+            alert("All fields must be filled");
+            return;
+        }
+
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        if (!name.match(nameRegex)) {
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Name should only contain letters.",
+              });
+           
+            return;
+        }
+        const validNumberLength = 10;
+        if (number.length !== validNumberLength) {
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Mobile number should be 10 digits.",
+              });
+            
+            return;
+        }
 
         axios
             .post('http://localhost:8175/user/AccountDetails', {

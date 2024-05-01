@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import AdminNav from '../Nav/adminNav';
+import Swal from 'sweetalert2';
 
 function CreateUsers() {
     const [name, setName] = useState("");
@@ -21,29 +22,63 @@ function CreateUsers() {
 
         const nameRegex = /^[a-zA-Z\s]+$/;
         if (!name.match(nameRegex)) {
-            alert("Name should only contain letters");
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'error...',
+                text: 'Name should only contain letters.',
+            });
             return;
         }
 
         if (password !== reenterPassword) {
-            alert("Passwords do not match");
+           
+            Swal.fire({
+                icon: 'error',
+                title: 'error...',
+                text: 'Passwords do not match.',
+            });
+            
             return;
         }
 
         const validNumberLength = 10;
         if (number.length !== validNumberLength) {
-            alert("Mobile number should be 10 digits");
+    
+             
+            Swal.fire({
+                icon: 'error',
+                title: 'error...',
+                text: 'Mobile number should be 10 digits.',
+            });
+            
+        
             return;
         }
 
         axios.post('http://localhost:8175/user/Adduser', { name, email, password, number })
             .then(result => {
                 console.log(result);
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "user successful added",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 navigate('/userdetails');
             })
             .catch(err => {
                 if (err.response && err.response.data.error ) {
-                    alert('Email is already in use. Please use a different email.');
+                    
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Email is already in use. Please use a different email.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    
                 } else {
                     console.log(err);
                 }

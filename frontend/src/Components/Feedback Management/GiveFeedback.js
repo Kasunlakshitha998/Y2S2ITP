@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -8,9 +8,13 @@ export default function GiveFeedback() {
   const { id } = useParams();
   const [feedbackType, setFeedbackType] = useState('');
   const [email, setFeedbackEmail] = useState('');
+
   const [descript, setDescription] = useState('');
   const [rating, setFeedbackRating] = useState(0);
   const userId = Cookies.get('userId');
+
+
+
 
 const navigate = useNavigate();
 
@@ -39,6 +43,21 @@ const navigate = useNavigate();
         console.error(err);
       });
   };
+
+  useEffect(() => {
+    const userId = Cookies.get('userId');
+    if (userId) {
+        axios.get(`http://localhost:8175/user/getUsers/${userId}`)
+            .then(result => {
+         
+              setFeedbackEmail(result.data.email);
+             
+             
+            })
+            .catch(err => console.log(err));
+    }
+}, []);
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -77,10 +96,12 @@ const navigate = useNavigate();
           <input
             type="email"
             name="email"
+            value={email}
             onChange={(e) => setFeedbackEmail(e.target.value)}
             placeholder="Your Email"
             className="mt-1 block w-full border border-gray-900 p-2"
             required
+            disabled
           />
         </div>
         <select
