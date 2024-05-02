@@ -1,12 +1,12 @@
 // HomeLeave.jsx
 import React from 'react';
-import Calendar from '../../../Components/Leave_Management/calender';
-import Greeting from '../../../Components/Leave_Management/Greeting';
 
 import { Link } from 'react-router-dom';
 import './HomeLeave.scss'; // Import your CSS file
-import AdminS from '../../../Components/Leave_Management/AdminS';
-import LeaveNav from '../../../Components/Leave_Management/LeaveNav';
+import LeaveNav from './../../../Components/leave_management/LeaveNav';
+import Greeting from './../../../Components/leave_management/Greeting';
+import Calendar from './../../../Components/leave_management/calender';
+
 
 export const HomeLeave = () => {
   return (

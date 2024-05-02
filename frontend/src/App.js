@@ -53,6 +53,8 @@ import EditOrder from './Components/Order_Management/EditOrder';
 import UserOrderEdit from './Components/Order_Management/userOderEdit';
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 import FeedbackList from './Components/Feedback Management/FeedbackList';
+import StaffDashboard from'./pages/Staff/staff';
+
 import StaffDashboard from'./Components/User_Management/staff';
 
 >>>>>>> df73c869ba2f7927960496cfcf909025c1aa6913
@@ -63,15 +65,14 @@ import StaffDashboard from'./Components/User_Management/staff';
 // import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
 
 // import StaffDashboard from './Components/User_Management/staff';
-import HomeLeave from "./pages/leavemanagement/Admin/homepage";
-
-import MyLeaves from "./pages/leavemanagement/Admin/MyLeaves";
-
+//import HomeLeave from "./pages/leavemanagement/Admin/homepage";
 import Myprofile from "./pages/leavemanagement/Admin/Myprofile";
 import Reports from "./pages/leavemanagement/Reports";
 import Settings from "./pages/leavemanagement/Settings";
-import AdminS from "./Components/Leave_Management/AdminS";
-// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+import MyLeaves from './pages/Staff/MyLeaves';
+import LeaveList from "./Components/leave_management/LeaveList";
+
+
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get("role");
@@ -100,7 +101,6 @@ const AllUsersRouteGuard = ({ element }) => {
   if (userRole === "admin" || userRole === "user") {
 =======
   if (userRole === 'admin' || userRole === 'user' || userRole === 'staff' ) {
->>>>>>> df73c869ba2f7927960496cfcf909025c1aa6913
     return element;
   } else {
     return <Navigate to="/login" />;
@@ -182,6 +182,8 @@ function App() {
 >>>>>>> df73c869ba2f7927960496cfcf909025c1aa6913
         <Route path="/admin/FeedbackList" element={<FeedbackList />} />
 
+        <Route path="/Staff/Dashboard" element={<Dashboard />} />
+        <Route path="/admin/leave" element={<LeaveList />} />
         <Route path="/MyLeaves/:id" element={<MyLeaves />} />
         {/* Corrected path */}
         <Route path="/Mleaves/id" element={<MyLeaves />} />
