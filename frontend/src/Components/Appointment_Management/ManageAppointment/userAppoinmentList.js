@@ -5,20 +5,20 @@ import UserNav from '../../Nav/userNav';
 import Cookies from 'js-cookie';
 
 function UserAppointmentList() {
-    const [appointments, setAppointments] = useState([]);
+    const [userAppointments, setUserAppointments] = useState([]);
     const userId = Cookies.get('userId');
 
-    const UserAppoint = appointments.filter((appointment) => appointment.userId === userId);
-
     useEffect(() => {
-        fetchAppointments();
+        fetchUserAppointments();
     }, []);
 
-    const fetchAppointments = () => {
+    const fetchUserAppointments = () => {
         axios
-            .get(`http://localhost:8175/appointment/`) 
+            .get(`http://localhost:8175/appointment/`)
             .then((res) => {
-                setAppointments(res.data);
+                const appointments = res.data;
+                const filteredAppointments = appointments.filter(appointment => appointment.userId === userId);
+                setUserAppointments(filteredAppointments);
             })
             .catch((err) => {
                 alert(err.message);
@@ -30,7 +30,7 @@ function UserAppointmentList() {
             .delete(`http://localhost:8175/appointment/delete/${id}`)
             .then(() => {
                 // Refresh appointment list after deletion
-                fetchAppointments();
+                fetchUserAppointments();
             })
             .catch((err) => {
                 console.log(err);
@@ -56,15 +56,13 @@ function UserAppointmentList() {
                             <th className="py-4 px-6">Date</th>
                             <th className="py-4 px-6">Receipt</th>
                             <th className="py-4 px-6">Description</th>
+                            <th className="py-4 px-6">Approval Status</th>
                             <th className="py-4 px-6">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
-                        {UserAppoint.map((appointment, index) => (
-                            <tr
-                                key={index}
-                                className={index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}
-                            >
+                        {userAppointments.map((appointment, index) => (
+                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}>
                                 <td className="py-4 px-6">{appointment.name}</td>
                                 <td className="py-4 px-6">{appointment.email}</td>
                                 <td className="py-4 px-6">{appointment.telephone}</td>
@@ -72,13 +70,18 @@ function UserAppointmentList() {
                                 <td className="py-4 px-6">{appointment.serviceType}</td>
                                 <td className="py-4 px-6">{appointment.date}</td>
                                 <td className="py-4 px-6">
-                                    <img
-                                        src={appointment.image}
-                                        alt={appointment.name}
-                                        style={{ width: '60px', height: '50px' }}
-                                    />
+                                    <img src={appointment.image} alt={appointment.name} style={{ width: '60px', height: '50px' }} />
                                 </td>
                                 <td className="py-4 px-6">{appointment.description}</td>
+                                <td className="py-4 px-6">
+                                    <span
+                                        className={`px-2 py-1 rounded-lg text-white ${
+                                            appointment.approved ? 'bg-green-500' : 'bg-red-500'
+                                        }`}
+                                    >
+                                        {appointment.approved ? 'Approved' : 'Not Approved'}
+                                    </span>
+                                </td>
                                 <td className="py-4 px-6">
                                     <Link to={`/updateAppointment/${appointment._id}`} className="mr-2">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
