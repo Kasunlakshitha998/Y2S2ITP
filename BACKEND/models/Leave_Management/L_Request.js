@@ -1,5 +1,5 @@
-const mongoose =require('mongoose');
-const Schema =mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const L_RequestSchema = new Schema({
   requestId: {
@@ -50,7 +50,6 @@ const L_RequestSchema = new Schema({
 
   Lduration: {
     type: String,
-    
   },
 
   attachments: {
@@ -77,9 +76,9 @@ const L_RequestSchema = new Schema({
   Status: {
     type: String,
     required: true,
-    default: 'Pending',
+    default: "Pending",
   },
 });
 
-const L_Request = mongoose.model("L_Request",L_RequestSchema);
-module.exports = L_Request;
+const L_Request = mongoose.model("L_Request", L_RequestSchema);
+module.exports = L_Request;

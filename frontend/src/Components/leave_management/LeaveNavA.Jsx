@@ -6,7 +6,7 @@ import axios from "axios";
 import { BsPersonFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 
-function LeaveNav() {
+function LeaveNavA() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -86,13 +86,10 @@ function LeaveNav() {
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul>
           <li className={activeLink === "/MyLeaves/:id" ? "active" : ""}>
-            <Link to="/MyLeaves/:id">MyLeaves</Link>
+            <Link to="/ManageLeaves/:id">Manage Leaves</Link>
           </li>
           <li className={activeLink === "/MyLeaves/:id" ? "active" : ""}>
-            <Link to="/MyLeaves/:id">MyLeaves</Link>
-          </li>
-          <li className={activeLink === "/Mleaves" ? "active" : ""}>
-            <Link to="/Mleaves">Manage Leaves</Link>
+            <Link to="/ManageLeaves/:id">Manage Leaves</Link>
           </li>
           <li className={activeLink === "/Myprofile" ? "active" : ""}>
             <Link to="/Myprofile">Myprofile</Link>
@@ -112,4 +109,4 @@ function LeaveNav() {
   );
 }
 
-export default LeaveNav;
+export default LeaveNavA;

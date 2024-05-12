@@ -1,21 +1,20 @@
-import React from 'react'
-import Sidebar from '../../../Components/leave_management/SidebarA';
-import Greeting from '../../../Components/leave_management/Greeting';
-import Calendar from '../../../Components/leave_management/calender';
-import "./Box.scss"
+import React from 'react';
 
 import { Link } from 'react-router-dom';
+import './HomeLeave.scss'; // Import your CSS file
+import LeaveNav from './../../../Components/leave_management/LeaveNav';
+import Greeting from './../../../Components/leave_management/Greeting';
+import Calendar from './../../../Components/leave_management/calender';
 
-export const Dashboard = () => {
+
+export const HomePageS = () => {
   return (
-   
-
-    <div>
+    <div className='content'>
+      <div>
+        <LeaveNav/>
+       
       <Greeting/>
-
-     <Sidebar/>
-
-     <Link  Link to="/MyLeaves/:id" className='button'> Apply Leave</Link>
+      <Link  Link to="/MyLeaves/:id" className='button'> Apply Leave</Link>
 
      <div className="box-container">
   <div className='box1'> 
@@ -37,11 +36,10 @@ export const Dashboard = () => {
   </div>
 </div>
 
-<Calendar/>-/
+    <Calendar/>
     </div>
-    
+    </div>
+  );
+};
 
-  
-  )
-}
-export default Dashboard;
+export default HomePageS;
