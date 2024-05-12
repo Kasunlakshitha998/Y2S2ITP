@@ -322,17 +322,17 @@ const MyLeaves = () => {
           </div>
 
           <div className="flex justify-between">
-            <button className="w-25 mt-4" type="submit">
-              {isUpdateMode ? 'Update' : 'Add'}
-            </button>
             <button className="w-25 mt-4" onClick={clearForm}>
               Cancel
             </button>
+            <button className="w-25 mt-4" type="submit">
+              {isUpdateMode ? 'Update' : 'Add'}
+            </button>
           </div>
         </form>
-        <div className="table-container">
+        <div className="table-container mr-5">
           <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-            <thead class="bg-gray-800 text-white">
+            <thead class="bg-gray-800">
               <tr>
                 <th class="py-2 px-4">Name</th>
                 <th class="py-2 px-4">Email</th>
@@ -393,5 +393,7 @@ const MyLeaves = () => {
     </>
   );
 };
+
+
 
 export default MyLeaves;

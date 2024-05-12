@@ -44,7 +44,7 @@ import UpdateFeedback from "./Components/Feedback Management/UpdateFeedback";
 import FeedbackList from "./Components/Feedback Management/FeedbackList";
 
 import MyLeaves from "./pages/Staff/MyLeaves";
-import LeaveList from "./Components/Leave_Management/LeaveList";
+
 import ReportsS from "./pages/Staff/ReportsS";
 import MyprofileS from "./pages/Staff/MyprofileS";
 import HomePageS from "./pages/Staff/HomePageS";
@@ -52,6 +52,7 @@ import Settings from "./pages/leavemanagement/Admin/Settings";
 //import CreateSlice from './pages/Appointment/createSlice';
 
 // import StaffDashboard from './Components/User_Management/staff'
+import LeaveList from './Components/leave_management/LeaveList';
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get("role");
@@ -168,7 +169,8 @@ function App() {
   }
 /> */}
 
-        <Route path="/FeedbackList" element={<FeedbackList />} />
+
+
         <Route path="/admin/leaveList" element={<LeaveList />} />
         <Route path="/staff/mLeave" element={<MyLeaves />} />
         <Route path="/staff/reports" element={<ReportsS />} />
