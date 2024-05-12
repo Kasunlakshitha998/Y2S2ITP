@@ -43,18 +43,14 @@ import EditOrder from './Components/Order_Management/EditOrder';
 import UserOrderEdit from './Components/Order_Management/userOderEdit';
 import UpdateFeedback from './Components/Feedback Management/UpdateFeedback';
 import FeedbackList from './Components/Feedback Management/FeedbackList';
+import LeaveList from './Components/leave_management/LeaveList';
+import MyLeaves from './pages/Staff/MyLeaves';
 //import CreateSlice from './pages/Appointment/createSlice';
 
 
 // import StaffDashboard from './Components/User_Management/staff'
-// import Home from'./pages/leavemanagement/Admin/homepage';
-// import SidebarA from './Components/leave_management/SidebarA';
-// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
 
-// import StaffDashboard from './Components/User_Management/staff';
-// import Home from './pages/leavemanagement/Admin/homepage';
-// import SidebarA from './Components/leave_management/SidebarA';
-// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -149,7 +145,6 @@ function App() {
         <Route path="/addForm" element={<AddAForm />} />
         <Route path="/updateAppointment/:id" element={<UpdateAppointment />} />
         <Route path="/userAppointmentList" element={<UserAppointmentList />} />
-        
 
         <Route path="/OrderList" element={<OrderList />} />
         <Route path="/UserOrderList" element={<UserOderList />} />
@@ -159,12 +154,9 @@ function App() {
         <Route path="/AddFeddback/:id" element={<GiveFeedback />} />
         <Route path="/UpdateFeedback/:id" element={<UpdateFeedback />} />
 
-
-
         <Route path="/FeedbackList" element={<FeedbackList />} />
 
-        
-{/* <Route path="/staff" element={<StaffDashboard />} />
+        {/* <Route path="/staff" element={<StaffDashboard />} />
 <Route path="/Home" element={<Home />} />
 <Route
   path="/SidebarA"
@@ -176,9 +168,9 @@ function App() {
   }
 /> */}
 
-
-       
         <Route path="/FeedbackList" element={<FeedbackList />} />
+        <Route path="/admin/leaveList" element={<LeaveList />} />
+        <Route path="/staff/mLeave" element={<MyLeaves />} />
 
       </Routes>
     </div>

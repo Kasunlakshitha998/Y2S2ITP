@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { BsPersonFill } from 'react-icons/bs'; 
 import Swal from 'sweetalert2';
+import Staff from './../User_Management/staffdetails';
 
 
 
@@ -62,7 +63,7 @@ const handleClickProfilePicture = () => {
       <header className="admin-header">
         <button className="burger-menu" onClick={toggleSidebar}></button>
         <div className="logo">
-          <Link to="/admin">Staff Dashboard</Link>
+          <Link to="/Staff">Staff Dashboard</Link>
         </div>
         <div className="profile">
           {userImage ? (
@@ -94,7 +95,7 @@ const handleClickProfilePicture = () => {
           </li>
 
           <li className={activeLink === '' ? 'active' : ''}>
-            <Link to="/MyLeaves/:id">Leave</Link>
+            <Link to="/staff/mLeave">Leave</Link>
           </li>
         </ul>
       </aside>
