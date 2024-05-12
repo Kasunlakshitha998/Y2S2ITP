@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from '../../../Components/Leave_Management/Admin/Sidebar';
+
 import { Link } from 'react-router-dom';
 import "./Settings.scss";
+import StaffNav from '../../../Components/Nav/staffnav';
 
 export const Settings = () => {
   const [showLookupForm, setShowLookupForm] = useState(false);
@@ -223,7 +224,7 @@ const submitHoliday = (e) => {
 
   return (
     <div>
-      <Sidebar />
+      <StaffNav/>
       <h1>Settings</h1>
       <h3>Setup Company Status here</h3>
       <ul>

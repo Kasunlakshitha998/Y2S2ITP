@@ -83,31 +83,34 @@ function AdminNav() {
         </div>
       </header>
 
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul>
-          <li className={activeLink === '/admin' ? 'active' : ''}>
+          <li className={activeLink === "/admin" ? "active" : ""}>
             <Link to="/admin">Dashboard</Link>
           </li>
-          <li className={activeLink === '/userdetails' ? 'active' : ''}>
+          <li className={activeLink === "/userdetails" ? "active" : ""}>
             <Link to="/userdetails">Users</Link>
           </li>
-          <li className={activeLink === '/staffdetails' ? 'active' : ''}>
+          <li className={activeLink === "/staffdetails" ? "active" : ""}>
             <Link to="/staffdetails">staff</Link>
           </li>
-          <li className={activeLink === '/admin/productsList' ? 'active' : ''}>
+          <li className={activeLink === "/admin/productsList" ? "active" : ""}>
             <Link to="/admin/productsList">Products</Link>
           </li>
-          <li className={activeLink === '/OrderList' ? 'active' : ''}>
+          <li className={activeLink === "/OrderList" ? "active" : ""}>
             <Link to="/OrderList">Orders</Link>
           </li>
-          <li className={activeLink === '/appointmentList' ? 'active' : ''}>
+          <li className={activeLink === "/appointmentList" ? "active" : ""}>
             <Link to="/appointmentList">Appoinment</Link>
           </li>
-          <li className={activeLink === '/admin/FeedbackList' ? 'active' : ''}>
+          <li className={activeLink === "/admin/FeedbackList" ? "active" : ""}>
             <Link to="/admin/FeedbackList">FeedBack</Link>
           </li>
-          <li className={activeLink === '/admin/leave' ? 'active' : ''}>
+          <li className={activeLink === "/admin/leave" ? "active" : ""}>
             <Link to="/admin/leaveList">Leave</Link>
+          </li>
+          <li className={activeLink === "/admin/settings" ? "active" : ""}>
+            <Link to="/admin/settings">Settings</Link>
           </li>
         </ul>
       </aside>

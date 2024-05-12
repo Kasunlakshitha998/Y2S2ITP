@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import './adminNav.css';
-import Cookies from 'js-cookie';
-import axios from 'axios';
-import { BsPersonFill } from 'react-icons/bs'; 
-import Swal from 'sweetalert2';
-import Staff from './../User_Management/staffdetails';
-
-
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import "./adminNav.css";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { BsPersonFill } from "react-icons/bs";
+import Swal from "sweetalert2";
+import Staff from "./../User_Management/staffdetails";
 
 function StaffNav() {
   const location = useLocation();
-  const [activeLink, setActiveLink] = useState('');
+  const [activeLink, setActiveLink] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userImage, setUserImage] = useState(null); //
 
@@ -23,39 +21,37 @@ function StaffNav() {
     setSidebarOpen(!sidebarOpen);
   };
   useEffect(() => {
-    const userId = Cookies.get('userId');
+    const userId = Cookies.get("userId");
     if (userId) {
-        axios.get(`http://localhost:8175/user/getUsers/${userId}`)
-            .then(result => {
-             
-                setUserImage(result.data.image);
-            })
-            .catch(err => console.log(err));
+      axios
+        .get(`http://localhost:8175/user/getUsers/${userId}`)
+        .then((result) => {
+          setUserImage(result.data.image);
+        })
+        .catch((err) => console.log(err));
     }
-}, []);
+  }, []);
 
-const handleClickProfilePicture = () => {
-   
-  Swal.fire({
+  const handleClickProfilePicture = () => {
+    Swal.fire({
       imageUrl: `http://localhost:3000/image/${userImage}`,
-      imageAlt: 'Profile Picture',
+      imageAlt: "Profile Picture",
       showCloseButton: true,
       showConfirmButton: false,
-      width: '20%',
-      height: 'auto',
-  });
-};
-
+      width: "20%",
+      height: "auto",
+    });
+  };
 
   const logout = () => {
     // Clear frontend cookies
-    Cookies.remove('token');
-    Cookies.remove('userEmail');
-    Cookies.remove('userId');
-    Cookies.remove('role');
-    
+    Cookies.remove("token");
+    Cookies.remove("userEmail");
+    Cookies.remove("userId");
+    Cookies.remove("role");
+
     // Redirect to login page
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   return (
@@ -88,14 +84,26 @@ const handleClickProfilePicture = () => {
         </div>
       </header>
 
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul>
-          <li className={activeLink === '' ? 'active' : ''}>
-            <Link to="">Dashboard</Link>
+          <li className={activeLink === "" ? "active" : ""}>
+            <Link to="/staff/homepage">Dashboard</Link>
           </li>
 
-          <li className={activeLink === '' ? 'active' : ''}>
+          <li className={activeLink === "" ? "active" : ""}>
             <Link to="/staff/mLeave">Leave</Link>
+          </li>
+
+          <li className={activeLink === "" ? "active" : ""}>
+            <Link to="/staff/myprofile">My profile</Link>
+          </li>
+
+          <li className={activeLink === "" ? "active" : ""}>
+            <Link to="/staff/reports">My Reports</Link>
+          </li>
+
+          <li className={activeLink === "" ? "active" : ""}>
+            <Link to="/">Log Out</Link>
           </li>
         </ul>
       </aside>

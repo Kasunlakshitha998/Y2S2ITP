@@ -2,17 +2,17 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 import './HomeLeave.scss'; // Import your CSS file
-import LeaveNav from './../../../Components/leave_management/LeaveNav';
-import Greeting from './../../../Components/leave_management/Greeting';
-import Calendar from './../../../Components/leave_management/calender';
+import StaffNav from '../../Components/Nav/staffnav';
+import Greeting from '../../Components/Leave_Management/Greeting';
+import Calendar from '../../Components/Leave_Management/calender';
+
 
 
 export const HomePageS = () => {
   return (
     <div className='content'>
       <div>
-        <LeaveNav/>
-       
+      <StaffNav/>
       <Greeting/>
       <Link  Link to="/MyLeaves/:id" className='button'> Apply Leave</Link>
 
@@ -35,8 +35,8 @@ export const HomePageS = () => {
     <p className='taken'>02/14 taken</p>
   </div>
 </div>
-
-    <Calendar/>
+<Calendar/>
+    
     </div>
     </div>
   );
