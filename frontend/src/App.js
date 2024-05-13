@@ -54,7 +54,7 @@ import FeedbackList from './Components/Feedback Management/FeedbackList';
 // import StaffDashboard from './Components/User_Management/staff';
 // import Home from './pages/leavemanagement/Admin/homepage';
 // import SidebarA from './Components/leave_management/SidebarA';
-// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
+import LeaveList from './Components/leave_management/LeaveList';
 
 
 const AdminRouteGuard = ({ element }) => {
@@ -162,6 +162,7 @@ function App() {
 
 
         <Route path="/FeedbackList" element={<FeedbackList />} />
+        <Route path="/admin/leave" element={<LeaveList/>} />
 
         
 {/* <Route path="/staff" element={<StaffDashboard />} />
