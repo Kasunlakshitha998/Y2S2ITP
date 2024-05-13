@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaTrash, FaFilePdf } from 'react-icons/fa';
 import AdminNav from '../Nav/adminNav';
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const FeedbackList = () => {
   const [reviews, setReviews] = useState([]);
@@ -13,7 +14,7 @@ const FeedbackList = () => {
     axios
       .get(`http://localhost:8175/feedback/`)
       .then((response) => {
-        setReviews(response.data);
+        setReviews(response.data); // assuming response.data is an array of reviews
       })
       .catch((error) => {
         console.error('Error fetching reviews:', error);
@@ -30,7 +31,7 @@ const FeedbackList = () => {
       })
       .catch((error) => {
         console.error('Error deleting :', error);
-        alert('Delete unSuccessfully');
+        alert('Delete unsuccessfully');
       });
   };
 
