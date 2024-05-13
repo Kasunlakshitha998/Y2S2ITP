@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import AdminNav from '../../Nav/adminNav';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { FaCheckCircle, FaEdit, FaReceipt, FaTimesCircle, FaTrash } from 'react-icons/fa';
+import './appointment.css';
 
 function AppointmentList() {
     const [appointments, setAppointments] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         fetchAppointments();
@@ -28,7 +30,6 @@ function AppointmentList() {
         axios
             .delete(`http://localhost:8175/appointment/delete/${id}`)
             .then(() => {
-                // Refresh appointment list after deletion
                 fetchAppointments();
             })
             .catch((err) => {
@@ -38,21 +39,40 @@ function AppointmentList() {
     };
 
     const handleGenerateReport = () => {
-        // Generate PDF report logic
-        html2canvas(document.querySelector("#appointment-table")).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF();
-            const imgHeight = canvas.height * 208 / canvas.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
-            pdf.save("appointments_report.pdf");
-        });
+        // Format the appointment data into CSV format
+        const tableHeader = 'Name,Email,Telephone,Phone Type,Service Type,Date,Description';
+        const appointmentsCSV = [tableHeader]
+            .concat(
+                appointments.map((appointment) => {
+                    return `${appointment.name},${appointment.email},${appointment.telephone},${appointment.phoneType},${appointment.serviceType},${appointment.date},${appointment.description}`;
+                })
+            )
+            .join('\n');
+
+        // Create a Blob object containing the CSV data
+        const blob = new Blob([appointmentsCSV], { type: 'text/csv' });
+
+        // Create a temporary URL for the Blob
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'appointments_report.csv');
+
+        // Simulate a click on the link to trigger the download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up by removing the temporary link and URL
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
     };
 
     const handleApprove = (id) => {
         axios
             .put(`http://localhost:8175/appointment/approve/${id}`)
             .then(() => {
-                // Update the appointment list to mark the appointment as approved
                 setAppointments(prevAppointments => prevAppointments.map(appointment => {
                     if (appointment._id === id) {
                         return { ...appointment, approved: true };
@@ -70,7 +90,6 @@ function AppointmentList() {
         axios
             .put(`http://localhost:8175/appointment/cancelApproval/${id}`)
             .then(() => {
-                // Update the appointment list to mark the appointment as not approved
                 setAppointments(prevAppointments => prevAppointments.map(appointment => {
                     if (appointment._id === id) {
                         return { ...appointment, approved: false };
@@ -88,88 +107,107 @@ function AppointmentList() {
         appointment.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredAppointments.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
-        <div className="mx-auto max-w-6xl p-5 rounded-lg mt-6">
+        <div>
             <header>
                 <AdminNav />
             </header>
 
             <div>
-                <input
-                    type="text"
-                    placeholder="Search by name..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="my-4 p-2 border border-gray-300 rounded-lg"
-                />
+                <div className="flex justify-between items-center mt-12 mb-4">
+                    <div className="rounded-lg bg-green-300 shadow-md p-4 mb-4 mr-4 ml-20 mt-12 duration-500 hover:scale-105 hover:shadow-xl w-50">
+                        <div className="flex items-center justify-center mb-2">
+                            <div className="text-lg font-semibold">Total Appointments</div>
+                        </div>
+                        <div className="text-center text-3xl font-bold text-gray-800">
+                            {filteredAppointments.length}
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            onClick={handleGenerateReport}
+                            className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded-lg mt-12 mr-20 rounded-lg "
+                        >
+                            <FaReceipt/>
+                            Report
+                        </button>
+                    </div>
+                </div>
 
-                <button onClick={handleGenerateReport} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Generate Report
-                </button>
+                <div className="mt-4 ml-20">
+                    <input
+                        type="text"
+                        placeholder="Search by name..."
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="px-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ml-20 "
+                    />
+                </div>
 
-                <span className="ml-3 text-blue-500">Total Appointments: {filteredAppointments.length}</span>
-
-                <table id="appointment-table" className="w-full bg-gray-100 shadow-md rounded-lg overflow-hidden mt-4">
-                    <thead className="text-white bg-gray-800">
+                <table id="appointment-table" className="w-full text-sm text-left text-gray-500 border-collapse mt-8 ml-20 px-20">
+                    {/* Table Header */}
+                    <thead className="text-xs text-white uppercase bg-gray-900">
                         <tr>
-                            <th className="py-4 px-6">Name</th>
-                            <th className="py-4 px-6">Email</th>
-                            <th className="py-4 px-6">Telephone</th>
-                            <th className="py-4 px-6">Phone Type</th>
-                            <th className="py-4 px-6">Service Type</th>
-                            <th className="py-4 px-6">Date</th>
-                            <th className="py-4 px-6">Receipt</th>
-                            <th className="py-4 px-6">Description</th>
-                            <th className="py-4 px-6">Actions</th> {/* Added Actions column */}
-                            <th className="py-4 px-6">Approve</th> {/* Added Approve column */}
-                            <th className="py-4 px-6">Cancel Approval</th> {/* Added Cancel Approval column */}
+                            <th className="px-2 py-2">Name</th>
+                            <th className="px-2 py-2">Email</th>
+                            <th className="px-2 py-2">Telephone</th>
+                            <th className="px-4 py-2">Phone Type</th>
+                            <th className="px-2 py-2">Service Type</th>
+                            <th className="px-2 py-2">Date</th>
+                            <th className="px-2 py-2">Receipt</th>
+                            <th className="px-2 py-2">Description</th>
+                            <th className="px-2 py-2">Actions</th>
+                            <th className="px-2 py-2">Approve</th>
+                            <th className="px-2 py-2">Cancel Approval</th>
                         </tr>
                     </thead>
-                    <tbody className="text-gray-700">
-                        {filteredAppointments.map((appointment, index) => (
-                            <tr
-                                key={index}
-                                className={index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}
-                            >
-                                <td className="py-4 px-6">{appointment.name}</td>
-                                <td className="py-4 px-6">{appointment.email}</td>
-                                <td className="py-4 px-6">{appointment.telephone}</td>
-                                <td className="py-4 px-6">{appointment.phoneType}</td>
-                                <td className="py-4 px-6">{appointment.serviceType}</td>
-                                <td className="py-4 px-6">{appointment.date}</td>
-                                <td className="py-4 px-6">
+                    {/* Table Body */}
+                    <tbody>
+                        {currentItems.map((appointment, index) => (
+                            <tr key={index} className="bg-white border-b hover:bg-white-50">
+                                {/* Table Data */}
+                                <td className="px-2 py-2">{appointment.name}</td>
+                                <td className="px-2 py-2">{appointment.email}</td>
+                                <td className="px-2 py-2">{appointment.telephone}</td>
+                                <td className="px-4 py-2">{appointment.phoneType}</td>
+                                <td className="px-2 py-2">{appointment.serviceType}</td>
+                                <td className="px-2 py-2">{appointment.date}</td>
+                                <td className="px-2 py-2">
                                     <img
                                         src={appointment.image}
                                         alt={appointment.name}
-                                        style={{ width: '60px', height: '50px' }}
+                                        className="w-20 h-20 object-cover"
                                     />
                                 </td>
-                                <td className="py-4 px-6">{appointment.description}</td>
-                                <td className="py-4 px-6">
-                                    {/* Update Button */}
-                                    <Link to={`/updateAppointment/${appointment._id}`} className="mr-2">
-                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            Update
+                                <td className="px-2 py-2">{appointment.description}</td>
+                                <td className="px-2 py-2">
+                                    <Link to={`/updateAppointment/${appointment._id}`}>
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
+                                            <FaEdit/>
                                         </button>
                                     </Link>
-                                    {/* Delete Button */}
-                                    <button onClick={() => handleDelete(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                        Delete
+                                    <button onClick={() => handleDelete(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                                        <FaTrash/>
                                     </button>
                                 </td>
-                                <td className="py-4 px-6">
+                                <td className="px-2 py-2">
                                     {appointment.approved ? (
-                                        <span className="bg-green-500 text-white font-bold py-2 px-4 rounded">Approved</span>
+                                        <span className="text-green-500 font-bold">Approved</span>
                                     ) : (
-                                        <button onClick={() => handleApprove(appointment._id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                            Approve
+                                        <button onClick={() => handleApprove(appointment._id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                                            <FaCheckCircle/> Approve
                                         </button>
                                     )}
                                 </td>
-                                <td className="py-4 px-6">
+                                <td className="px-2 py-2">
                                     {appointment.approved && (
-                                        <button onClick={() => handleCancelApproval(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                            Cancel Approval
+                                        <button onClick={() => handleCancelApproval(appointment._id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                                            <FaTimesCircle/> Cancel
                                         </button>
                                     )}
                                 </td>
@@ -177,6 +215,28 @@ function AppointmentList() {
                         ))}
                     </tbody>
                 </table>
+                
+                {/* Pagination */}
+                <div className="flex justify-center mt-4">
+                    <ul className="flex">
+                        {Array.from({
+                            length: Math.ceil(filteredAppointments.length / itemsPerPage),
+                        }).map((_, index) => (
+                            <li key={index}>
+                                <button
+                                    onClick={() => paginate(index + 1)}
+                                    className={`${
+                                        currentPage === index + 1
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-gray-300 text-gray-700'
+                                    } font-semibold py-2 px-4 rounded-l`}
+                                >
+                                    {index + 1}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );
