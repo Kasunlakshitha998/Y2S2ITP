@@ -62,6 +62,9 @@ const expenseRoutes = require('./routes/Financial_Management/expense');
 const salaryRoutes = require('./routes/Financial_Management/salary');
 
 const LeaveRoutes = require('./routes/Leave_managemet/LeaveB.js');
+const LookLeaveRoutes = require('./routes/Leave_managemet/LookupsB.js');
+const HolidayLeaveRoutes = require('./routes/Leave_managemet/HolidaysB.js');
+const LsetupLeaveRoutes = require('./routes/Leave_managemet/LsetupB.js');
 
 
 
@@ -85,6 +88,11 @@ app.use('/feedback',feedbackRouter);//feedback
 
 //leave
 app.use("/Leave",LeaveRoutes);
+app.use('/LookLeave', LookLeaveRoutes);
+app.use('/Holidays', HolidayLeaveRoutes);
+app.use('/Lsetup', LsetupLeaveRoutes);
+
+
 //promotion
 app.use('/expenses', expenseRoutes);//Finance
 app.use('/salaries', salaryRoutes);//Finance
