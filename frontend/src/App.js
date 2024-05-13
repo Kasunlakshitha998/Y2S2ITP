@@ -51,20 +51,8 @@ import HomePageS from "./pages/Staff/HomePageS";
 import Settings from "./pages/leavemanagement/Admin/Settings";
 //import CreateSlice from './pages/Appointment/createSlice';
 
-// import StaffDashboard from './Components/User_Management/staff'
-<<<<<<< HEAD
+//import StaffDashboard from './Components/User_Management/staff'
 import LeaveList from './Components/leave_management/LeaveList';
-=======
-// import Home from'./pages/leavemanagement/Admin/homepage';
-// import SidebarA from './Components/leave_management/SidebarA';
-// import MyLeaves from './pages/leavemanagement/Admin/MyLeaves';
-
-// import StaffDashboard from './Components/User_Management/staff';
-// import Home from './pages/leavemanagement/Admin/homepage';
-// import SidebarA from './Components/leave_management/SidebarA';
-import LeaveList from './Components/leave_management/LeaveList';
-
->>>>>>> 08a86f238632bb18579e86bc35c8a0b56f3d154b
 
 const AdminRouteGuard = ({ element }) => {
   const userRole = Cookies.get("role");
