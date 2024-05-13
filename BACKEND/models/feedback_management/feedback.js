@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -32,6 +32,15 @@ const feedbackSchema = new Schema({
   descript: {
     type: String,
     required: true,
+  },
+  satisfaction: {
+    type: String,
+  },
+  recommend: {
+    type: String,
+  },
+  purchaseAgain: {
+    type: String,
   },
 });
 
