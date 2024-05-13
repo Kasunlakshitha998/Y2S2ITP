@@ -72,7 +72,7 @@ function StaffNav() {
             <BsPersonFill size={50} color="#adb5bd" />
           )}
 
-          <span>Admin User</span>
+          <span>Staff User</span>
           <div className="dropdown">
             <button className="dropbtn">▼</button>
             <div className="dropdown-content">

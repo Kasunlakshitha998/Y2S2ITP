@@ -77,7 +77,7 @@ const UserRouteGuard = ({ element }) => {
 const AllUsersRouteGuard = ({ element }) => {
   const userRole = Cookies.get("role");
 
-  if (userRole === "admin" || userRole === "user") {
+  if (userRole === "admin" || userRole === "user" ||userRole === "staff" ) {
     return element;
   } else {
     return <Navigate to="/login" />;
