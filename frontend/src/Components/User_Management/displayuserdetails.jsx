@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import "./displayuser.css"; // Import your CSS file
+//import "./displayuser.css"; // Import your CSS file
 import Swal from 'sweetalert2';
 import { BsPersonFill } from 'react-icons/bs'; // Import Bootstrap icon
 import AdminNav from '../Nav/adminNav'; // Import AdminNav component
@@ -93,6 +93,13 @@ function Users() {
     return (
         <div className="container-fluid">
             <AdminNav /> {/* Include AdminNav component here */}
+            
+
+            <div className="button-container">
+                    <Link to="/usercreate" className='bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5'>Add +</Link>
+                  
+                </div>
+                
             <div className="card-body">
                 <div className="search-bar">
                     <input
@@ -103,6 +110,7 @@ function Users() {
                         className="form-control"
                     />
                 </div>
+                
         
                 <div className="button-container">
                     <Link to="/usercreate" className='bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5'>Add +</Link>
@@ -113,6 +121,8 @@ function Users() {
                         Get Report
                     </button>
                 </div>
+
+                
 
                 <p className='btn total-users'>Total Users: {users.length}</p>
                 <div className="table-container">

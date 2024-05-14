@@ -119,6 +119,7 @@ function LeaveList() {
               <tr>
                 <th className="px-4 py-2">Leave ID</th>
                 <th className="px-4 py-2">name</th>
+                <th className="px-4 py-2">Email</th>
                 <th className="px-4 py-2">LType</th>
                 <th className="px-4 py-2">duration</th>
                 <th className="px-4 py-2">remarks</th>
@@ -132,6 +133,7 @@ function LeaveList() {
                 <tr key={leave._id}>
                   <td className="border px-4 py-2">{leave._id}</td>
                   <td className="border px-4 py-2">{leave.name}</td>
+                  <td className="border px-4 py-2">{leave.Email}</td>
                   <td className="border px-4 py-2">{leave.LType}</td>
                   <td className="border px-4 py-2">{leave.Lduration}</td>
                   <td className="border px-4 py-2"> {leave.remarks} </td>

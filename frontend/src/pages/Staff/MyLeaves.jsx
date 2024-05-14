@@ -7,6 +7,9 @@ import Cookies from 'js-cookie';
 
 const MyLeaves = () => {
   const userId = Cookies.get('userId');
+      const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [number, setNumber] = useState("");
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [LeaveRequestToUpdate,setLeaveRequestToUpdate]= useState(null); 
@@ -73,28 +76,33 @@ const MyLeaves = () => {
         })
         .catch(err => console.log(err));
     } else {
-      axios.post("http://localhost:8175/Leave/create", newLeaveRequest)
-        .then(result => {
-          console.log(result);
-          setNewLeaveRequest({
-            EmpID: userId,
-            name: '',
-            Email: '',
-            Contact: '',
-            Destination: '',
-            LDateF: '',
-            LdateT: '',
-            LType: '',
-            Lduration: '',
-            attachments: '',
-            remarks: '',
-            Sup_name: '',
-            Sup_des: '',
-            Backup: ''
-          });
-          fetchLeaveRequests();
-        })
-        .catch(err => console.log(err));
+      axios.post("http://localhost:8175/Leave/create", {
+        ...newLeaveRequest,
+        name: name,
+        Email: email,
+        Contact: number
+      })
+      .then(result => {
+        console.log(result);
+        setNewLeaveRequest({
+          EmpID: userId,
+          name: '',
+          Email: '',
+          Contact: '',
+          Destination: '',
+          LDateF: '',
+          LdateT: '',
+          LType: '',
+          Lduration: '',
+          attachments: '',
+          remarks: '',
+          Sup_name: '',
+          Sup_des: '',
+          Backup: ''
+        });
+        fetchLeaveRequests();
+      })
+      .catch(err => console.log(err));
     }
   };
 
@@ -153,6 +161,15 @@ const MyLeaves = () => {
   const filteredLeaveRequests = leaveRequests.filter((request) => {
     return request.EmpID.includes(userId);
   });
+  axios.get(`http://localhost:8175/user/getUsers/${userId}`)
+  .then(result => {
+      console.log('User data:', result.data);
+      setName(result.data.name);
+      setEmail(result.data.email);
+      setNumber(result.data.number);
+  })
+  .catch(err => console.log(err));
+
 
   return (
     <>
@@ -183,9 +200,10 @@ const MyLeaves = () => {
                 <input
                   type="text"
                   name="name"
-                  value={newLeaveRequest.name}
+                  value={name}
                   onChange={handleInputChange}
                   placeholder="Your name"
+                  disabled
                 />
               </div>
               <div className="form-row">
@@ -193,9 +211,10 @@ const MyLeaves = () => {
                 <input
                   type="text"
                   name="Email"
-                  value={newLeaveRequest.Email}
+                  value={email}
                   onChange={handleInputChange}
                   placeholder="Email"
+                  disabled
                 />
               </div>
               <div className="form-row">
@@ -203,9 +222,10 @@ const MyLeaves = () => {
                 <input
                   type="text"
                   name="Contact"
-                  value={newLeaveRequest.Contact}
+                  value={number}
                   onChange={handleInputChange}
                   placeholder="Contact Number"
+                  disabled
                 />
               </div>
 
@@ -336,6 +356,7 @@ const MyLeaves = () => {
               <tr>
                 <th class="py-2 px-4">Name</th>
                 <th class="py-2 px-4">Email</th>
+                <th class="py-2 px-4">number</th>
                 <th class="py-2 px-4">Designation</th>
                 <th class="py-2 px-4">Leave Date from</th>
                 <th class="py-2 px-4">Leave Date To</th>
@@ -351,8 +372,9 @@ const MyLeaves = () => {
             <tbody class="divide-y divide-gray-200">
               {filteredLeaveRequests.map((leaveRequest) => (
                 <tr key={leaveRequest._id}>
-                  <td class="py-2 px-4">{leaveRequest.name}</td>
-                  <td class="py-2 px-4">{leaveRequest.Email}</td>
+                  <td class="py-2 px-4">{name}</td>
+                  <td class="py-2 px-4">{email}</td>
+                  <td class="py-2 px-4">{number}</td>
                   <td class="py-2 px-4">{leaveRequest.Destination}</td>
                   <td class="py-2 px-4">{leaveRequest.LDateF}</td>
                   <td class="py-2 px-4">{leaveRequest.LdateT}</td>
