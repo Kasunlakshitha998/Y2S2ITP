@@ -6,11 +6,12 @@ const Schema = mongoose.Schema;
 const LookupsSchema = new Schema({
   LookupsT: {
     type: String,
-    enum: ["Annual Leave", "Casual Leave", "Official Leave"],
+    required: true,
   },
 
   LookupN: {
     type: String,
+    required: true,
   },
 });
 

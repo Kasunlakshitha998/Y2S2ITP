@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminNav from './../Nav/adminNav';
+import AdminNav from '../Nav/adminNav';
 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { Link } from 'react-router-dom';
 
 function LeaveList() {
   const [leaves, setLeave] = useState([]);
@@ -92,6 +93,15 @@ function LeaveList() {
               className="max-w-2xl my-4 p-2 border border-gray-300 rounded-lg"
             />
           </div>
+
+          <div>
+            <Link to="/admin/settings">
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Settings
+              </button>
+            </Link>
+          </div>
+
           <div>
             <button
               onClick={handleGenerateReport}
