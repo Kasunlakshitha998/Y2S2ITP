@@ -52,7 +52,7 @@ import Settings from "./pages/leavemanagement/Admin/Settings";
 //import CreateSlice from './pages/Appointment/createSlice';
 
 // import StaffDashboard from './Components/User_Management/staff'
-import LeaveList from './Components/leave_management/LeaveList';
+
 
 // import StaffDashboard from './Components/User_Management/staff'
 
