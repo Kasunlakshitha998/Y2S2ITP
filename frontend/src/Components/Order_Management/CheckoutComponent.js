@@ -10,6 +10,7 @@ const CheckoutComponent = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const navigate = useNavigate();
   const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [number, setnumber] = useState('');
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
   const [image, setImage] = useState([]);
@@ -17,6 +18,10 @@ const CheckoutComponent = () => {
 
   const handleAddressChange = (e) => {
     setDeliveryAddress(e.target.value);
+  };
+
+  const handlenumberChange = (e) => {
+    setnumber(e.target.value);
   };
 
   const handlePaymentOptionChange = (e) => {
@@ -39,13 +44,13 @@ const CheckoutComponent = () => {
     const checkoutData = {
       UserID,
       deliveryAddress,
+      number,
       paymentOption,
       items: cartItems.map((item) => ({
         productId: item._id,
         productName: item.name,
         quantity: item.cartQuantity,
         totalPrice: item.price * item.cartQuantity,
-        // Add other details as needed
       })),
       image,
     };
@@ -122,6 +127,20 @@ const CheckoutComponent = () => {
                 onChange={handleAddressChange}
                 className="w-full border rounded py-2 px-3 mt-1"
                 required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="number" className="block font-medium">
+                Phone Number
+              </label>
+              <input
+                type="number"
+                id="deliveryAddress"
+                value={number}
+                onChange={handlenumberChange}
+                className="w-full border rounded py-2 px-3 mt-1"
+                required
+                min="10"
               />
             </div>
             <div>
