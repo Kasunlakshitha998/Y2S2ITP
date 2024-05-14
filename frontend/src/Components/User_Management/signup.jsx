@@ -184,7 +184,7 @@ function Signup() {
                 <span className="circle two"></span>
                 {/* Form */}
                 <form onSubmit={handleSubmit} autoComplete="off">
-                    <h3 className="title">Sign in</h3>
+                    <h3 className="title">Sign up</h3>
                     <div className="input-container">
                         <input type="text" name="name" className="input" value={name} onChange={(e) => setName(e.target.value)} />
                         <label htmlFor="">Username</label>
