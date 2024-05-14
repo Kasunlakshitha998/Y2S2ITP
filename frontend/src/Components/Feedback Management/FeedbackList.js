@@ -3,7 +3,6 @@ import axios from 'axios';
 import { FaTrash, FaFilePdf } from 'react-icons/fa';
 import AdminNav from '../Nav/adminNav';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 const FeedbackList = () => {
   const [reviews, setReviews] = useState([]);
