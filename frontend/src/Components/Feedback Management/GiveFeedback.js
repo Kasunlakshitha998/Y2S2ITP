@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import ProfanityFilter from 'bad-words'; // Example external library for content moderation
+
+const filter = new ProfanityFilter();
 
 export default function GiveFeedback() {
   const { id } = useParams();
@@ -13,11 +16,21 @@ export default function GiveFeedback() {
   const [satisfaction, setSatisfaction] = useState('');
   const [recommend, setRecommend] = useState('');
   const [purchaseAgain, setPurchaseAgain] = useState('');
+  const [error, setError] = useState('');
   const userId = Cookies.get('userId');
   const navigate = useNavigate();
 
+  const containsOffensiveLanguage = (text) => {
+    return filter.isProfane(text);
+  };
+
   const sendData = (e) => {
     e.preventDefault();
+    
+    if (containsOffensiveLanguage(descript)) {
+      setError('Your feedback contains inappropriate language. Please revise your input.');
+      return;
+    }
 
     const newFeedback = {
       productId: id,
@@ -63,6 +76,12 @@ export default function GiveFeedback() {
     <div className="container mx-auto px-4 py-8">
       <form onSubmit={sendData}>
         <h2 className="text-2xl font-bold mb-4">Give your feedback</h2>
+        
+        {error && (
+          <div className="mb-4 text-red-500">
+            {error}
+          </div>
+        )}
 
         <div className="mb-4">
           <label htmlFor="feedbackType" className="block text-sm font-medium text-gray-700">Feedback Type:</label>
