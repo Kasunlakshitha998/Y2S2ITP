@@ -57,6 +57,7 @@ function UserAppointmentList() {
                             <th className="px-4 py-2">Date</th>
                             <th className="px-4 py-2">Receipt</th>
                             <th className="px-4 py-2">Description</th>
+                            <th className="px-4 py-2">Status</th> {/* New Column for Status */}
                             <th className="px-4 py-2">Actions</th>
                         </tr>
                     </thead>
@@ -73,6 +74,7 @@ function UserAppointmentList() {
                                     <img src={appointment.image} alt={appointment.name} className="w-20 h-20 object-cover" />
                                 </td>
                                 <td className="px-4 py-2">{appointment.description}</td>
+                                <td className="px-4 py-2">{appointment.approved ? 'Approved' : 'Not Approved'}</td> {/* Displaying Status */}
                                 <td className="px-4 py-2">
                                     <Link to={`/updateAppointment/${appointment._id}`}>
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"><FaEdit/></button>

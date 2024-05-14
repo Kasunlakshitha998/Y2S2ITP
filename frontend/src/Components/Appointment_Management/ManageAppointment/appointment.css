@@ -3,11 +3,11 @@
     padding: 0;
     /* Add margin-top to create space between the navigation bar and the table */
      /* Adjust the value as needed */
-    margin-left: 181px;
+    margin-left: 1px;
 }
 
 #appointment-table th,
 #appointment-table td {
     /* Reduce padding to make table cells closer */
-    padding: 4px 2px; /* Adjust values as needed */
+    padding: 2px 2px; /* Adjust values as needed */
 }

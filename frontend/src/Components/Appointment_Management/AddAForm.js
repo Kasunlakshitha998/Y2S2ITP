@@ -6,6 +6,7 @@ import Footer from '../Nav/footer';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { useNavigate } from 'react-router-dom';
+import { FaCalendar } from 'react-icons/fa';
 
 export default function AddAForm() {
   const [name, setName] = useState('');
@@ -310,9 +311,17 @@ export default function AddAForm() {
               htmlFor="date"
               className="block text-sm font-medium text-gray-700"
             >
-              Date:
+              Date:<FaCalendar/>
             </label>
-           
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
           </div>
           <div className="mb-4">
             <label
