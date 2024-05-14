@@ -6,6 +6,7 @@ import UserNav from './../Nav/userNav';
 const UserOrderEdit = () => {
   const { id } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [number, setnumber] = useState('');
   const [paymentOption, setPaymentOption] = useState('cash');
   const [checkoutError, setCheckoutError] = useState(null);
   const [paymentStatus, setpaymentStatus] = useState('Pending');
@@ -20,6 +21,7 @@ const UserOrderEdit = () => {
         console.log(res.data);
         setDeliveryAddress(res.data.deliveryAddress);
         setPaymentOption(res.data.paymentOption);
+        setnumber(res.data.number);
         setImage(res.data.image);
         setpaymentStatus('Pending');
       })
@@ -36,6 +38,7 @@ function UpdateData(e) {
   const UpdateOrder = {
     deliveryAddress,
     paymentOption,
+    number,
     image,
     paymentStatus,
   };
@@ -53,6 +56,9 @@ function UpdateData(e) {
     });
 }
 
+  const handlenumberChange = (e) => {
+    setnumber(e.target.value);
+  };
 
   const handleAddressChange = (e) => {
     setDeliveryAddress(e.target.value);
@@ -95,6 +101,20 @@ function UpdateData(e) {
               onChange={handleAddressChange}
               className="w-full border rounded py-2 px-3 mt-1"
               required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="number" className="block font-medium">
+              Phone Number
+            </label>
+            <input
+              type="number"
+              id="deliveryAddress"
+              value={number}
+              onChange={handlenumberChange}
+              className="w-full border rounded py-2 px-3 mt-1"
+              required
+              min="10"
             />
           </div>
           <div>
