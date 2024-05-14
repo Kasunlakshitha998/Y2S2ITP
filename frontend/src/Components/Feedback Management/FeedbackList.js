@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaTrash, FaFilePdf } from 'react-icons/fa';
 import AdminNav from '../Nav/adminNav';
 import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const FeedbackList = () => {
   const [reviews, setReviews] = useState([]);
@@ -35,27 +36,17 @@ const FeedbackList = () => {
   };
 
   // Generate PDF report
-  const handleReport = () => {
-    const doc = new jsPDF();
-    const tableRows = [];
-
-    // Add table header
-    const tableHeader = ['Email', 'Feedback Type', 'Rating', 'Description'];
-    tableRows.push(tableHeader);
-
-    // Add feedback data to table
-    reviews.forEach((review) => {
-      tableRows.push([review.email, review.feedbackType, review.rating, review.descript]);
+  const handleGenerateReport = () => {
+    html2canvas(document.querySelector("#feedback-list")).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+      pdf.save('feedback_report.pdf');
+    }).catch((error) => {
+      console.error('Error generating report:', error);
+      alert('Error generating report');
     });
-
-    // AutoTable plugin to generate table in PDF
-    doc.autoTable({
-      head: tableRows.slice(0, 1),
-      body: tableRows.slice(1),
-    });
-
-    // Save the PDF
-    doc.save('feedback_report.pdf');
   };
 
   const filteredFeedback = reviews.filter((review) =>
@@ -79,7 +70,7 @@ const FeedbackList = () => {
         />
         <button
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleReport}
+          onClick={handleGenerateReport}
         >
           <FaFilePdf /> Get Report
         </button>

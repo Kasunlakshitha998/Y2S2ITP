@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import AdminNav from '../../Nav/adminNav';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { FaCheckCircle, FaEdit, FaReceipt, FaTimesCircle, FaTrash } from 'react-icons/fa';
-import './appointment.css';
 
 function AppointmentList() {
     const [appointments, setAppointments] = useState([]);
@@ -39,35 +40,14 @@ function AppointmentList() {
     };
 
     const handleGenerateReport = () => {
-        // Format the appointment data into CSV format
-        const tableHeader = 'Name,Email,Telephone,Phone Type,Service Type,Date,Description';
-        const appointmentsCSV = [tableHeader]
-            .concat(
-                appointments.map((appointment) => {
-                    return `${appointment.name},${appointment.email},${appointment.telephone},${appointment.phoneType},${appointment.serviceType},${appointment.date},${appointment.description}`;
-                })
-            )
-            .join('\n');
-
-        // Create a Blob object containing the CSV data
-        const blob = new Blob([appointmentsCSV], { type: 'text/csv' });
-
-        // Create a temporary URL for the Blob
-        const url = window.URL.createObjectURL(blob);
-
-        // Create a temporary link element
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'appointments_report.csv');
-
-        // Simulate a click on the link to trigger the download
-        document.body.appendChild(link);
-        link.click();
-
-        // Clean up by removing the temporary link and URL
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-    };
+        html2canvas(document.querySelector("#appointment-table")).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          const imgHeight = canvas.height * 208 / canvas.width;
+          pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+          pdf.save("appointment_report.pdf");
+        });
+      };
 
     const handleApprove = (id) => {
         axios
@@ -118,10 +98,10 @@ function AppointmentList() {
             <header>
                 <AdminNav />
             </header>
-
+        <main className="plist ml-28">
             <div>
                 <div className="flex justify-between items-center mt-12 mb-4">
-                    <div className="rounded-lg bg-green-300 shadow-md p-4 mb-4 mr-4 ml-20 mt-12 duration-500 hover:scale-105 hover:shadow-xl w-50">
+                    <div className="rounded-lg bg-green-300 shadow-md p-4 mb-4 mr-4 ml-10 mt-12 duration-500 hover:scale-105 hover:shadow-xl w-50">
                         <div className="flex items-center justify-center mb-2">
                             <div className="text-lg font-semibold">Total Appointments</div>
                         </div>
@@ -148,8 +128,8 @@ function AppointmentList() {
                         className="px-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ml-20 "
                     />
                 </div>
-
-                <table id="appointment-table" className="w-full text-sm text-left text-gray-500 border-collapse mt-8 ml-20 px-20">
+            
+                <table id="appointment-table" className="w-full text-sm text-left text-gray-500 border-collapse mt-8 ml-1 px-20">
                     {/* Table Header */}
                     <thead className="text-xs text-white uppercase bg-gray-900">
                         <tr>
@@ -238,6 +218,7 @@ function AppointmentList() {
                     </ul>
                 </div>
             </div>
+            </main>
         </div>
     );
 }
