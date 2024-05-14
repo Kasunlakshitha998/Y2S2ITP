@@ -107,7 +107,10 @@ function AdminNav() {
             <Link to="/FeedbackList">FeedBack</Link>
           </li>
           <li className={activeLink === "/admin/leave" ? "active" : ""}>
-            <Link to="/admin/leave">Leave</Link>
+            <Link to="/admin/leaveList">Leave</Link>
+          </li>
+          <li className={activeLink === "/admin/settings" ? "active" : ""}>
+            <Link to="/admin/settings">Settings</Link>
           </li>
         </ul>
       </aside>

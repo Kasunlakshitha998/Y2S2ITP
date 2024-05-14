@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from '../../../Components/Leave_Management/Admin/Sidebar';
+
 import { Link } from 'react-router-dom';
 import "./Settings.scss";
 
-export const Settings = () => {
+import AdminNav from '../../../Components/Nav/adminNav';
+
+const Settings = () => {
   const [showLookupForm, setShowLookupForm] = useState(false);
   const [showHolidaysForm, setShowHolidaysForm] = useState(false);
   const [showLsetupForm, setLsetupForm] = useState(false);
@@ -28,10 +30,6 @@ export const Settings = () => {
   const [  Max_CarryF, setMax_CarryF] = useState('');
   const [LsetupToUpdate, setLsetupToUpdate] = useState(null);
   
- 
-  
-
-
 
   useEffect(() => {
     fetchLookups();
@@ -155,7 +153,6 @@ const submitHoliday = (e) => {
   }
 };
 
- 
 
   const handleEditLookup = (lookup) => {
     setLookupToUpdate(lookup);
@@ -164,7 +161,6 @@ const submitHoliday = (e) => {
     setIsUpdateMode(true);
   };
 
- 
 
   const handleDeleteLookup = (id) => {
     axios.delete(`http://localhost:8175/Lookups/delete/${id}`)
@@ -198,6 +194,7 @@ const submitHoliday = (e) => {
         console.error('Error deleting Leave Setups:', error);
       });
   };
+
   const handleCancelLookup = () => {
     setIsUpdateMode(false);
     setLookupToUpdate(null);
@@ -223,189 +220,267 @@ const submitHoliday = (e) => {
 
   return (
     <div>
-      <Sidebar />
-      <h1>Settings</h1>
-      <h3>Setup Company Status here</h3>
-      <ul>
-        <li><Link to="#" onClick={() => setLsetupForm(true)}>Leave Setup</Link></li>
-        <li><Link to="#" onClick={() => setShowHolidaysForm(true)}>Company Holidays</Link></li>
-        <li><Link to="#" onClick={() => setShowLookupForm(true)}>Lookup Types</Link></li>
-      </ul>
+      <AdminNav />
+      <div className="ml-48 max-w-5xl mt-10">
+        <h1>Settings</h1>
+        <h3>Setup Company Status here</h3>
+        <ul>
+          <li>
+            <Link to="#" onClick={() => setLsetupForm(true)}>
+              Leave Setup
+            </Link>
+          </li>
+          <li>
+            <Link to="#" onClick={() => setShowHolidaysForm(true)}>
+              Company Holidays
+            </Link>
+          </li>
+          <li>
+            <Link to="#" onClick={() => setShowLookupForm(true)}>
+              Lookup Types
+            </Link>
+          </li>
+        </ul>
 
-      {/* Lookup form */}
-      {showLookupForm && (
-        <>
-          <form name='' className='formL' onSubmit={submitLookup}>
-            <h3>{isUpdateMode ? 'Update Lookup' : 'Create Lookup'}</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="">Lookup Type</label>
-                <select value={LookupsT} onChange={(e) => setLookupType(e.target.value)}>
-                  <option value="Annual Leave">Annual Leave</option>
-                  <option value="Casual Leave">Casual Leave</option>
-                  <option value="Official Leave">Official Leave</option>
-                </select>
+        {/* Lookup form */}
+        {showLookupForm && (
+          <>
+            <form name="" className="formL" onSubmit={submitLookup}>
+              <h3>{isUpdateMode ? 'Update Lookup' : 'Create Lookup'}</h3>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="">Lookup Type</label>
+                  <select
+                    value={LookupsT}
+                    onChange={(e) => setLookupType(e.target.value)}
+                  >
+                    <option value="Annual Leave">Annual Leave</option>
+                    <option value="Casual Leave">Casual Leave</option>
+                    <option value="Official Leave">Official Leave</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="">Lookup Name</label>
+                  <input
+                    type="text"
+                    name="LookupN"
+                    value={LookupN}
+                    onChange={(e) => setLookupName(e.target.value)}
+                    placeholder="HR department"
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="">Lookup Name</label>
-                <input type="text" name="LookupN" value={LookupN} onChange={(e) => setLookupName(e.target.value)} placeholder="HR department" />
-              </div>
-            </div>
 
-            <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
-            <button type="button" onClick={handleCancelLookup}>Cancel</button>
-          </form>
+              <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
+              <button type="button" onClick={handleCancelLookup}>
+                Cancel
+              </button>
+            </form>
 
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Lookup Type</th>
-                  <th>Lookup Name</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Lookups.map((lookup) => (
-                  <tr key={lookup._id}>
-                    <td>{lookup.LookupsT}</td>
-                    <td>{lookup.LookupN}</td>
-                    <td>
-                      <button onClick={() => handleEditLookup(lookup)}>Edit</button>
-                      <button onClick={() => handleDeleteLookup(lookup._id)}>Delete</button>
-                    </td>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Lookup Type</th>
+                    <th>Lookup Name</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-
-      {/* Holiday form */}
-      {showHolidaysForm && (
-        <>
-          <form name='Holiday' className='formL' onSubmit={submitHoliday}>
-            <h3>{isUpdateMode ? 'Update Company Holiday' : 'Create Company Holiday'}</h3>
-            <h4>Manage company holidays here</h4>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="">Date</label>
-                <input type="date" value={Date} onChange={(e) => setDate(e.target.value)} />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="">Holiday Name</label>
-                <input type="text" value={Hname} onChange={(e) => setHname(e.target.value)} placeholder="Holiday name" />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="">Description</label>
-                <textarea rows="5" value={Description} onChange={(e) => setDescription(e.target.value)} placeholder="Describe here" />
-              </div>
+                </thead>
+                <tbody>
+                  {Lookups.map((lookup) => (
+                    <tr key={lookup._id}>
+                      <td>{lookup.LookupsT}</td>
+                      <td>{lookup.LookupN}</td>
+                      <td>
+                        <button onClick={() => handleEditLookup(lookup)}>
+                          Edit
+                        </button>
+                        <button onClick={() => handleDeleteLookup(lookup._id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          </>
+        )}
 
-            <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
-            <button type="button" onClick={handleCancelHoliday}>Cancel</button>
-          </form>
+        {/* Holiday form */}
+        {showHolidaysForm && (
+          <>
+            <form name="Holiday" className="formL" onSubmit={submitHoliday}>
+              <h3>
+                {isUpdateMode
+                  ? 'Update Company Holiday'
+                  : 'Create Company Holiday'}
+              </h3>
+              <h4>Manage company holidays here</h4>
 
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Holiday Name</th>
-                  <th>Description</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Holidays.map((holiday) => (
-                  <tr key={holiday._id}>
-                    <td>{holiday.Date}</td>
-                    <td>{holiday.Hname}</td>
-                    <td>{holiday.Description}</td>
-                    <td>
-                      <button onClick={() => handleEditHoliday(holiday)}>Edit</button>
-                      <button onClick={() => handleDeleteHoliday(holiday._id)}>Delete</button>
-                    </td>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="">Date</label>
+                  <input
+                    type="date"
+                    value={Date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="">Holiday Name</label>
+                  <input
+                    type="text"
+                    value={Hname}
+                    onChange={(e) => setHname(e.target.value)}
+                    placeholder="Holiday name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="">Description</label>
+                  <textarea
+                    rows="5"
+                    value={Description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Describe here"
+                  />
+                </div>
+              </div>
+
+              <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
+              <button type="button" onClick={handleCancelHoliday}>
+                Cancel
+              </button>
+            </form>
+
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Holiday Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-
-      {/* //Lsetup from */}
-
-      {showLsetupForm && (
-        <>
-          <form name='' className='formL' onSubmit={submitLsetup}>
-            <h3>{isUpdateMode ? 'Update Leave Setup' : 'Create Leave Setup'}</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="">Setup Type</label>
-                <select value={SetupT} onChange={(e) => setSetupT(e.target.value)}>
-                  <option value="Company">Company</option>
-                  <option value="Individual">Individual</option>
-                  
-                </select>
-
-                <label htmlFor="">Company</label>
-                <select value={Company} onChange={(e) => setCompany(e.target.value)}>
-                  <option value="Annual">Annual</option>
-                  <option value="Casual">Casual</option>
-                  <option value="Official">Offical</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="">Duration</label>
-                <input type="number" name="Duration" value={Duration} onChange={(e) => setDuration(e.target.value)} placeholder="Duration" />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="">Max Carry Forward Leaves</label>
-                <input type="number" name="Max_CarryF" value={Max_CarryF} onChange={(e) => setMax_CarryF(e.target.value)} placeholder=" Enter Leaves" />
-              </div>
+                </thead>
+                <tbody>
+                  {Holidays.map((holiday) => (
+                    <tr key={holiday._id}>
+                      <td>{holiday.Date}</td>
+                      <td>{holiday.Hname}</td>
+                      <td>{holiday.Description}</td>
+                      <td>
+                        <button onClick={() => handleEditHoliday(holiday)}>
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteHoliday(holiday._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          </>
+        )}
 
-            <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
-            <button type="button" onClick={handleCancelLsetup}>Cancel</button>
-          </form>
+        {/* //Lsetup from */}
 
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Setup Type</th>
-                  <th>Company</th>
-                  <th>Duration</th>
-                  <th>Max Carry Forward Leaves</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Lsetup.map((Lsetup) => (
-                  <tr key={Lsetup._id}>
-                    <td>{Lsetup.SetupT}</td>
-                    <td>{Lsetup.Company}</td>
-                    <td>{Lsetup.Duration}</td>
-                    <td>{Lsetup.Max_CarryF}</td>
-                    <td>
-                      <button onClick={() => handleEditLsetup(Lsetup)}>Edit</button>
-                      <button onClick={() => handleDeleteLsetup(Lsetup._id)}>Delete</button>
-                    </td>
+        {showLsetupForm && (
+          <>
+            <form name="" className="formL" onSubmit={submitLsetup}>
+              <h3>
+                {isUpdateMode ? 'Update Leave Setup' : 'Create Leave Setup'}
+              </h3>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="">Setup Type</label>
+                  <select
+                    value={SetupT}
+                    onChange={(e) => setSetupT(e.target.value)}
+                  >
+                    <option value="Company">Company</option>
+                    <option value="Individual">Individual</option>
+                  </select>
+
+                  <label htmlFor="">Company</label>
+                  <select
+                    value={Company}
+                    onChange={(e) => setCompany(e.target.value)}
+                  >
+                    <option value="Annual">Annual</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Official">Offical</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="">Duration</label>
+                  <input
+                    type="number"
+                    name="Duration"
+                    value={Duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                    placeholder="Duration"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="">Max Carry Forward Leaves</label>
+                  <input
+                    type="number"
+                    name="Max_CarryF"
+                    value={Max_CarryF}
+                    onChange={(e) => setMax_CarryF(e.target.value)}
+                    placeholder=" Enter Leaves"
+                  />
+                </div>
+              </div>
+
+              <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
+              <button type="button" onClick={handleCancelLsetup}>
+                Cancel
+              </button>
+            </form>
+
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setup Type</th>
+                    <th>Company</th>
+                    <th>Duration</th>
+                    <th>Max Carry Forward Leaves</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-
-
+                </thead>
+                <tbody>
+                  {Lsetup.map((Lsetup) => (
+                    <tr key={Lsetup._id}>
+                      <td>{Lsetup.SetupT}</td>
+                      <td>{Lsetup.Company}</td>
+                      <td>{Lsetup.Duration}</td>
+                      <td>{Lsetup.Max_CarryF}</td>
+                      <td>
+                        <button onClick={() => handleEditLsetup(Lsetup)}>
+                          Edit
+                        </button>
+                        <button onClick={() => handleDeleteLsetup(Lsetup._id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

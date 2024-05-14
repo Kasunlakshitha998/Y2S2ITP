@@ -137,6 +137,7 @@ function AccountDetails() {
                 <button className="nav-link">
                     <Link to="/SecuritySettings">Security</Link>
                 </button>
+               
             </nav>
             <hr className="mt-0 mb-4" />
             <div className="row">
@@ -180,7 +181,7 @@ function AccountDetails() {
                                 <div className="row gx-3 mb-3">
                                     <div className="col-md-6">
                                         <label className="small mb-1" htmlFor="inputPhone">Phone number</label>
-                                        <input className="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value={number} onChange={(e) => setNumber(e.target.value)} />
+                                        <input className="form-control" id="inputPhone" type="number" placeholder="Enter your phone number" value={number} onChange={(e) => setNumber(e.target.value)} />
                                     </div>
                                 </div>
                                 <button className="btn btn-primary" type="submit">Save changes</button>

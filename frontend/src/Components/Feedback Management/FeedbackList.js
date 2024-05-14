@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaTrash, FaFileCsv } from 'react-icons/fa';
+import { FaTrash, FaFilePdf } from 'react-icons/fa';
 import AdminNav from '../Nav/adminNav';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const FeedbackList = () => {
   const [reviews, setReviews] = useState([]);
@@ -12,7 +14,7 @@ const FeedbackList = () => {
     axios
       .get(`http://localhost:8175/feedback/`)
       .then((response) => {
-        setReviews(response.data);
+        setReviews(response.data); // assuming response.data is an array of reviews
       })
       .catch((error) => {
         console.error('Error fetching reviews:', error);
@@ -29,40 +31,32 @@ const FeedbackList = () => {
       })
       .catch((error) => {
         console.error('Error deleting :', error);
-        alert('Delete unSuccessfully');
+        alert('Delete unsuccessfully');
       });
   };
 
-  // Generate CSV report
+  // Generate PDF report
   const handleReport = () => {
-    // Format the feedback data into CSV format
-    const tableHeader = 'Email,Feedback Type,Rating,Description';
-    const feedbackCSV = [tableHeader]
-      .concat(
-        reviews.map((review) => {
-          return `${review.email},${review.feedbackType},${review.rating},${review.descript}`;
-        })
-      )
-      .join('\n');
+    const doc = new jsPDF();
+    const tableRows = [];
 
-    // Create a Blob object containing the CSV data
-    const blob = new Blob([feedbackCSV], { type: 'text/csv' });
+    // Add table header
+    const tableHeader = ['Email', 'Feedback Type', 'Rating', 'Description'];
+    tableRows.push(tableHeader);
 
-    // Create a temporary URL for the Blob
-    const url = window.URL.createObjectURL(blob);
+    // Add feedback data to table
+    reviews.forEach((review) => {
+      tableRows.push([review.email, review.feedbackType, review.rating, review.descript]);
+    });
 
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'feedback_report.csv');
+    // AutoTable plugin to generate table in PDF
+    doc.autoTable({
+      head: tableRows.slice(0, 1),
+      body: tableRows.slice(1),
+    });
 
-    // Simulate a click on the link to trigger the download
-    document.body.appendChild(link);
-    link.click();
-
-    // Clean up by removing the temporary link and URL
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    // Save the PDF
+    doc.save('feedback_report.pdf');
   };
 
   const filteredFeedback = reviews.filter((review) =>
@@ -88,7 +82,7 @@ const FeedbackList = () => {
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           onClick={handleReport}
         >
-          <FaFileCsv /> Get Report
+          <FaFilePdf /> Get Report
         </button>
       </div>
 
@@ -99,9 +93,7 @@ const FeedbackList = () => {
           {filteredFeedback.map((review, index) => (
             <div key={index} className="bg-white shadow-md rounded-lg">
               <div className="p-4">
-                <p className="text-lg font-semibold mb-2">
-                  {review.feedbackType}
-                </p>
+                <p className="text-lg font-semibold mb-2">{review.feedbackType}</p>
                 <p className="text-gray-600 mb-4">{review.email}</p>
                 <p className="text-gray-800">{review.descript}</p>
                 <div className="flex items-center mt-2">

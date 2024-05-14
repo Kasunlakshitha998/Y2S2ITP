@@ -8,11 +8,11 @@ function StaffDashboard() {
     < StaffNav  />
   
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-          
-  
+
           <main>
   
           </main>
+          
         </div>
       </div>
     );

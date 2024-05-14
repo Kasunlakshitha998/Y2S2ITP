@@ -101,7 +101,7 @@ function SecuritySettings() {
                 <button className="nav-link">
                     <Link to="/AccountDetails">Profile</Link>
                 </button>
-              
+           
                 
                 
                 

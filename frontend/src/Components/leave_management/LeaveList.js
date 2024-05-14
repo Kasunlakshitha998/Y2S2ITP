@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminNav from './../Nav/adminNav';
-import { Link } from 'react-router-dom';
-import {FaTrash } from 'react-icons/fa';
-import { FcApproval } from 'react-icons/fc';
+
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 

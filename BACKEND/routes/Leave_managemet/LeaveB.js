@@ -2,51 +2,51 @@ const router = require("express").Router();
 const L_Request = require("../../models/Leave_Management/L_Request");
 
 // Create a leave request
-router.post("/create", async (req, res) => {
-  try {
-    const {
-      EmpID,
-      name,
-      Email,
-      Contact,
-      Destination,
-      LDateF,
-      LdateT,
-      LType,
-      Lduration,
-      attachments,
-      remarks,
-      Sup_name,
-      Sup_des,
-      Backup,
-    } = req.body;
+// router.post("/create", async (req, res) => {
+//   try {
+//     const {
+//       EmpID,
+//       name,
+//       Email,
+//       Contact,
+//       Destination,
+//       LDateF,
+//       LdateT,
+//       LType,
+//       Lduration,
+//       attachments,
+//       remarks,
+//       Sup_name,
+//       Sup_des,
+//       Backup,
+//     } = req.body;
 
-    const newLeaveRequest = new L_Request({
-      EmpID,
-      name,
-      Email,
-      Contact,
-      Destination,
-      LDateF,
-      LdateT,
-      LType,
-      Lduration,
-      attachments,
-      remarks,
-      Sup_name,
-      Sup_des,
-      Backup,
-    });
+//     const newLeaveRequest = new L_Request({
+//       EmpID,
+//       name,
+//       Email,
+//       Contact,
+//       Destination,
+//       LDateF,
+//       LdateT,
+//       LType,
+//       Lduration,
+//       attachments,
+//       remarks,
+//       Sup_name,
+//       Sup_des,
+//       Backup,
+//     });
 
-    await newLeaveRequest.save();
-    res.json({ message: "Leave request created successfully" });
-  } catch (error) {
-    console.error("Error creating leave request:", error);
-    res.status(500).json({ error: "Failed to create leave request" });
-  }
-});
+//     await newLeaveRequest.save();
+//     res.json({ message: "Leave request created successfully" });
+//   } catch (error) {
+//     console.error("Error creating leave request:", error);
+//     res.status(500).json({ error: "Failed to create leave request" });
+//   }
+// });
 
-module.exports = router;
+// module.exports = router;
 
 // Create a leave request
 router.post("/create", async (req, res) => {
