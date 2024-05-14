@@ -55,6 +55,7 @@ function UserOderList() {
                 <th className="px-4 py-2">Order ID</th>
                 <th className="px-4 py-2">Delivery Address</th>
                 <th className="px-4 py-2">Items</th>
+                <th className="px-4 py-2">Phone Number</th>
                 <th className="px-4 py-2">Payment Option</th>
                 <th className="px-4 py-2">Slip</th>
                 <th className="px-4 py-2">Payment Status</th>
@@ -85,6 +86,9 @@ function UserOderList() {
                       ))}
                     </ul>
                   </td>
+
+                  <td className="border px-4 py-2">{order.number}</td>
+
                   <td className="border px-4 py-2">{order.paymentOption}</td>
                   <td className="border px-4 py-2">
                     {order.paymentOption === 'bank' ? (

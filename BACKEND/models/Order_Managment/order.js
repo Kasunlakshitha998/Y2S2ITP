@@ -10,6 +10,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    number: {
+      type: Number,
+      required: true,
+    },
     paymentOption: {
       type: String,
       required: true,
@@ -42,12 +46,12 @@ const orderSchema = new mongoose.Schema(
     deliveryStatus: {
       type: String,
       required: true,
-      default: 'Pending', 
+      default: 'Pending',
     },
     paymentStatus: {
       type: String,
       required: true,
-      default: 'Pending', 
+      default: 'Pending',
     },
   },
   { timestamps: true }
