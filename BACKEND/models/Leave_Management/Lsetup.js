@@ -4,21 +4,21 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const LSetupSchema = new Schema({
-  SetupT: {
+  setupType: {
     type: String,
-    enum: ["Company", "individual"],
+    
   },
 
-  Company: {
+  company: {
     type: String,
-    enum: ["Annual", "Casual", "Offical"],
+    
   },
 
-  Duration: {
+  duration: {
     type: Number,
   },
 
-  Max_CarryF: {
+  maxCarryForward: {
     type: Number,
   },
 });

@@ -1,35 +1,36 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
 import { Link } from 'react-router-dom';
-import "./Settings.scss";
-
 import AdminNav from '../../../Components/Nav/adminNav';
 
 const Settings = () => {
   const [showLookupForm, setShowLookupForm] = useState(false);
   const [showHolidaysForm, setShowHolidaysForm] = useState(false);
-  const [showLsetupForm, setLsetupForm] = useState(false);
-  const [Lookups, setLookups] = useState([]);
-  const [LookupsT, setLookupType] = useState('');
+  const [showLsetupForm, setShowLsetupForm] = useState(false);
+
+  // Lookups state
+  const [lookups, setLookups] = useState([]);
+  const [LookupsT, setLookupsType] = useState('');
   const [LookupN, setLookupName] = useState('');
-  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [isUpdateModeLookup, setIsUpdateModeLookup] = useState(false);
   const [lookupToUpdate, setLookupToUpdate] = useState(null);
-  const [HolidaysToUpdate, setHolidaysToUpdate] = useState(null);
 
-  const [Holidays, setHolidays] = useState([]);
-  const [Date, setDate] = useState('');
-  const [Hname, setHname] = useState('');
-  const [Description, setDescription] = useState('');
+  // Holidays state
+  const [holidays, setHolidays] = useState([]);
+  const [date, setDate] = useState('');
+  const [holidayName, setHolidayName] = useState('');
+  const [description, setDescription] = useState('');
+  const [isUpdateModeHoliday, setIsUpdateModeHoliday] = useState(false);
+  const [holidayToUpdate, setHolidayToUpdate] = useState(null);
 
-  const [Lsetup, setLsetup] = useState([]);
-  const [SetupT, setSetupT] = useState('');
-  const [ Company, setCompany] = useState('');
-  const [Duration, setDuration] = useState('');
-  const [  Max_CarryF, setMax_CarryF] = useState('');
-  const [LsetupToUpdate, setLsetupToUpdate] = useState(null);
-  
+  // Leave setup state
+  const [lsetup, setLsetup] = useState([]);
+  const [setupType, setSetupType] = useState('');
+  const [company, setCompany] = useState('');
+  const [duration, setDuration] = useState('');
+  const [maxCarryForward, setMaxCarryForward] = useState('');
+  const [isUpdateModeLsetup, setIsUpdateModeLsetup] = useState(false);
+  const [lsetupToUpdate, setLsetupToUpdate] = useState(null);
 
   useEffect(() => {
     fetchLookups();
@@ -38,228 +39,283 @@ const Settings = () => {
   }, []);
 
   const fetchLookups = () => {
-    axios.get("http://localhost:8175/Lookups/")
-      .then(result => setLookups(result.data))
-      .catch(err => console.log(err));
+    axios
+      .get('http://localhost:8175/LookLeave/')
+      .then((result) => setLookups(result.data))
+      .catch((err) => console.log(err));
   };
 
   const fetchHolidays = () => {
-    axios.get("http://localhost:8175/Holidays/")
-      .then(result => setHolidays(result.data))
-      .catch(err => console.log(err));
+    axios
+      .get('http://localhost:8175/Holidays/')
+      .then((result) => setHolidays(result.data))
+      .catch((err) => console.log(err));
   };
 
   const fetchLsetup = () => {
-    axios.get("http://localhost:8175/Lsetup/")
-      .then(result => setLsetup(result.data))
-      .catch(err => console.log(err));
+    axios
+      .get('http://localhost:8175/Lsetup/')
+      .then((result) => setLsetup(result.data))
+      .catch((err) => console.log(err));
   };
 
-
-  const submitLsetup = (e) => {
-    e.preventDefault();
-    if (isUpdateMode) {
-      axios.put(`http://localhost:8175/Lsetup/update/${LsetupToUpdate._id}`, {  SetupT,
-      Company,
-      Duration,
-      Max_CarryF, })
-        .then(result => {
-          console.log(result);
-          setIsUpdateMode(false);
-          setLsetupToUpdate(null);
-          setSetupT('');
-          setCompany('');
-          setDuration('');
-          setMax_CarryF('');
-          fetchLsetup(); 
-        })
-        .catch(err => console.log(err));
-    } else {
-      axios.post("http://localhost:8175/Lsetup/create", { SetupT,
-      Company,
-      Duration,
-      Max_CarryF, })
-        .then(result => {
-          console.log(result);
-          fetchLsetup(); 
-        })
-        .catch(err => console.log(err));
-    }
-  };
-
+  // Handle lookup form submission
   const submitLookup = (e) => {
     e.preventDefault();
-    if (isUpdateMode) {
-      axios.put(`http://localhost:8175/Lookups/update/${lookupToUpdate._id}`, { LookupsT, LookupN })
-        .then(result => {
+    if (isUpdateModeLookup && lookupToUpdate) {
+      axios
+        .put(`http://localhost:8175/LookLeave/update/${lookupToUpdate._id}`, {
+          LookupsT,
+          LookupN,
+        })
+        .then((result) => {
           console.log(result);
-          setIsUpdateMode(false);
+          setIsUpdateModeLookup(false);
           setLookupToUpdate(null);
-          setLookupType('');
+          setLookupsType('');
           setLookupName('');
-          fetchLookups(); 
+          fetchLookups();
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else {
-      axios.post("http://localhost:8175/Lookups/create", { LookupsT, LookupN })
-        .then(result => {
+
+      const newl = {
+        LookupsT,
+        LookupN,
+      };
+
+      console.log(newl);
+      axios
+        .post('http://localhost:8175/LookLeave/create', newl)
+        .then((result) => {
           console.log(result);
-          fetchLookups(); 
+          fetchLookups();
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   };
 
- // Inside handleEditHoliday function
-const handleEditHoliday = (holiday) => {
-  setHolidaysToUpdate(holiday);
-  setDate(holiday.Date);
-  setHname(holiday.Hname);
-  setDescription(holiday.Description);
-  setIsUpdateMode(true);
-};
-
-const handleEditLsetup = (Lsetup) => {
-  setLsetupToUpdate(Lsetup);
-  setSetupT(Lsetup.SetupT)
-  setCompany(Lsetup.Company);
-  setDuration(Lsetup.Duration);
-  setMax_CarryF(Lsetup.Max_CarryF);
-  setIsUpdateMode(true);
-};
-
-// Inside submitHoliday function
-const submitHoliday = (e) => {
-  e.preventDefault();
-  if (isUpdateMode && HolidaysToUpdate) {
-    axios.put(`http://localhost:8175/Holidays/update/${HolidaysToUpdate._id}`, { Date, Hname, Description })
-      .then(result => {
-        console.log(result);
-        setIsUpdateMode(false);
-        setHolidaysToUpdate(null);
-        setDate('');
-        setHname('');
-        setDescription('');
-        fetchHolidays(); 
-      })
-      .catch(err => console.log(err));
-  } else {
-    axios.post("http://localhost:8175/Holidays/create", { Date, Hname, Description })
-      .then(result => {
-        console.log(result);
-        fetchHolidays(); 
-      })
-      .catch(err => console.log(err));
-  }
-};
-
-
-  const handleEditLookup = (lookup) => {
-    setLookupToUpdate(lookup);
-    setLookupType(lookup.LookupsT);
-    setLookupName(lookup.LookupN);
-    setIsUpdateMode(true);
+  // Handle holiday form submission
+  const submitHoliday = (e) => {
+    e.preventDefault();
+    if (isUpdateModeHoliday && holidayToUpdate) {
+      axios
+        .put(`http://localhost:8175/Holidays/update/${holidayToUpdate._id}`, {
+          date,
+          holidayName,
+          description,
+        })
+        .then((result) => {
+          console.log(result);
+          setIsUpdateModeHoliday(false);
+          setHolidayToUpdate(null);
+          setDate('');
+          setHolidayName('');
+          setDescription('');
+          fetchHolidays();
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .post('http://localhost:8175/Holidays/create', {
+          date,
+          holidayName,
+          description,
+        })
+        .then((result) => {
+          console.log(result);
+          fetchHolidays();
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
+  // Handle leave setup form submission
+  const submitLsetup = (e) => {
+    e.preventDefault();
+    if (isUpdateModeLsetup && lsetupToUpdate) {
+      axios
+        .put(
+          `http://localhost:8175/Lsetup/update/${lsetupToUpdate._id}`,
+          {
+            setupType,
+            company,
+            duration,
+            maxCarryForward,
+          }
+        )
+        .then((result) => {
+          console.log(result);
+          setIsUpdateModeLsetup(false);
+          setLsetupToUpdate(null);
+          setSetupType('');
+          setCompany('');
+          setDuration('');
+          setMaxCarryForward('');
+          fetchLsetup();
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .post('http://localhost:8175/Lsetup/create', {
+          setupType,
+          company,
+          duration,
+          maxCarryForward,
+        })
+        .then((result) => {
+          console.log(result);
+          fetchLsetup();
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
+  // Handle edit functions
+  const handleEditLookup = (lookup) => {
+    setLookupToUpdate(lookup);
+    setLookupsType(lookup.LookupsT);
+    setLookupName(lookup.LookupN);
+    setIsUpdateModeLookup(true);
+  };
+
+  const handleEditHoliday = (holiday) => {
+    setHolidayToUpdate(holiday);
+    setDate(holiday.date);
+    setHolidayName(holiday.holidayName);
+    setDescription(holiday.description);
+    setIsUpdateModeHoliday(true);
+  };
+
+  const handleEditLsetup = (Lsetup) => {
+    setLsetupToUpdate(Lsetup);
+    setSetupType(Lsetup.setupType);
+    setCompany(Lsetup.company);
+    setDuration(Lsetup.duration);
+    setMaxCarryForward(Lsetup.maxCarryForward);
+    setIsUpdateModeLsetup(true);
+  };
+
+  // Handle delete functions
   const handleDeleteLookup = (id) => {
-    axios.delete(`http://localhost:8175/Lookups/delete/${id}`)
-      .then(response => {
+    axios
+      .delete(`http://localhost:8175/LookLeave/delete/${id}`)
+      .then((response) => {
         console.log(response);
-        fetchLookups(); 
+        fetchLookups();
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error deleting lookup:', error);
       });
   };
 
   const handleDeleteHoliday = (id) => {
-    axios.delete(`http://localhost:8175/Holidays/delete/${id}`)
-      .then(response => {
+    axios
+      .delete(`http://localhost:8175/Holidays/delete/${id}`)
+      .then((response) => {
         console.log(response);
-        fetchHolidays(); 
+        fetchHolidays();
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error deleting holiday:', error);
       });
   };
 
   const handleDeleteLsetup = (id) => {
-    axios.delete(`http://localhost:8175/Lsetup/delete/${id}`)
-      .then(response => {
+    axios
+      .delete(`http://localhost:8175/Lsetup/delete/${id}`)
+      .then((response) => {
         console.log(response);
-        fetchLsetup(); 
+        fetchLsetup();
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error deleting Leave Setups:', error);
       });
   };
 
+  // Handle cancel functions
   const handleCancelLookup = () => {
-    setIsUpdateMode(false);
+    setIsUpdateModeLookup(false);
     setLookupToUpdate(null);
-    setLookupType('');
+    setLookupsType('');
     setLookupName('');
   };
 
   const handleCancelHoliday = () => {
+    setIsUpdateModeHoliday(false);
+    setHolidayToUpdate(null);
     setDate('');
-    setHname('');
+    setHolidayName('');
     setDescription('');
   };
 
   const handleCancelLsetup = () => {
-    setIsUpdateMode(false);
+    setIsUpdateModeLsetup(false);
     setLsetupToUpdate(null);
-    setSetupT('');
+    setSetupType('');
     setCompany('');
     setDuration('');
-    setMax_CarryF('');
-    
+    setMaxCarryForward('');
   };
 
   return (
     <div>
       <AdminNav />
-      <div className="ml-48 max-w-5xl mt-10">
-        <h1>Settings</h1>
-        <h3>Setup Company Status here</h3>
-        <ul>
-          <li>
-            <Link to="#" onClick={() => setLsetupForm(true)}>
-              Leave Setup
-            </Link>
-          </li>
-          <li>
-            <Link to="#" onClick={() => setShowHolidaysForm(true)}>
-              Company Holidays
-            </Link>
-          </li>
-          <li>
-            <Link to="#" onClick={() => setShowLookupForm(true)}>
-              Lookup Types
-            </Link>
-          </li>
-        </ul>
+      <div className="ml-48 max-w-5xl mt-24">
+        <div className="ml-20">
+          <h1 className="text-xl font-bold mb-4">Settings</h1>
+          <h3 className="text-lg font-semibold mb-2">
+            Setup Company Status here
+          </h3>
+          <ul className="list-disc pl-6">
+            <li>
+              <Link
+                to="#"
+                className="text-blue-500 hover:underline"
+                onClick={() => setShowLsetupForm(true)}
+              >
+                Leave Setup
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="text-blue-500 hover:underline"
+                onClick={() => setShowHolidaysForm(true)}
+              >
+                Company Holidays
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="text-blue-500 hover:underline"
+                onClick={() => setShowLookupForm(true)}
+              >
+                Lookup Types
+              </Link>
+            </li>
+          </ul>
+        </div>
 
         {/* Lookup form */}
         {showLookupForm && (
           <>
-            <form name="" className="formL" onSubmit={submitLookup}>
-              <h3>{isUpdateMode ? 'Update Lookup' : 'Create Lookup'}</h3>
-              <div className="form-row">
-                <div className="form-group">
+            <form name="" onSubmit={submitLookup}>
+              <h3>{isUpdateModeLookup ? 'Update Lookup' : 'Create Lookup'}</h3>
+              <div>
+                <div>
                   <label htmlFor="">Lookup Type</label>
                   <select
                     value={LookupsT}
-                    onChange={(e) => setLookupType(e.target.value)}
+                    onChange={(e) => setLookupsType(e.target.value)}
                   >
                     <option value="Annual Leave">Annual Leave</option>
                     <option value="Casual Leave">Casual Leave</option>
                     <option value="Official Leave">Official Leave</option>
                   </select>
                 </div>
-                <div className="form-group">
+                <div>
                   <label htmlFor="">Lookup Name</label>
                   <input
                     type="text"
@@ -271,31 +327,45 @@ const submitHoliday = (e) => {
                 </div>
               </div>
 
-              <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
-              <button type="button" onClick={handleCancelLookup}>
-                Cancel
-              </button>
+              <div className="flex mr-5 justify-between">
+                <button
+                  className="w-30 mx-10 my-2"
+                  type="button"
+                  onClick={handleCancelLookup}
+                >
+                  Cancel
+                </button>
+                <button className="w-30 mx-10 my-2" type="submit">
+                  {isUpdateModeLookup ? 'Update' : 'Add'}
+                </button>
+              </div>
             </form>
 
-            <div className="table-container">
-              <table>
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full">
                 <thead>
                   <tr>
-                    <th>Lookup Type</th>
-                    <th>Lookup Name</th>
-                    <th>Action</th>
+                    <th className="px-4 py-2">Lookup Type</th>
+                    <th className="px-4 py-2">Lookup Name</th>
+                    <th className="px-4 py-2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Lookups.map((lookup) => (
-                    <tr key={lookup._id}>
-                      <td>{lookup.LookupsT}</td>
-                      <td>{lookup.LookupN}</td>
-                      <td>
-                        <button onClick={() => handleEditLookup(lookup)}>
+                  {lookups.map((lookup) => (
+                    <tr key={lookup._id} className="bg-gray-100">
+                      <td className="border px-4 py-2">{lookup.LookupsT}</td>
+                      <td className="border px-4 py-2">{lookup.LookupN}</td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                          onClick={() => handleEditLookup(lookup)}
+                        >
                           Edit
                         </button>
-                        <button onClick={() => handleDeleteLookup(lookup._id)}>
+                        <button
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => handleDeleteLookup(lookup._id)}
+                        >
                           Delete
                         </button>
                       </td>
@@ -310,72 +380,87 @@ const submitHoliday = (e) => {
         {/* Holiday form */}
         {showHolidaysForm && (
           <>
-            <form name="Holiday" className="formL" onSubmit={submitHoliday}>
+            <form name="Holiday" onSubmit={submitHoliday}>
               <h3>
-                {isUpdateMode
+                {isUpdateModeHoliday
                   ? 'Update Company Holiday'
                   : 'Create Company Holiday'}
               </h3>
               <h4>Manage company holidays here</h4>
 
-              <div className="form-row">
-                <div className="form-group">
+              <div>
+                <div>
                   <label htmlFor="">Date</label>
                   <input
                     type="date"
-                    value={Date}
+                    value={date}
                     onChange={(e) => setDate(e.target.value)}
                   />
                 </div>
 
-                <div className="form-group">
+                <div>
                   <label htmlFor="">Holiday Name</label>
                   <input
                     type="text"
-                    value={Hname}
-                    onChange={(e) => setHname(e.target.value)}
+                    value={holidayName}
+                    onChange={(e) => setHolidayName(e.target.value)}
                     placeholder="Holiday name"
                   />
                 </div>
 
-                <div className="form-group">
+                <div>
                   <label htmlFor="">Description</label>
                   <textarea
                     rows="5"
-                    value={Description}
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Describe here"
                   />
                 </div>
               </div>
-
-              <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
-              <button type="button" onClick={handleCancelHoliday}>
-                Cancel
-              </button>
+              <div className="flex mr-5 justify-center">
+                <button
+                  className="w-30 mx-10 my-2"
+                  type="button"
+                  onClick={handleCancelHoliday}
+                >
+                  Cancel
+                </button>
+                <button className="w-30 mx-10 my-2" type="submit">
+                  {isUpdateModeHoliday ? 'Update' : 'Add'}
+                </button>
+              </div>
             </form>
 
-            <div className="table-container">
-              <table>
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full">
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>Holiday Name</th>
-                    <th>Description</th>
-                    <th>Action</th>
+                    <th className="px-4 py-2">Date</th>
+                    <th className="px-4 py-2">Holiday Name</th>
+                    <th className="px-4 py-2">Description</th>
+                    <th className="px-4 py-2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Holidays.map((holiday) => (
-                    <tr key={holiday._id}>
-                      <td>{holiday.Date}</td>
-                      <td>{holiday.Hname}</td>
-                      <td>{holiday.Description}</td>
-                      <td>
-                        <button onClick={() => handleEditHoliday(holiday)}>
+                  {holidays.map((holiday) => (
+                    <tr key={holiday._id} className="bg-gray-100">
+                      <td className="border px-4 py-2">{holiday.date}</td>
+                      <td className="border px-4 py-2">
+                        {holiday.holidayName}
+                      </td>
+                      <td className="border px-4 py-2">
+                        {holiday.description}
+                      </td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                          onClick={() => handleEditHoliday(holiday)}
+                        >
                           Edit
                         </button>
                         <button
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                           onClick={() => handleDeleteHoliday(holiday._id)}
                         >
                           Delete
@@ -389,28 +474,30 @@ const submitHoliday = (e) => {
           </>
         )}
 
-        {/* //Lsetup from */}
-
+        {/* Leave setup form */}
         {showLsetupForm && (
           <>
-            <form name="" className="formL" onSubmit={submitLsetup}>
+            <form name="" onSubmit={submitLsetup}>
               <h3>
-                {isUpdateMode ? 'Update Leave Setup' : 'Create Leave Setup'}
+                {isUpdateModeLsetup
+                  ? 'Update Leave Setup'
+                  : 'Create Leave Setup'}
               </h3>
-              <div className="form-row">
-                <div className="form-group">
+              <div>
+                <div>
                   <label htmlFor="">Setup Type</label>
                   <select
-                    value={SetupT}
-                    onChange={(e) => setSetupT(e.target.value)}
+                    value={setupType}
+                    onChange={(e) => setSetupType(e.target.value)}
                   >
                     <option value="Company">Company</option>
                     <option value="Individual">Individual</option>
                   </select>
-
+                </div>
+                <div>
                   <label htmlFor="">Company</label>
                   <select
-                    value={Company}
+                    value={company}
                     onChange={(e) => setCompany(e.target.value)}
                   >
                     <option value="Annual">Annual</option>
@@ -418,58 +505,73 @@ const submitHoliday = (e) => {
                     <option value="Official">Offical</option>
                   </select>
                 </div>
-                <div className="form-group">
+                <div>
                   <label htmlFor="">Duration</label>
                   <input
                     type="number"
                     name="Duration"
-                    value={Duration}
+                    value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     placeholder="Duration"
                   />
                 </div>
-
-                <div className="form-group">
+                <div>
                   <label htmlFor="">Max Carry Forward Leaves</label>
                   <input
                     type="number"
                     name="Max_CarryF"
-                    value={Max_CarryF}
-                    onChange={(e) => setMax_CarryF(e.target.value)}
+                    value={maxCarryForward}
+                    onChange={(e) => setMaxCarryForward(e.target.value)}
                     placeholder=" Enter Leaves"
                   />
                 </div>
               </div>
 
-              <button type="submit">{isUpdateMode ? 'Update' : 'Add'}</button>
-              <button type="button" onClick={handleCancelLsetup}>
-                Cancel
-              </button>
+              <div className="flex mr-5 justify-center">
+                <button
+                  className="w-30 mx-10 my-2"
+                  type="button"
+                  onClick={handleCancelLsetup}
+                >
+                  Cancel
+                </button>
+                <button className="w-30 mx-10 my-2" type="submit">
+                  {isUpdateModeLsetup ? 'Update' : 'Add'}
+                </button>
+              </div>
             </form>
 
-            <div className="table-container">
-              <table>
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full">
                 <thead>
                   <tr>
-                    <th>Setup Type</th>
-                    <th>Company</th>
-                    <th>Duration</th>
-                    <th>Max Carry Forward Leaves</th>
-                    <th>Action</th>
+                    <th className="px-4 py-2">Setup Type</th>
+                    <th className="px-4 py-2">Company</th>
+                    <th className="px-4 py-2">Duration</th>
+                    <th className="px-4 py-2">Max Carry Forward Leaves</th>
+                    <th className="px-4 py-2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Lsetup.map((Lsetup) => (
-                    <tr key={Lsetup._id}>
-                      <td>{Lsetup.SetupT}</td>
-                      <td>{Lsetup.Company}</td>
-                      <td>{Lsetup.Duration}</td>
-                      <td>{Lsetup.Max_CarryF}</td>
-                      <td>
-                        <button onClick={() => handleEditLsetup(Lsetup)}>
+                  {lsetup.map((lsetup) => (
+                    <tr key={lsetup._id} className="bg-gray-100">
+                      <td className="border px-4 py-2">{lsetup.setupType}</td>
+                      <td className="border px-4 py-2">{lsetup.company}</td>
+                      <td className="border px-4 py-2">{lsetup.duration}</td>
+                      <td className="border px-4 py-2">
+                        {lsetup.maxCarryForward}
+                      </td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                          onClick={() => handleEditLsetup(lsetup)}
+                        >
                           Edit
                         </button>
-                        <button onClick={() => handleDeleteLsetup(Lsetup._id)}>
+                        <button
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => handleDeleteLsetup(lsetup._id)}
+                        >
                           Delete
                         </button>
                       </td>

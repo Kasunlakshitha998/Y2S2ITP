@@ -1,79 +1,87 @@
-//LsetupB.js
+const router = require('express').Router();
+const Lsetup = require('../../models/Leave_Management/Lsetup');
 
-const router = require("express").Router();
-const Lsetup = require("../../models/Leave_Management/Lsetup");
-
-router.post("/create", async (req, res) => {
+// Create a new leave setup
+router.post('/create', async (req, res) => {
   try {
-    const SetupT = req.body.SetupT; // Corrected field name
-    const Company = req.body.Company;
-    const Duration = req.body.Duration;
-    const Max_CarryF = req.body.Max_CarryF;
+    const { setupType, company, duration, maxCarryForward } = req.body;
 
     const newLsetup = new Lsetup({
-      SetupT,
-      Company,
-      Duration,
-      Max_CarryF,
+      setupType,
+      company,
+      duration,
+      maxCarryForward,
     });
 
     await newLsetup.save();
-    res.json({ message: "Leave setup created successfully" });
+    res.json({ message: 'Leave setup created successfully' });
   } catch (error) {
-    console.error("Error creating Holiday:", error);
-    res.status(500).json({ error: "Failed to create Leave Setup" });
+    console.error('Error creating leave setup:', error);
+    res.status(500).json({ error: 'Failed to create leave setup' });
   }
 });
 
-router.route("/").get((req, res) => {
+// Get all leave setups
+
+router.get('/', (req, res) => {
   Lsetup.find()
-    .then((Lsetup) => {
-      res.json(Lsetup);
+    .then((setups) => {
+      res.json(setups);
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).json({ error: 'Failed to fetch setups' });
     });
 });
 
-//update product
-router.route("/update/:id").put(async (req, res) => {
-  //get product id
-  let id = req.params.id;
-  const { SetupT, Company, Duration, Max_CarryF } = req.body;
+
+
+// Update a leave setup by ID
+router.put('/update/:id', async (req, res) => {
+  const id = req.params.id;
+  const { setupType, company, duration, maxCarryForward } = req.body;
 
   const updateLsetup = {
-    SetupT,
-    Company,
-    Duration,
-    Max_CarryF,
+    setupType,
+    company,
+    duration,
+    maxCarryForward,
   };
 
-  const update = await Lsetup.findByIdAndUpdate(id, updateLsetup, {
-    new: true,
-  })
-    .then((Lsetup) => {
-      res.status(200).send({ status: "Leave setup update", Lsetup });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ status: "Error with updatind data" });
+  try {
+    const updatedLsetup = await Lsetup.findByIdAndUpdate(id, updateLsetup, {
+      new: true,
     });
+
+    if (!updatedLsetup) {
+      return res.status(404).json({ status: 'Leave setup not found' });
+    }
+
+    res
+      .status(200)
+      .json({ status: 'Leave setup updated', Lsetup: updatedLsetup });
+  } catch (error) {
+    console.error('Error updating leave setup:', error);
+    res.status(500).json({ status: 'Error updating leave setup' });
+  }
 });
 
-//Delete product
-router.route("/delete/:id").delete(async (req, res) => {
-  let Lsetup_id = req.params.id;
+// Delete a leave setup by ID
+router.delete('/delete/:id', async (req, res) => {
+  const setupId = req.params.id;
 
-  await Lsetup.findByIdAndDelete(Lsetup_id)
-    .then(() => {
-      res.status(200).send({ status: "Product Delete" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res
-        .status(500)
-        .send({ status: "Error with delete Holidays", error: err.message });
-    });
+  try {
+    const deletedSetup = await Lsetup.findByIdAndDelete(setupId);
+
+    if (!deletedSetup) {
+      return res.status(404).json({ status: 'Leave setup not found' });
+    }
+
+    res.status(200).json({ status: 'Leave setup deleted' });
+  } catch (error) {
+    console.error('Error deleting leave setup:', error);
+    res.status(500).json({ status: 'Error deleting leave setup' });
+  }
 });
 
 module.exports = router;

@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const HolidaysSchema = new Schema({
-  Date: {
+  date: {
     type: Date,
   },
 
-  Hname: {
+  holidayName: {
     type: String,
   },
 
-  Description: {
+  description: {
     type: String,
   },
 });

@@ -1,75 +1,81 @@
-// HolidaysB.JS
-const router = require("express").Router();
-const Holidays = require("../../models/Leave_Management/Holidays.js");
+const router = require('express').Router();
+const Holidays = require('../../models/Leave_Management/Holidays.js');
 
-router.post("/create", async (req, res) => {
+// Create a new holiday
+router.post('/create', async (req, res) => {
   try {
-    const Date = req.body.Date; // Corrected field name
-    const Hname = req.body.Hname;
-    const Description = req.body.Description;
+    const { date, holidayName, description } = req.body;
 
-    const newHolidays = new Holidays({
-      Date,
-      Hname,
-      Description,
+    const newHoliday = new Holidays({
+      date,
+      holidayName,
+      description,
     });
 
-    await newHolidays.save();
-    res.json({ message: "Holiday created successfully" });
+    await newHoliday.save();
+    res.json({ message: 'Holiday created successfully' });
   } catch (error) {
-    console.error("Error creating Holiday:", error);
-    res.status(500).json({ error: "Failed to create Holiday" });
+    console.error('Error creating holiday:', error);
+    res.status(500).json({ error: 'Failed to create holiday' });
   }
 });
 
-router.route("/").get((req, res) => {
-  Holidays.find()
-    .then((Holidays) => {
-      res.json(Holidays);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+// Get all holidays
+router.get('/', async (req, res) => {
+  try {
+    const holidays = await Holidays.find();
+    res.json(holidays);
+  } catch (error) {
+    console.error('Error fetching holidays:', error);
+    res.status(500).json({ error: 'Failed to fetch holidays' });
+  }
 });
 
-//update product
-router.route("/update/:id").put(async (req, res) => {
-  //get product id
-  let id = req.params.id;
-  const { Date, Hname, Description } = req.body;
+// Update a holiday by ID
+router.put('/update/:id', async (req, res) => {
+  const id = req.params.id;
+  const { date, holidayName, description } = req.body;
 
-  const updateHolidays = {
-    Date,
-    Hname,
-    Description,
+  const updateHoliday = {
+    date,
+    holidayName,
+    description,
   };
 
-  const update = await Holidays.findByIdAndUpdate(id, updateHolidays, {
-    new: true,
-  })
-    .then((Holidays) => {
-      res.status(200).send({ status: "Holiday update", Holidays });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ status: "Error with updatind data" });
+  try {
+    const updatedHoliday = await Holidays.findByIdAndUpdate(id, updateHoliday, {
+      new: true,
     });
+
+    if (!updatedHoliday) {
+      return res.status(404).json({ status: 'Holiday not found' });
+    }
+
+    res
+      .status(200)
+      .json({ status: 'Holiday updated', holiday: updatedHoliday });
+  } catch (error) {
+    console.error('Error updating holiday:', error);
+    res.status(500).json({ status: 'Error updating holiday' });
+  }
 });
 
-//Delete product
-router.route("/delete/:id").delete(async (req, res) => {
-  let Holidays_id = req.params.id;
+// Delete a holiday by ID
+router.delete('/delete/:id', async (req, res) => {
+  const holidayId = req.params.id;
 
-  await Holidays.findByIdAndDelete(Holidays_id)
-    .then(() => {
-      res.status(200).send({ status: "Product Delete" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res
-        .status(500)
-        .send({ status: "Error with delete Holidays", error: err.message });
-    });
+  try {
+    const deletedHoliday = await Holidays.findByIdAndDelete(holidayId);
+
+    if (!deletedHoliday) {
+      return res.status(404).json({ status: 'Holiday not found' });
+    }
+
+    res.status(200).json({ status: 'Holiday deleted' });
+  } catch (error) {
+    console.error('Error deleting holiday:', error);
+    res.status(500).json({ status: 'Error deleting holiday' });
+  }
 });
 
 module.exports = router;
