@@ -52,7 +52,7 @@ const MyLeaves = () => {
     e.preventDefault();
     if (isUpdateMode && LeaveRequestToUpdate) {
       axios.put(`http://localhost:8175/Leave/update/${LeaveRequestToUpdate._id}`, newLeaveRequest)
-        .then(result => {
+      .then(result =>  {
           console.log(result);
           setIsUpdateMode(false);
           setLeaveRequestToUpdate(null);
@@ -163,6 +163,7 @@ const MyLeaves = () => {
   });
   axios.get(`http://localhost:8175/user/getUsers/${userId}`)
   .then(result => {
+    
       console.log('User data:', result.data);
       setName(result.data.name);
       setEmail(result.data.email);
@@ -418,4 +419,4 @@ const MyLeaves = () => {
 
 
 
-export default MyLeaves;
+export default MyLeaves;
