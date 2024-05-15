@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-//import "./displayuser.css"; // Import your CSS file
+import "./displayuser.css"; // Import your CSS file
 import Swal from 'sweetalert2';
 import { BsPersonFill } from 'react-icons/bs'; // Import Bootstrap icon
 import AdminNav from '../Nav/adminNav'; // Import AdminNav component
