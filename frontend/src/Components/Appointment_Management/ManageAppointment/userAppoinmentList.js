@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import UserNav from '../../Nav/userNav';
 import Cookies from 'js-cookie';
@@ -27,18 +28,38 @@ function UserAppointmentList() {
     };
 
     const handleDelete = (id) => {
-        axios
-            .delete(`http://localhost:8175/appointment/delete/${id}`)
-            .then(() => {
-                // Refresh appointment list after deletion
-                fetchUserAppointments();
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('Error deleting appointment');
-            });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to delete this appointment!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(`http://localhost:8175/appointment/delete/${id}`)
+                    .then(() => {
+                        // Refresh appointment list after deletion
+                        fetchUserAppointments();
+                        Swal.fire(
+                            'Deleted!',
+                            'Your appointment has been deleted.',
+                            'success'
+                        );
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        Swal.fire(
+                            'Error!',
+                            'Failed to delete appointment.',
+                            'error'
+                        );
+                    });
+            }
+        });
     };
-
     return (
         <div>
             <header>
@@ -63,7 +84,7 @@ function UserAppointmentList() {
                     </thead>
                     <tbody className="text-sm text-gray-500">
                         {userAppointments.map((appointment, index) => (
-                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-grey-300'}>
+                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-300' : 'bg-grey-300'}>
                                 <td className="px-2 py-2">{appointment.name}</td>
                                 <td className="px-2 py-2">{appointment.email}</td>
                                 <td className="px-4 py-2">{appointment.telephone}</td>
