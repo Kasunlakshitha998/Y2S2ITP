@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import AdminNav from '../../Nav/adminNav';
 import jsPDF from 'jspdf';
@@ -29,16 +30,38 @@ function AppointmentList() {
     };
 
     const handleDelete = (id) => {
-        axios
-            .delete(`http://localhost:8175/appointment/delete/${id}`)
-            .then(() => {
-                fetchAppointments();
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('Error deleting appointment');
-            });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to delete this appointment!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(`http://localhost:8175/appointment/delete/${id}`)
+                    .then(() => {
+                        fetchAppointments();
+                        Swal.fire(
+                            'Deleted!',
+                            'Appointment has been deleted.',
+                            'success'
+                        );
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        Swal.fire(
+                            'Error!',
+                            'Failed to delete appointment.',
+                            'error'
+                        );
+                    });
+            }
+        });
     };
+
 
     const handleGenerateReport = () => {
         html2canvas(document.querySelector("#appointment-table")).then((canvas) => {
@@ -102,7 +125,7 @@ function AppointmentList() {
             <main className="plist ml-48">
                 <div>
                     <div className="flex justify-between items-center mt-2 mb-2 ml-20">
-                        <div className="rounded-lg bg-green-300 shadow-md p-4 mb-2 mr-2 ml-20 mt-0 mb-2 duration-500 hover:scale-105 hover:shadow-xl w-50 ">
+                        <div className="rounded-lg bg-blue-300 shadow-md p-4 mb-2 mr-2 ml-20 mt-0 mb-2 duration-500 hover:scale-105 hover:shadow-xl w-50 ">
                             <div className="flex items-center justify-center mb-2">
                                 <div className="text-lg font-semibold">Total Appointments</div>
                             </div>
