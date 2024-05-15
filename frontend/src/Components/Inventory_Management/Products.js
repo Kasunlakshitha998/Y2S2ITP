@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './productPage.css';
 import ReviewStar from '../Feedback Management/ReviewStar';
+import { BsBagPlus } from 'react-icons/bs';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { IoIosArrowDown } from 'react-icons/io';
 
 function Products() {
   const [loading, setLoading] = useState(true);
@@ -11,13 +14,17 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [cat, setCat] = useState([]);
   const [isCategoryOpen, setIsCatogeryOpen] = useState(false);
-  
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+
   const toggleCategory = () => {
     setIsCatogeryOpen(!isCategoryOpen);
   };
 
   const reSet = () => {
     setFilter(false);
+    setMinPrice('');
+    setMaxPrice('');
   };
 
   const filterRes = (catItem) => {
@@ -33,7 +40,6 @@ function Products() {
       axios
         .get('http://localhost:8175/product/')
         .then((res) => {
-          //console.log(res.data);
           setProducts(res.data);
           setLoading(false);
         })
@@ -45,267 +51,168 @@ function Products() {
     getProducts();
   }, []);
 
+  const applyFilters = (product) => {
+    const matchesSearch =
+      searchItem === '' ||
+      product.name.toLowerCase().includes(searchItem.toLowerCase());
+    const matchesCategory = !filter || cat.includes(product);
+    const matchesPrice =
+      (minPrice === '' || product.price >= Number(minPrice)) &&
+      (maxPrice === '' || product.price <= Number(maxPrice));
+    return matchesSearch && matchesCategory && matchesPrice;
+  };
+
   return (
     <div className="Container">
-      {loading ? ( // Display loading indicator
+      <>
+        <div className="ListCategory">
+          <div className="flex">
+            <button
+              onClick={toggleCategory}
+              className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-lg hover:bg-gray-200"
+              type="button"
+            >
+              All categories
+              <IoIosArrowDown />
+            </button>
+            <div className="z-10 relative">
+              {isCategoryOpen && (
+                <div className="absolute top-full right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <ul>
+                    <li>
+                      <button
+                        className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                        onClick={reSet}
+                      >
+                        All
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                        onClick={() => filterRes('Iphone')}
+                      >
+                        I Phone
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                        onClick={() => filterRes('Android')}
+                      >
+                        Android
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                        onClick={() => filterRes('Tablets')}
+                      >
+                        Tablets
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
+                        onClick={() => filterRes('accessories')}
+                      >
+                        Accessories
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+            <div className="relative w-full">
+              <input
+                type="search"
+                className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Search products..."
+                onChange={(e) => {
+                  setSearchItem(e.target.value);
+                }}
+                required
+              />
+              <button
+                type="submit"
+                className="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              >
+                <AiOutlineSearch />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center my-4">
+          <div className="flex space-x-4">
+            <input
+              type="number"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Min Price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+            />
+            <input
+              type="number"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Max Price"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            />
+            <button
+              onClick={reSet}
+              className="p-2.5 text-sm font-medium text-white bg-red-500 rounded-lg border border-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </>
+      {loading ? (
         <div className="loader"></div>
       ) : (
         <>
-          <div className="ListCategory">
-            <div className="flex">
-              <button
-                onClick={toggleCategory}
-                className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-lg hover:bg-gray-200"
-                type="button"
-              >
-                All categories
-                <svg
-                  className="w-2.5 h-2.5 ms-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-              <div className="z-10 relative">
-                {isCategoryOpen && (
-                  <div className="absolute top-full right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
-                    <ul>
-                      <li>
-                        <button
-                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={reSet}
-                        >
-                          All
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={() => filterRes('Iphone')}
-                        >
-                          I Phone
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={() => filterRes('Android')}
-                        >
-                          Android
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={() => filterRes('Tablets')}
-                        >
-                          Tablets
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          className="categoryButton hover:bg-gray-100 w-full py-2 px-4 text-left"
-                          onClick={() => filterRes('accessories')}
-                        >
-                          Accessories
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <div className="relative w-full">
-                <input
-                  type="search"
-                  className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Search products..."
-                  onChange={(e) => {
-                    setSearchItem(e.target.value);
-                  }}
-                  required
-                />
-                <button
-                  type="submit"
-                  className="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-8 mt-4 mb-4">
+            {(filter ? cat : products).filter(applyFilters).map((product) => (
+              <Link to={`/product/${product._id}`} key={product._id}>
+                <div className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl">
+                  <div className="overflow-hidden">
+                    <img
+                      src={product.image[0]}
+                      alt={`${product.name}_0`}
+                      className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
                     />
-                  </svg>
-                </button>
-              </div>
-            </div>
+                  </div>
+
+                  <div className="px-4 py-3 w-72">
+                    <strong className="text-lg font-bold text-black truncate block capitalize">
+                      {product.name}
+                    </strong>
+                    <div className="flex items-center mt-2.5">
+                      <ReviewStar id={product._id} />
+                    </div>
+
+                    <div className="flex items-center">
+                      <p className="text-lg font-semibold text-blue-700 cursor-auto my-3">
+                        Rs.{product.price.toLocaleString()}
+                      </p>
+                      <del>
+                        <p className="text-sm text-red-600 cursor-auto ml-2">
+                          Rs.{product.price.toLocaleString()}
+                        </p>
+                      </del>
+
+                      <div className="ml-auto">
+                        <Link to="/cart">
+                          <BsBagPlus size={20} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-
-          {filter ? (
-            <>
-              <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-8 mt-4 mb-4">
-                {cat
-                  .filter((product) => {
-                    if (searchItem === '') {
-                      return product;
-                    } else if (
-                      product.name
-                        .toLowerCase()
-                        .includes(searchItem.toLowerCase())
-                    ) {
-                      return product;
-                    }
-                  })
-                  .map((product) => (
-                    <Link to={`/product/${product._id}`}>
-                      <div
-                        className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl"
-                        key={product._id}
-                      >
-                        <div className="overflow-hidden">
-                          <img
-                            src={product.image[0]}
-                            alt={`${product.name}_0`}
-                            className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
-                          />
-                        </div>
-
-                        <div className="px-4 py-3 w-72">
-                          <strong className="text-lg font-bold text-black truncate block capitalize">
-                            {product.name}
-                          </strong>
-                          {/* rating */}
-                          <div className="flex items-center mt-2.5">
-                            <ReviewStar id={product._id} />
-                          </div>
-
-                          <div class="flex items-center">
-                            <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
-                              Rs.{product.price.toLocaleString()}
-                            </p>
-
-                            <del>
-                              <p class="text-sm text-gray-600 cursor-auto ml-2">
-                                Rs.{product.price.toLocaleString()}
-                              </p>
-                            </del>
-
-                            <div class="ml-auto">
-                              <Link to="/cart">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="currentColor"
-                                  class="bi bi-bag-plus"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                                  />
-                                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-8 mt-4 mb-4">
-                {products
-                  .filter((product) => {
-                    if (searchItem === '') {
-                      return product;
-                    } else if (
-                      product.name
-                        .toLowerCase()
-                        .includes(searchItem.toLowerCase())
-                    ) {
-                      return product;
-                    }
-                  })
-                  .map((product) => (
-                    <Link to={`/product/${product._id}`}>
-                      <div
-                        className="w-72 bg-white shadow-md rounded-xl duration-200 hover:scale-105 hover:shadow-xl"
-                        key={product._id}
-                      >
-                        <div className="overflow-hidden">
-                          <img
-                            src={product.image[0]}
-                            alt={`${product.name}_0`}
-                            className="h-50 w-80 object-cover rounded-t-xl transition-transform duration-300 transform-gpu hover:scale-125"
-                          />
-                        </div>
-
-                        <div className="px-4 py-3 w-72">
-                          <strong className="text-lg font-bold text-black truncate block capitalize">
-                            {product.name}
-                          </strong>
-                          {/* rating */}
-                          <div className="flex items-center mt-2.5">
-                            <ReviewStar id={product._id} />
-                          </div>
-
-                          <div class="flex items-center">
-                            <p class="text-lg font-semibold text-blue-700 cursor-auto my-3">
-                              Rs.{product.price.toLocaleString()}
-                            </p>
-                            <del>
-                              <p class="text-sm text-red-600 cursor-auto ml-2">
-                                Rs.{product.price.toLocaleString()}
-                              </p>
-                            </del>
-
-                            <div class="ml-auto">
-                              <Link to="/cart">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="currentColor"
-                                  class="bi bi-bag-plus"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                                  />
-                                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-            </>
-          )}
         </>
       )}
     </div>

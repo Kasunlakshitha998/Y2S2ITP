@@ -46,7 +46,7 @@ function HomePage() {
 
       <div id="section1">
         <div id="product-cards">
-          <h1 className="text-center">PRODUCTS</h1>
+          <h1 className="text-center font-extralight">ALL  PRODUCTS</h1>
           <Products />
         </div>
       </div>

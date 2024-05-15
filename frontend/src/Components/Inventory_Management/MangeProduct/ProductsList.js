@@ -11,8 +11,8 @@ import {
   FaEdit,
   FaTrash,
 } from 'react-icons/fa';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
+import * as XLSX from 'xlsx';
 
 
 function ProductsList() {
@@ -23,7 +23,9 @@ function ProductsList() {
   const [itemsPerPage] = useState(4);
   const [outOfStockCount, setOutOfStockCount] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+
+
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -161,54 +163,40 @@ function ProductsList() {
     }
   };
 
-
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
+
+
 const handleReport = () => {
-  // Format the product data into CSV format
-  const tableHeader = 'Name,Category,Stock Count,Price';
-  const productsCSV = [tableHeader]
-    .concat(
-      products.map((product) => {
-        // Handle 0 stock count differently
-        const stockCount = product.countInStock === 0 ? 'Out of Stock' : product.countInStock;
-        return `${product.name},${product.category},${stockCount},${product.price}`;
-      })
-    )
-    .join('\n');
+  // Create a new workbook
+  const wb = XLSX.utils.book_new();
 
-  // Create a Blob object containing the CSV data
-  const blob = new Blob([productsCSV], { type: 'text/csv' });
+  // Prepare data for the worksheet
+  const wsData = [
+    ['Name', 'Category', 'Stock Count', 'Price'], // Header row
+    ...products.map((product) => {
+      // Map each product to a row in the worksheet
+      return [
+        product.name,
+        product.category, 
+        product.countInStock === 0 ? 'Out of Stock' : product.countInStock,
+        product.price, 
+      ];
+    }),
+  ];
 
-  // Create a temporary URL for the Blob
-  const url = window.URL.createObjectURL(blob);
+  // Convert data to worksheet format
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
 
-  // Create a temporary link element
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', 'products_report.csv');
+  // Append the worksheet to the workbook
+  XLSX.utils.book_append_sheet(wb, ws, 'Products');
 
-  // Simulate a click on the link to trigger the download
-  document.body.appendChild(link);
-  link.click();
-
-  // Clean up by removing the temporary link and URL
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(url);
+  // Save the workbook to a file with the name 'products_report.xlsx'
+  XLSX.writeFile(wb, 'products_report.xlsx');
 };
 
-  // const handleReport = () => {
-  //   // Generate PDF report logic
-  //   html2canvas(document.querySelector('#product-table')).then((canvas) => {
-  //     const imgData = canvas.toDataURL('image/png');
-  //     const pdf = new jsPDF();
-  //     const imgHeight = (canvas.height * 208) / canvas.width;
-  //     pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
-  //     pdf.save('products_report.pdf');
-  //   });
-  // };
 
 
   return (
@@ -234,7 +222,10 @@ const handleReport = () => {
           {isPopupOpen && <PopupComponent onClose={togglePopup} />}
 
           {/* Out of Stock Products Card */}
-          <div className="rounded-lg bg-red-200 shadow-md p-4 mb-4 mr-4 duration-500 hover:scale-105 hover:shadow-xl w-50">
+          <button
+            // onClick={osCount}
+            className="rounded-lg bg-red-200 shadow-md p-4 mb-4 mr-4 duration-500 hover:scale-105 hover:shadow-xl w-50"
+          >
             <div className="flex items-center justify-center mb-2">
               <FaExclamationCircle className="text-red-700 text-2xl mr-2" />
               <div className="text-lg font-semibold">Out of Stock Products</div>
@@ -242,7 +233,7 @@ const handleReport = () => {
             <div className="text-center text-3xl font-bold text-gray-800">
               {outOfStockCount}
             </div>
-          </div>
+          </button>
         </div>
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-1 p-3 max-w-full sm:max-w-7xl">
@@ -481,7 +472,3 @@ const handleReport = () => {
 }
 
 export default ProductsList;
-
-
-
-
