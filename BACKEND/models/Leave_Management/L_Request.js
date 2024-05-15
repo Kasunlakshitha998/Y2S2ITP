@@ -4,22 +4,22 @@ const Schema = mongoose.Schema;
 const L_RequestSchema = new Schema({
   EmpID: {
     type: String,
-    required: true,
+    //required: true,
   },
 
   name: {
     type: String,
-    required: true,
+    //required: true,
   },
 
   Email: {
     type: String,
-    required: true,
+   // required: true,
   },
 
   Contact: {
     type: Number,
-    required: true,
+    //required: true,
   },
 
   Destination: {

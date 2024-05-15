@@ -91,6 +91,10 @@ function Staff() {
     return (
         <div className="container-fluid">
             <AdminNav />
+            <div className="button-container">
+                    <Link to="/createstaff" className='bg-green-500 hover:bg-green-700 text-white inline-flex items-center border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-2.5'>Add +</Link>
+                    
+                </div>
             <div className="card-body">
                 <div className="search-bar">
                     <input

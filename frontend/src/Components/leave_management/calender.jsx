@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
-import './custom-calendar.css'; // Import the custom CSS file
+//import './custom-calendar.css'; // Import the custom CSS file
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
