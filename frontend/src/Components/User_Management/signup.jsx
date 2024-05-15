@@ -49,7 +49,12 @@ function Signup() {
         e.preventDefault();
 
         if (!name || !email || !password || !reenterPassword || !number) {
-          alert("All fields must be filled");
+         
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            text: "All fields must be filled.",
+          });
           return;
       }
 
@@ -151,15 +156,15 @@ function Signup() {
                 <div className="information d-flex align-items-center">
                    <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
                    
-                   <p className="mb-0">92 Cherry Drive Uniondale, NY 11553</p>
+                   <p className="mb-0">No:43, Namaluwa Rd, Dekatana, Sri Lanka</p>
                  </div>
                     <div className="information">
                     <i className="bi bi-envelope-fill fs-5 me-3"></i>
-                        <p className="mb-0">lorem@ipsum.com</p>
+                        <p className="mb-0">techconnectstore@gmail.com</p>
                     </div>
                     <div className="information">
                     <i className="bi bi-telephone-fill fs-5 me-3"></i>
-                        <p className="mb-0">123-456-789</p>
+                        <p className="mb-0">+94 757 717 569</p>
                     </div>
                 </div>
                 {/* Social Media Links */}
