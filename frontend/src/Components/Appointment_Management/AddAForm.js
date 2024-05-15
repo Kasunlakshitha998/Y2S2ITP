@@ -314,14 +314,15 @@ export default function AddAForm() {
               Date:<FaCalendar/>
             </label>
             <input
-              type="date"
-              id="date"
-              name="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
+  type="date"
+  id="date"
+  name="date"
+  value={date}
+  onChange={(e) => setDate(e.target.value)}
+  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+  min={new Date().toISOString().split('T')[0]} // Set min attribute to today's date
+  required
+/>
           </div>
           <div className="mb-4">
             <label

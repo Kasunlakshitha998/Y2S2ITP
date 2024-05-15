@@ -46,11 +46,11 @@ function UserAppointmentList() {
             </header>
 
             <div>
-                <table className="w-full border-collapse mt-20 ml-0 px-20 round-lg">
+                <table className="w-full border-collapse mt-20 ml-0 px-10 round-lg">
                     <thead className="text-xs text-white bg-gray-900">
                         <tr>
-                            <th className="px-4 py-2">Name</th>
-                            <th className="px-4 py-2">Email</th>
+                            <th className="px-2 py-2">Name</th>
+                            <th className="px-2 py-2">Email</th>
                             <th className="px-4 py-2">Telephone</th>
                             <th className="px-4 py-2">Phone Type</th>
                             <th className="px-2 py-2">Service Type</th>
@@ -64,8 +64,8 @@ function UserAppointmentList() {
                     <tbody className="text-sm text-gray-500">
                         {userAppointments.map((appointment, index) => (
                             <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-grey-300'}>
-                                <td className="px-4 py-2">{appointment.name}</td>
-                                <td className="px-4 py-2">{appointment.email}</td>
+                                <td className="px-2 py-2">{appointment.name}</td>
+                                <td className="px-2 py-2">{appointment.email}</td>
                                 <td className="px-4 py-2">{appointment.telephone}</td>
                                 <td className="px-4 py-2">{appointment.phoneType}</td>
                                 <td className="px-2 py-2">{appointment.serviceType}</td>

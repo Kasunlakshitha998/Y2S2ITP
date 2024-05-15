@@ -1,9 +1,10 @@
 #appointment-table {
     /* Adjust the padding to reduce space between table cells */
-    padding: 0;
+    padding: 2;
     /* Add margin-top to create space between the navigation bar and the table */
      /* Adjust the value as needed */
     margin-left: 1px;
+    margin-right: 4px;
 }
 
 #appointment-table th,

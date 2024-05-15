@@ -99,10 +99,10 @@ function AppointmentList() {
             <header>
                 <AdminNav />
             </header>
-            <main className="plist ml-18">
+            <main className="plist ml-48">
                 <div>
-                    <div className="flex justify-between items-center mt-5 mb-2">
-                        <div className="rounded-lg bg-green-300 shadow-md p-4 mb-2 mr-4 ml-10 mt-0 duration-500 hover:scale-105 hover:shadow-xl w-50">
+                    <div className="flex justify-between items-center mt-2 mb-2 ml-20">
+                        <div className="rounded-lg bg-green-300 shadow-md p-4 mb-2 mr-2 ml-20 mt-0 mb-2 duration-500 hover:scale-105 hover:shadow-xl w-50 ">
                             <div className="flex items-center justify-center mb-2">
                                 <div className="text-lg font-semibold">Total Appointments</div>
                             </div>
@@ -110,7 +110,7 @@ function AppointmentList() {
                                 {filteredAppointments.length}
                             </div>
                         </div>
-                        <div>
+                        <div >
                             <button
                                 onClick={handleGenerateReport}
                                 className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded-lg mt-12 mr-20 rounded-lg "
@@ -126,7 +126,8 @@ function AppointmentList() {
                             type="text"
                             placeholder="Search by name..."
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="px-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ml-10 "
+                            className="block px-4 py-2.5 text-sm text-gray-900 border border-gray-800 rounded-lg w-36 sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                            
                         />
                     </div>
                 
@@ -190,6 +191,7 @@ function AppointmentList() {
                             ))}
                         </tbody>
                     </table>
+                
                     
                     {/* Pagination */}
                     <div className="flex justify-center mt-4">
