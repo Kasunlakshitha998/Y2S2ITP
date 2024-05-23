@@ -62,7 +62,7 @@ function Login() {
                   
     
                     if (isAdmin) {
-                        navigate('/admin');
+                        navigate('/userdetails');
                     } else if (isStaff) { // Check if user is staff
                         navigate('/staff/mLeave'); // Navigate to staff page
                     } else {

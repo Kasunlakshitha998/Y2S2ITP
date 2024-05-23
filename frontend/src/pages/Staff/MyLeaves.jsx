@@ -238,6 +238,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Destination}
                   onChange={handleInputChange}
                   placeholder="Designation"
+                  required
                 />
               </div>
 
@@ -248,6 +249,7 @@ const MyLeaves = () => {
                   name="LDateF"
                   value={newLeaveRequest.LDateF}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
 
@@ -258,6 +260,7 @@ const MyLeaves = () => {
                   name="LdateT"
                   value={newLeaveRequest.LdateT}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
             </div>
@@ -271,6 +274,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.LType}
                   onChange={handleInputChange}
                   placeholder="Leave Type"
+                  required
                 />
               </div>
 
@@ -282,19 +286,11 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Lduration}
                   onChange={handleInputChange}
                   placeholder="Leave Duration"
+                  required
                 />
               </div>
 
-              <div className="form-row">
-                <label htmlFor="">Attachments</label>
-                <input
-                  type="file"
-                  name="attachments"
-                  value={newLeaveRequest.attachments}
-                  onChange={handleInputChange}
-                  placeholder="Attachments"
-                />
-              </div>
+           
 
               <div className="form-row">
                 <label htmlFor="">Remarks</label>
@@ -304,6 +300,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.remarks}
                   onChange={handleInputChange}
                   placeholder="Remarks"
+                  required
                 />
               </div>
 
@@ -315,6 +312,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Sup_name}
                   onChange={handleInputChange}
                   placeholder="Supervisor Name"
+                  required
                 />
               </div>
 
@@ -326,6 +324,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Sup_des}
                   onChange={handleInputChange}
                   placeholder="Supervisor Designation"
+                  required
                 />
               </div>
 
@@ -337,6 +336,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Backup}
                   onChange={handleInputChange}
                   placeholder="Backup person"
+                  required
                 />
               </div>
             </div>

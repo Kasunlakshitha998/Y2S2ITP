@@ -85,9 +85,7 @@ function AdminNav() {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul>
-          <li className={activeLink === "/admin" ? "active" : ""}>
-            <Link to="/admin">Dashboard</Link>
-          </li>
+          
           <li className={activeLink === "/userdetails" ? "active" : ""}>
             <Link to="/userdetails">Users</Link>
           </li>
