@@ -46,7 +46,9 @@ function Signup() {
 
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+       
+
+        e.preventDefault()
 
         if (!name || !email || !password || !reenterPassword || !number) {
          
