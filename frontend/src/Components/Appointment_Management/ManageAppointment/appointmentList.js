@@ -102,7 +102,7 @@ function AppointmentList() {
             <main className="plist ml-48">
                 <div>
                     <div className="flex justify-between items-center mt-2 mb-2 ml-20">
-                        <div className="rounded-lg bg-green-300 shadow-md p-4 mb-2 mr-2 ml-20 mt-0 mb-2 duration-500 hover:scale-105 hover:shadow-xl w-50 ">
+                        <div className="rounded-lg bg-green-300 shadow-md p-4 mr-2 ml-20 mt-0 mb-2 duration-500 hover:scale-105 hover:shadow-xl w-50 ">
                             <div className="flex items-center justify-center mb-2">
                                 <div className="text-lg font-semibold">Total Appointments</div>
                             </div>
@@ -113,7 +113,7 @@ function AppointmentList() {
                         <div >
                             <button
                                 onClick={handleGenerateReport}
-                                className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded-lg mt-12 mr-20 rounded-lg "
+                                className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded-lg mt-12 mr-20 "
                             >
                                 <FaReceipt/>
                                 Report
