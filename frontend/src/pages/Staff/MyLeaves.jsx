@@ -52,7 +52,7 @@ const MyLeaves = () => {
     e.preventDefault();
     if (isUpdateMode && LeaveRequestToUpdate) {
       axios.put(`http://localhost:8175/Leave/update/${LeaveRequestToUpdate._id}`, newLeaveRequest)
-        .then(result => {
+      .then(result =>  {
           console.log(result);
           setIsUpdateMode(false);
           setLeaveRequestToUpdate(null);
@@ -163,6 +163,7 @@ const MyLeaves = () => {
   });
   axios.get(`http://localhost:8175/user/getUsers/${userId}`)
   .then(result => {
+    
       console.log('User data:', result.data);
       setName(result.data.name);
       setEmail(result.data.email);
@@ -237,6 +238,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Destination}
                   onChange={handleInputChange}
                   placeholder="Designation"
+                  required
                 />
               </div>
 
@@ -247,6 +249,7 @@ const MyLeaves = () => {
                   name="LDateF"
                   value={newLeaveRequest.LDateF}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
 
@@ -257,6 +260,7 @@ const MyLeaves = () => {
                   name="LdateT"
                   value={newLeaveRequest.LdateT}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
             </div>
@@ -270,6 +274,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.LType}
                   onChange={handleInputChange}
                   placeholder="Leave Type"
+                  required
                 />
               </div>
 
@@ -281,19 +286,11 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Lduration}
                   onChange={handleInputChange}
                   placeholder="Leave Duration"
+                  required
                 />
               </div>
 
-              <div className="form-row">
-                <label htmlFor="">Attachments</label>
-                <input
-                  type="file"
-                  name="attachments"
-                  value={newLeaveRequest.attachments}
-                  onChange={handleInputChange}
-                  placeholder="Attachments"
-                />
-              </div>
+           
 
               <div className="form-row">
                 <label htmlFor="">Remarks</label>
@@ -303,6 +300,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.remarks}
                   onChange={handleInputChange}
                   placeholder="Remarks"
+                  required
                 />
               </div>
 
@@ -314,6 +312,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Sup_name}
                   onChange={handleInputChange}
                   placeholder="Supervisor Name"
+                  required
                 />
               </div>
 
@@ -325,6 +324,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Sup_des}
                   onChange={handleInputChange}
                   placeholder="Supervisor Designation"
+                  required
                 />
               </div>
 
@@ -336,6 +336,7 @@ const MyLeaves = () => {
                   value={newLeaveRequest.Backup}
                   onChange={handleInputChange}
                   placeholder="Backup person"
+                  required
                 />
               </div>
             </div>
@@ -418,4 +419,4 @@ const MyLeaves = () => {
 
 
 
-export default MyLeaves;
+export default MyLeaves;

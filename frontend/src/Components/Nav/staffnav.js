@@ -91,12 +91,12 @@ function StaffNav() {
           </li>
 
           <li className={activeLink === "" ? "active" : ""}>
-            <Link to="/staff/mLeave">Leave</Link>
+            <Link to="/staff/mLeave"> My Leave</Link>
           </li>
 
 
           <li className={activeLink === "" ? "active" : ""}>
-            <Link to="/staff/reports">My Reports</Link>
+            <Link to="/">Logout</Link>
           </li>
 
         </ul>

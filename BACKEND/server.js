@@ -22,6 +22,7 @@ app.get("/products", async (req, res) => {
   }
 });
 
+
 // Middleware
 app.use(express.json({ extended: false, limit: '50mb' }));
 app.use(
@@ -31,6 +32,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 const path = require('path');
+
 
 
 

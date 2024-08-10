@@ -100,7 +100,14 @@ function LeaveList() {
               </button>
             </Link>
           </div>
-
+          <div className="rounded-lg bg-red-300 shadow-md p-4 mb-2 mr-2 ml-20 mt-0 mb-2 duration-500 hover:scale-105 hover:shadow-xl w-50 ">
+                            <div className="flex items-center justify-center mb-2">
+                                <div className="text-lg font-semibold">Total Requested Leaves</div>
+                            </div>
+                            <div className="text-center text-3xl font-bold text-gray-800">
+                                {filteredleave.length}
+                            </div>
+                        </div>
           <div>
             <button
               onClick={handleGenerateReport}

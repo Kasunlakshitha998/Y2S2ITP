@@ -241,8 +241,63 @@ router.route('/forgot-password').post((req, res) => {
       const mailOptions = {
         from: 'navindadharmasiri@gmail.com',
         to: user.email,
-        subject: 'Password Reset OTP',
-        text: `Your OTP for password reset is: ${otp}`,
+        subject: 'Your Recent Phone Purchase - Order Confirmation & OTP for Account Login',
+        text: `
+        ---
+        
+        **Subject: Your Recent Phone Purchase - Order Confirmation & OTP for Account Login**
+        
+        Dear [Ravindu],
+        
+        Thank you for your recent purchase at Tecconet mobile shop We are delighted to confirm that your order for i phone 15 has been successfully processed.
+        
+        **Order Details:**
+        
+        - **Order Number:** [665dbed77407b30d42645566]
+        - **Phone Model:** [iPhone 15]
+        - **Purchase Date:** [6/3/2024]
+        - **Total Amount:** [24000]
+        
+        
+        
+        **Account Login:**
+        
+        To track your order and manage your account, please log in to our website using the One-Time Password (OTP) provided below:
+        
+        - **OTP:**  ${otp}
+        
+        **Login Instructions:**
+        
+        1. Visit our website: [http://localhost:3000/home]
+        2. Click on the "Login" button.
+        3. Enter your registered email address.
+        4. Input the OTP provided above.
+        5. Click "Submit" to access your account.
+        
+        **What Happens Next:**
+        
+        1. **Processing Your Order:** Our team is preparing your order for shipment. You will receive another email once your order has been shipped, including a tracking number.
+        2. **Delivery:** Your phone will be delivered to the provided address. Please ensure someone is available to receive the package.
+        3. **Enjoy Your New Phone:** Once you receive your phone, you can start enjoying the latest features and capabilities of your new device.
+        
+        **Need Help?**
+        
+        If you have any questions or need further assistance, please feel free to reach out to our customer support team at [Customer Support Email] or call us at [Customer Support Phone Number]. We're here to help!
+        
+        Thank you for choosing [Phone Shop Name]. We hope you enjoy your new phone and look forward to serving you again in the future.
+        
+        Best regards,
+        
+        Navinda Viraj
+        Owner  
+        [Tecconect]  
+        No:43, Namaluwa Rd, Dekatana, Sri Lanka
+        techconnectstore@gmail.com
+        94 757 717 569
+        
+        ---
+        
+        Feel free to customize this template with the specific details related to your shop and customer order.`,
       };
 
       // Send email

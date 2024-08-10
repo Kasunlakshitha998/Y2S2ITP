@@ -62,7 +62,7 @@ function Login() {
                   
     
                     if (isAdmin) {
-                        navigate('/admin');
+                        navigate('/userdetails');
                     } else if (isStaff) { // Check if user is staff
                         navigate('/staff/mLeave'); // Navigate to staff page
                     } else {
@@ -101,15 +101,15 @@ function Login() {
                     <div className="info">
                         <div className="information d-flex align-items-center">
                             <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
-                            <p className="mb-0">92 Cherry Drive Uniondale, NY 11553</p>
+                            <p className="mb-0">No:43, Namaluwa Rd, Dekatana, Sri Lanka</p>
                         </div>
                         <div className="information">
                             <i className="bi bi-envelope-fill fs-5 me-3"></i>
-                            <p className="mb-0">lorem@ipsum.com</p>
+                            <p className="mb-0">techconnectstore@gmail.com</p>
                         </div>
                         <div className="information">
                             <i className="bi bi-telephone-fill fs-5 me-3"></i>
-                            <p className="mb-0">123-456-789</p>
+                            <p className="mb-0">+94 757 717 569</p>
                         </div>
                     </div>
                     <div className="social-media">
