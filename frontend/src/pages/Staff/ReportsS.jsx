@@ -203,15 +203,9 @@ const MyLeaves = () => {
                   Loading Report...
                 </button>
               ) : (
-                <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-                <div className="px-6 py-4">
-                    <h2 className="text-xl font-bold mb-2">Download Your Leave Report Here</h2>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Download Report
-                    </button>
-                </div>
-            </div>
-            
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Download Report
+                </button>
               )
             }
           </PDFDownloadLink>
