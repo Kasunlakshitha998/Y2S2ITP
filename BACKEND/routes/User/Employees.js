@@ -245,22 +245,7 @@ router.route('/forgot-password').post((req, res) => {
         text: `
         ---
         
-        **Subject: Your Recent Phone Purchase - Order Confirmation & OTP for Account Login**
         
-        Dear [Ravindu],
-        
-        Thank you for your recent purchase at Tecconet mobile shop We are delighted to confirm that your order for i phone 15 has been successfully processed.
-        
-        **Order Details:**
-        
-        - **Order Number:** [665dbed77407b30d42645566]
-        - **Phone Model:** [iPhone 15]
-        - **Purchase Date:** [6/3/2024]
-        - **Total Amount:** [24000]
-        
-        
-        
-        **Account Login:**
         
         To track your order and manage your account, please log in to our website using the One-Time Password (OTP) provided below:
         
@@ -297,7 +282,7 @@ router.route('/forgot-password').post((req, res) => {
         
         ---
         
-        Feel free to customize this template with the specific details related to your shop and customer order.`,
+   `,
       };
 
       // Send email
