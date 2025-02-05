@@ -32,7 +32,7 @@ router.route('/register').post((req, res) => {
                           res.cookie('userEmail', email, { maxAge: 86400000 });
 
                           // Generate OTP
-                          const otp = generateNumericOTP(6); // You need to define this function
+                          const otp = generateNumericOTP(6); 
 
                           // Save OTP in the database
                           newEmployee.otp = otp;
