@@ -43,7 +43,7 @@ router.route('/register').post((req, res) => {
                               service: 'gmail',
                               auth: {
                                   user: 'navindadharmasiri@gmail.com',
-                                  pass: 'xbdd pchv ufvh spcs', // Please replace with your actual password or use environment variables for security
+                                  pass: '', // Please replace with your actual password or use environment variables for security
                               },
                           });
 
@@ -233,7 +233,7 @@ router.route('/forgot-password').post((req, res) => {
         service: 'gmail',
         auth: {
           user: 'navindadharmasiri@gmail.com',
-          pass: 'xbdd pchv ufvh spcs', // Please replace with your actual password or use environment variables for security
+          pass: '', // Please replace with your actual password or use environment variables for security
         },
       });
 
