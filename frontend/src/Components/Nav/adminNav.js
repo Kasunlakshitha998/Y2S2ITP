@@ -70,8 +70,8 @@ function AdminNav() {
           <li className={activeLink === '/appoinment' ? 'active' : ''}>
             <Link to="/appoinment">Appoinment</Link>
           </li>
-          <li className={activeLink==='/financial-analysis' ? 'active': ''}>
-          <Link to="/financial-analysis"> Finance Management</Link>
+          {/* <li className={activeLink==='/financial-analysis' ? 'active': ''}>
+          <Link to="/financial-analysis"> Finance Management</Link> */}
         </ul>
       </aside>
     </>

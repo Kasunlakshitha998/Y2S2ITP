@@ -112,7 +112,7 @@ function App() {
         <Route path="/updateD" element={<UpdateAppointment />} />
 
         <Route path="/staffdetails" element={<Staff/>}/>
-        <Route path = "/financial-analysis" element={<FinanceHome/>}/>
+        {/* <Route path = "/financial-analysis" element={<FinanceHome/>}/> */}
 
         
 
